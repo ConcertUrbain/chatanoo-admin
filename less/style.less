@@ -1,0 +1,497 @@
+/* ==|== HelpLess - LESS Helpers Library (http://m6tt.github.com/HelpLess) = */
+@import 'libs/helpless.0.0.3.less';
+
+/* ==|== Import HTML5 ✰ Boilerplate LESS library =========================== */
+@import 'libs/boilerplate.less';
+
+/* Normalize */
+#blr.normalize(#0abbcd, #555);
+
+/* ==|== primary styles =====================================================
+   Author:
+  ========================================================================== */
+
+
+
+/* ==|== media queries ====================================================== */
+/* Screen width <= 480px */
+
+
+/* ==|== endos ==============================================================
+   Please define your styles before this section.
+   ========================================================================== */
+#blr.ns-helpers();
+@media print { #blr.media-print(); }
+
+.button (@color1, @color2) {
+	text-shadow: 0px 1px 0px @color2;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30/16em;
+	padding: 10px;
+	color: #ffffff;
+	background-color: @color1;
+	border:0;
+	border-bottom: 2px solid @color2;
+	font-weight: bold;
+	#hl.rounded-corners(10px, 10px, 10px, 10px);
+	
+	&:hover, &:active, &:focus {
+		background-color: @color2;
+		text-shadow: 0px -1px 0px rgba(142,142,142,1);
+	}
+}
+
+.input {
+	color: #8E8E8E;
+	font-size: 24/16em;
+	padding: 3%;
+	
+	background-color: #FFFFFF;
+	border: 1px solid #8E8E8E;
+	
+	&::-webkit-input-placeholder {
+		font-style: italic;
+	}
+	
+	&:-moz-placeholder {
+		font-style: italic;
+	}
+}
+
+@grey: #666666;
+@grey-light: #8E8E8E;
+@grey-dark: #4D4D4D;
+
+///
+
+html, body {
+	height: 100%
+}
+
+body {
+	font-family: Arial;
+}
+
+#header {
+	height: 40px;
+	border-bottom: 5px solid @grey-dark;
+	background-color: @grey;
+	color: white;
+	padding: 8px;
+	#hl.box-sizing();
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	
+	
+	h1 {
+		font-weight: bold;
+		margin: 0;
+		font-size: 1.5em;
+		#hl.text-shadow();
+	}
+}
+
+#wrapper {
+	
+	position: absolute;
+	top: 40px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	#hl.box-sizing();
+	
+	& > div {
+		#hl.box-sizing();
+	}
+	
+	&.login-view {
+		
+		& > div {
+			width: 314px;
+			height: 200px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			margin: auto;
+			
+			background: url(../img/lineslight.jpg) repeat top left;
+			
+			#hl.drop-shadow(0px, 0px, 40px);
+			
+			h2 {
+				font-weight: bold;
+				border-bottom: 5px solid @grey-dark;
+				background-color: @grey;
+				color: white;
+				padding: 8px;
+				#hl.box-sizing();
+				
+				font-size: 1.5em;
+				#hl.text-shadow();
+				margin: 0;
+			}
+			
+			form {	
+				font-size: 0.7em;
+				margin: 5%;
+
+				input {
+					width: 100%;
+					#hl.box-sizing();
+				}
+
+				input[type=submit], input[type=button] {
+					.button(#AAB973, #71873B);
+				}
+
+				input[type=text], input[type=password] {
+					.input();
+					border-bottom: 0;
+				}
+
+				input:first-child {
+					#hl.rounded-corners(10px, 10px, 0px, 0px);
+				}
+
+				input:nth-child(2) {
+					border-bottom: 1px solid #8E8E8E;
+					#hl.rounded-corners(0px, 0px, 10px, 10px);
+					margin-bottom: 15px;
+				}
+			}
+		}
+		
+	}
+	
+}
+
+#menu {
+	background: url(../img/lineslight.jpg) repeat top left;
+	
+	width: 155px;
+	position: absolute;
+	
+	top: 0;
+	bottom: 0;
+	left: 0;
+	
+	color: white;
+	#hl.text-shadow();
+	
+	h3 {
+		font-weight: bold;
+		font-size: 13px;
+		padding-left: 5px;
+	}
+	
+	ul {
+		margin: 0;
+		padding: 0;
+		margin-bottom: 30px;
+	}
+	
+	li {
+		list-style: none;
+		
+		ul {
+			border-top: 1px solid #1A1A1A;
+			border-bottom: 1px solid #666666;
+		}
+		
+		li {
+			padding: 10px 10px 10px 30px;
+			
+			border-top: 1px solid #666666;
+			border-bottom: 1px solid #1A1A1A;
+			
+			font-size: 11px;
+			
+			cursor: pointer;
+			
+			&:hover, &.selected {
+				background: #f2f2f2; /* Old browsers */
+				background: -moz-linear-gradient(top, #f2f2f2 0%, #afafaf 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* IE10+ */
+				background: linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* W3C */
+				
+				a {
+					color: black;
+					#hl.text-shadow(1px, 1px, 1px, rgba(255, 255, 255, .6));
+				}
+			}
+		}
+	}
+	
+	a {
+		color: white;
+		text-decoration: none;
+		font-weight: normal;
+	}
+}
+
+#content {
+	position: absolute;
+
+	top: 0;
+	bottom: 0;
+	left: 155px;
+	right: 320px;
+	
+	padding: 10px;
+}
+
+.table-control {
+	margin-bottom: 10px;
+	
+	.left {
+		float: left;
+	}
+	
+	.right {
+		float: right;
+	}
+	
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	
+	li {
+		float: left;
+		margin-right: 2px;
+		
+		a {
+			color: @grey-dark;
+			text-decoration: none;
+			font-weight: bold;
+			
+			padding: 2px 8px;
+			
+			&:hover, &.selected {
+				background-color: @grey-dark;
+				color: white;
+				#hl.rounded-corners(10px, 10px, 10px, 10px);
+			}
+			
+			&.refresh {
+				padding-right: 20px;
+				background: url(../img/refresh.png) center right no-repeat transparent;
+				
+				&:hover {
+					background: url(../img/refresh.png) center right no-repeat @grey-dark;
+				}
+			}
+		}
+	}
+	
+	&:after {
+		visibility: hidden;
+		display: block;
+		font-size: 0;
+		content: " ";
+		clear: both;
+		height: 0;
+	}
+	
+}
+
+* html .table-control             { zoom: 1; } /* IE6 */
+*:first-child+html .table-control { zoom: 1; } /* IE7 */
+
+table {
+	#hl.box-sizing();
+	border: 1px solid #BCBCBC;
+	
+	/* set table header to a fixed position. WinIE 6.x only                                       */
+	/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
+	/* an element that has an overflow property set, the relative value translates into fixed.    */
+	/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
+	thead tr {
+		position: relative
+	}
+
+	/* set THEAD element to have block level attributes. All other non-IE browsers            */
+	/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+	thead tr {
+		display: block
+	}
+
+	/* make the TH elements pretty */
+	thead th {
+		background: #f2f2f2; /* Old browsers */
+		background: -moz-linear-gradient(top, #f2f2f2 0%, #afafaf 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* IE10+ */
+		background: linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* W3C */
+	
+		border-right: 1px solid #CCC;
+	
+		padding: 4px 3px;
+		text-align: left
+	}
+	
+	thead th:last-child {
+		border: 0;
+	}
+
+	/* make the A elements pretty. makes for nice clickable headers                */
+	thead a, thead a:link, thead a:visited {
+		color: black;
+		#hl.text-shadow(1px, 1px, 1px, rgba(255, 255, 255, .6));
+		
+		display: block;
+		text-decoration: none;
+		width: 100%
+	}
+
+	/* make the A elements pretty. makes for nice clickable headers                */
+	/* WARNING: swapping the background on hover may cause problems in WinIE 6.x   */
+	thead a:hover {
+		display: block;
+		width: 100%
+	}
+
+	/* define the table content to be scrollable                                              */
+	/* set TBODY element to have block level attributes. All other non-IE browsers            */
+	/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+	/* induced side effect is that child TDs no longer accept width: auto                     */
+	tbody {
+		display: block;
+		height: 262px;
+		//overflow: auto;
+		overflow-y : scroll;
+		width: 100%
+	}
+
+	/* make TD elements pretty. Provide alternating classes for striping the table */
+	/* http://www.alistapart.com/articles/zebratables/                             */
+	tbody td, tbody tr td {
+		background: #FFF;
+		border-bottom: none;
+		border-left: none;
+		border-right: 1px solid #CCC;
+		border-top: 1px solid #DDD;
+		padding: 2px 3px 3px 4px
+	}
+
+	tbody tr:nth-child(2n) td {
+		background: #EEE;
+		border-bottom: none;
+		border-left: none;
+		border-right: 1px solid #CCC;
+		border-top: 1px solid #DDD;
+		padding: 2px 3px 3px 4px
+	}
+	
+	tbody tr:hover td {
+		background-color: @grey-light;
+		color: white;
+	}
+	 
+	tbody tr.selected td {
+		background-color: @grey;
+		color: white;
+	}
+}
+
+#chatanoo {
+	width: 320px;
+	position: absolute;
+	
+	top: 0;
+	bottom: 0;
+	right: 0;
+	
+	border-left: 1px solid @grey-light;
+	
+	iframe {
+		width: 100%;
+		height: 99%;
+	}
+}
+
+#overlay {
+	//display: none;
+	
+	position: absolute;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	//background-color: rgba(0, 0, 0, 0.5);
+	
+	& > div {
+   		width: 150px;
+   		height: 150px;
+   		position: absolute;
+   		top: 0;
+   		right: 0;
+   		bottom: 0;
+   		left: 0;
+   		margin: auto;
+
+		background-color: rgba(0, 0, 0, 0.8);
+		#hl.rounded-corners(15px, 15px, 15px, 15px);
+		
+		text-align: center;
+		
+		&#error {
+			display: none;
+			span {
+				background: url(../img/error_icon.png) center 10px no-repeat;
+				padding-top: 100px;
+			}
+		}
+		
+		&#valid {
+			display: none;
+			span {
+				background: url(../img/valid_icon.png) center 10px no-repeat;
+				padding-top: 100px;
+			}
+		}
+		
+		&#loading {
+			//display: none;
+			
+			#spinner {
+				padding-top: 38px;
+			}
+			
+			span {
+				//background: url(../img/loading.gif) center 10px no-repeat;
+				padding-top: 10px;
+			}
+		}
+		
+		span {
+			display: block;
+			position: relative;
+			width: 80%;
+			height: 80%;
+			margin: 10%;
+			
+			color: white;
+			font-weight: bold;
+		}
+	}
+}
+
+
+
+
+
+

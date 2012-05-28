@@ -1,0 +1,39 @@
+<div class="table-control">
+	<div class="left">
+		<ul>
+			<li><a href="" class="all<% if(mode == 'all') print(' selected') %>">Tous</a></li>
+			<li><a href="" class="valid<% if(mode == 'valid') print(' selected') %>">Validés</a></li>
+			<li><a href="" class="unvalid<% if(mode == 'unvalid') print(' selected') %>">Invalidés</a></li>
+		</ul>
+	</div>
+	<div class="right">
+		<ul>
+			<li><a href="" class='refresh'>Rafraichir</a></li>
+		</ul>
+	</div>
+</div>
+
+<table class="scrollTable">
+	<thead>
+		<tr>
+			<th data-size="30px"><a href="#">id</a></th>
+			<th data-size="35%"><a href="#">Titre</a></th>
+			<th data-size="65%"><a href="#">Description</a></th>
+			<th data-size="90px"><a href="#">Date d'ajout</a></th>
+			<th data-size="150px"><a href="#">Date de modification</a></th>
+			<th data-size="60px"><a href="#">Actions</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% _(items).each( function(item) { %>
+		<tr data-item-id="<%= item.get('id') %>">
+			<td><%= item.get('id') %></td>
+			<td><%= item.get('title') %></td>
+			<td><%= item.get('description') %></td>
+			<td><%= _.isNull( item.get('addDate') ) ? 'NULL' : item.get('addDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( item.get('setDate') ) ? 'NULL' : item.get('setDate').format('MM/DD/YYYY') %></td>
+			<td></td>
+		</tr>
+		<% }) %>
+	</tbody>
+</table>

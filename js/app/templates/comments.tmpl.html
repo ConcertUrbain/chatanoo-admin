@@ -1,0 +1,37 @@
+<div class="table-control">
+	<div class="left">
+		<ul>
+			<li><a href="" class="all<% if(mode == 'all') print(' selected') %>">Tous</a></li>
+			<li><a href="" class="valid<% if(mode == 'valid') print(' selected') %>">Validés</a></li>
+			<li><a href="" class="unvalid<% if(mode == 'unvalid') print(' selected') %>">Invalidés</a></li>
+		</ul>
+	</div>
+	<div class="right">
+		<ul>
+			<li><a href="" class='refresh'>Rafraichir</a></li>
+		</ul>
+	</div>
+</div>
+
+<table class="scrollTable">
+	<thead>
+		<tr>
+			<th data-size="30px"><a href="#">id</a></th>
+			<th data-size="100%"><a href="#">Contenu</a></th>
+			<th data-size="90px"><a href="#">Date d'ajout</a></th>
+			<th data-size="150px"><a href="#">Date de modification</a></th>
+			<th data-size="60px"><a href="#">Actions</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% _(comments).each( function(comment) { %>
+		<tr data-comment-id="<%= comment.get('id') %>">
+			<td><%= comment.get('id') %></td>
+			<td><%= comment.get('content') %></td>
+			<td><%= _.isNull( comment.get('addDate') ) ? 'NULL' : comment.get('addDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( comment.get('setDate') ) ? 'NULL' : comment.get('setDate').format('MM/DD/YYYY') %></td>
+			<td></td>
+		</tr>
+		<% }) %>
+	</tbody>
+</table>
