@@ -1,5 +1,6 @@
 .svn
 /build
-/crea
+/design
 /test
 rsync.exclude
+rsync.sh

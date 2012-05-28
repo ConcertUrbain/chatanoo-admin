@@ -1,9 +1,9 @@
 <div class="table-control">
 	<div class="left">
 		<ul>
-			<li><a href="" class="selected all">Tous</a></li>
-			<li><a href="" class="valid">Validés</a></li>
-			<li><a href="" class="unvalid">Invalidés</a></li>
+			<li><a href="" class="all<% if(mode == 'all') print(' selected') %>">Tous</a></li>
+			<li><a href="" class="valid<% if(mode == 'valid') print(' selected') %>">Validés</a></li>
+			<li><a href="" class="unvalid<% if(mode == 'unvalid') print(' selected') %>">Invalidés</a></li>
 		</ul>
 	</div>
 	<div class="right">
@@ -13,3 +13,33 @@
 	</div>
 </div>
 
+<table class="scrollTable">
+	<thead>
+		<tr>
+			<th data-size="30px"><a href="#">id</a></th>
+			<th data-size="20%"><a href="#">Nom</a></th>
+			<th data-size="20%"><a href="#">Prénom</a></th>
+			<th data-size="20%"><a href="#">Pseudo</a></th>
+			<th data-size="40%"><a href="#">Email</a></th>
+			<th data-size="90px"><a href="#">Rôle</a></th>
+			<th data-size="90px"><a href="#">Date d'ajout</a></th>
+			<th data-size="100px"><a href="#">Date de modif</a></th>
+			<th data-size="60px"><a href="#">Actions</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% _(users).each( function(user) { %>
+		<tr data-user-id="<%= user.get('id') %>">
+			<td><%= user.get('id') %></td>
+			<td><%= user.get('firstName') %></td>
+			<td><%= user.get('lastName') %></td>
+			<td><%= user.get('pseudo') %></td>
+			<td><%= user.get('email') %></td>
+			<td><%= user.get('role') %></td>
+			<td><%= _.isNull( user.get('addDate') ) ? '' : user.get('addDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( user.get('setDate') ) ? '' : user.get('setDate').format('MM/DD/YYYY') %></td>
+			<td></td>
+		</tr>
+		<% }) %>
+	</tbody>
+</table>

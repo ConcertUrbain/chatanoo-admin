@@ -22,13 +22,13 @@
 			<th data-size="50%"><a href="#">Description</a></th>
 			<th data-size="120px"><a href="#">Url</a></th>
 			<th data-size="90px"><a href="#">Date d'ajout</a></th>
-			<th data-size="150px"><a href="#">Date de modification</a></th>
+			<th data-size="100px"><a href="#">Date de modif</a></th>
 			<th data-size="60px"><a href="#">Actions</a></th>
 		</tr>
 	</thead>
 	<tbody>
 		<% _(medias).each( function(media) { %>
-		<tr data-media-id="<%= media.get('id') %>">
+		<tr data-media-id="<%= media.get('id') %>" data-media-type="<%= media.get('type') %>">
 			<td><%= media.get('id') %></td>
 			<td>
 			<% switch( media.get('__className') ) {
@@ -41,8 +41,8 @@
 			<td><%= media.get('title') %></td>
 			<td><%= media.get('description') %></td>
 			<td><%= media.get('url') %></td>
-			<td><%= _.isNull( media.get('addDate') ) ? 'NULL' : media.get('addDate').format('MM/DD/YYYY') %></td>
-			<td><%= _.isNull( media.get('setDate') ) ? 'NULL' : media.get('setDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( media.get('addDate') ) ? '' : media.get('addDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( media.get('setDate') ) ? '' : media.get('setDate').format('MM/DD/YYYY') %></td>
 			<td></td>
 		</tr>
 		<% }) %>

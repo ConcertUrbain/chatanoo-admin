@@ -2,6 +2,7 @@ define([
 	'Backbone',
 	'Underscore',
 	'jQuery',
+	'Chatanoo',
 	
 	'app/views/abstract_table_view',
 	
@@ -12,7 +13,7 @@ define([
 	'text!app/templates/comments.tmpl.html',
 	
 	'app/views/app_view'
-], function(Backbone, _, $,
+], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
 	Comments,
@@ -61,7 +62,12 @@ define([
 		
 		selectRow: function( event ) {
 			var commentId = $( event.currentTarget ).data('comment-id');
-			//app_view.chatanoo.loadUrl('/queries/' + queryId);
+			var itemId = $( event.currentTarget ).data('item-id');
+            
+			var r = Chatanoo.queries.getQueriesByItemId( itemId );
+			Chatanoo.queries.on( r.success, function(queries) {
+				app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
+			}, this);
 		},
 		
 		kill: function() {

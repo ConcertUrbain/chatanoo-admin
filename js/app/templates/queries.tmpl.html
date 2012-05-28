@@ -20,7 +20,7 @@
 			<th data-size="35%"><a href="#">Contenu</a></th>
 			<th data-size="65%"><a href="#">Description</a></th>
 			<th data-size="90px"><a href="#">Date d'ajout</a></th>
-			<th data-size="150px"><a href="#">Date de modification</a></th>
+			<th data-size="100px"><a href="#">Date de modif</a></th>
 			<th data-size="60px"><a href="#">Actions</a></th>
 		</tr>
 	</thead>
@@ -30,8 +30,8 @@
 			<td><%= query.get('id') %></td>
 			<td><%= query.get('content') %></td>
 			<td><%= query.get('description') %></td>
-			<td><%= _.isNull( query.get('addDate') ) ? 'NULL' : query.get('addDate').format('MM/DD/YYYY') %></td>
-			<td><%= _.isNull( query.get('setDate') ) ? 'NULL' : query.get('setDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( query.get('addDate') ) ? '' : query.get('addDate').format('MM/DD/YYYY') %></td>
+			<td><%= _.isNull( query.get('setDate') ) ? '' : query.get('setDate').format('MM/DD/YYYY') %></td>
 			<td></td>
 		</tr>
 		<% }) %>

@@ -478,6 +478,10 @@
 			args = [queryId];
 			return this.getRequest("getItemsByQueryId", args);
 		},
+		getItemsByMediaId: function(mediaId, mediaType) {
+			args = [mediaId, mediaType];
+			return this.getRequest("getItemsByMediaId", args);
+		},
 		addItem: function(item) {
 			args = [item];
 			return this.getRequest("addItem", args);
