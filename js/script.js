@@ -21,7 +21,10 @@ require.config({
 });
 
 require([
-  'app/app'
+  'order!app/app',
+
+  'order!libs/jquery-1.7.2',
+  'order!bootstrap.min'
 ], function(App) {
 	console.log("App loaded");
   	App.initialize();

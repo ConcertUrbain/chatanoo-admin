@@ -24,22 +24,10 @@
 			<th data-size="90px"><a href="#">Rôle</a></th>
 			<th data-size="90px"><a href="#">Date d'ajout</a></th>
 			<th data-size="100px"><a href="#">Date de modif</a></th>
-			<th data-size="60px"><a href="#">Actions</a></th>
+			<th data-size="80px"><a href="#">Actions</a></th>
 		</tr>
 	</thead>
 	<tbody>
-		<% _(users).each( function(user) { %>
-		<tr data-user-id="<%= user.get('id') %>">
-			<td><%= user.get('id') %></td>
-			<td><%= user.get('firstName') %></td>
-			<td><%= user.get('lastName') %></td>
-			<td><%= user.get('pseudo') %></td>
-			<td><%= user.get('email') %></td>
-			<td><%= user.get('role') %></td>
-			<td><%= _.isNull( user.get('addDate') ) ? '' : user.get('addDate').format('MM/DD/YYYY') %></td>
-			<td><%= _.isNull( user.get('setDate') ) ? '' : user.get('setDate').format('MM/DD/YYYY') %></td>
-			<td></td>
-		</tr>
-		<% }) %>
+		
 	</tbody>
 </table>

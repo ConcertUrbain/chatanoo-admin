@@ -8,6 +8,7 @@ define([
 	'Config',
 	
 	'app/collections/queries',
+	'app/views/query_view',
 	
 	'text!app/templates/queries.tmpl.html',
 	
@@ -15,7 +16,7 @@ define([
 ], function(Backbone, _, $,
 	AbstractTableView,
 	Config,
-	Queries,
+	Queries, QueryView,
 	template,
 	app_view) {
 	
@@ -49,6 +50,13 @@ define([
 				case "unvalid": queries = this.queries.unvalid(); break;
 			}
 			this.$el.html( _.template( template, { queries: queries, mode: this.mode } ) );
+			
+			var els = [];
+			_(queries).each( function (query) {
+				var qv = new QueryView( { model: query } );
+				els.push( qv.render().el );
+			});
+			this.$el.find("table tbody").append( els );
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;

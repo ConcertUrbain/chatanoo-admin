@@ -1,0 +1,17 @@
+ <td><%= item.get('id') %></td>
+ <td><%= item.get('title') %></td>
+ <td><%= item.get('description') %></td>
+ <td><%= _.isNull( item.get('addDate') ) ? '' : item.get('addDate').format('MM/DD/YYYY') %></td>
+ <td><%= _.isNull( item.get('setDate') ) ? '' : item.get('setDate').format('MM/DD/YYYY') %></td>
+ <td class="action">
+	<div class="btn-group">
+		<button class="btn btn-mini <%= item.get('_isValid') ? "btn-danger" : "btn-success" %>"><%= item.get('_isValid') ? "Invalider" : "Valider" %></button>
+		<button class="btn btn-mini <%= item.get('_isValid') ? "btn-danger" : "btn-success" %> dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right">
+			<li><a href="#"><i class="icon-edit"></i> Editer</a></li>
+			<li><a href="#"><i class="icon-remove"></i> Supprimer</a></li>
+		</ul>
+	</div>
+</td>

@@ -21,19 +21,10 @@
 			<th data-size="65%"><a href="#">Description</a></th>
 			<th data-size="90px"><a href="#">Date d'ajout</a></th>
 			<th data-size="100px"><a href="#">Date de modif</a></th>
-			<th data-size="60px"><a href="#">Actions</a></th>
+			<th data-size="80px"><a href="#">Actions</a></th>
 		</tr>
 	</thead>
 	<tbody>
-		<% _(items).each( function(item) { %>
-		<tr data-item-id="<%= item.get('id') %>">
-			<td><%= item.get('id') %></td>
-			<td><%= item.get('title') %></td>
-			<td><%= item.get('description') %></td>
-			<td><%= _.isNull( item.get('addDate') ) ? '' : item.get('addDate').format('MM/DD/YYYY') %></td>
-			<td><%= _.isNull( item.get('setDate') ) ? '' : item.get('setDate').format('MM/DD/YYYY') %></td>
-			<td></td>
-		</tr>
-		<% }) %>
+		
 	</tbody>
 </table>

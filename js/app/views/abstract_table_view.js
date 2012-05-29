@@ -23,7 +23,8 @@ define([
 			'click a.all': 'showAll',
 			'click a.valid': 'showValid',
 			'click a.unvalid': 'showUnvalid',
-			'click table tbody tr': '_selectRow'
+			'click table tbody tr': '_selectRow',
+			'click table tbody tr td.action': '_actionClick',
 		},
 		
 		render: function() {
@@ -56,6 +57,10 @@ define([
 		_selectRow: function( event ) {
 			this.$el.find('tbody tr.selected').removeClass('selected');
 			$( event.currentTarget ).addClass('selected');
+		},
+		
+		_actionClick: function( event ) {
+			event.preventDefault();
 		},
 		
 		resize: function( blockResize ) {

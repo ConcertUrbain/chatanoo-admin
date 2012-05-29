@@ -30,7 +30,10 @@ define([
 		
 		loadUrl: function( url ) {
 			this.hash = '#' + url;
-			this.render();
+			
+			var url = Config.chatanoo.iframe + this.hash;
+			if( this.$el.find('iframe').attr('src') != url )
+				this.$el.find('iframe').attr('src', url);
 		},
 		
 		kill: function() {

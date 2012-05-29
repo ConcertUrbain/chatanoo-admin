@@ -1,0 +1,16 @@
+<td><%= comment.get('id') %></td>
+<td><%= comment.get('content') %></td>
+<td><%= _.isNull( comment.get('addDate') ) ? '' : comment.get('addDate').format('MM/DD/YYYY') %></td>
+<td><%= _.isNull( comment.get('setDate') ) ? '' : comment.get('setDate').format('MM/DD/YYYY') %></td>
+<td class="action">
+	<div class="btn-group">
+		<button class="btn btn-mini <%= parseInt( comment.get('_isValid') ) ? "btn-danger" : "btn-success" %>"><%= parseInt( comment.get('_isValid') ) ? "Invalider" : "Valider" %></button>
+		<button class="btn btn-mini <%= parseInt( comment.get('_isValid') ) ? "btn-danger" : "btn-success" %> dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right">
+			<li><a href="#"><i class="icon-edit"></i> Editer</a></li>
+			<li><a href="#"><i class="icon-remove"></i> Supprimer</a></li>
+		</ul>
+	</div>
+</td>

@@ -1,0 +1,17 @@
+<td><%= query.get('id') %></td>
+<td><%= query.get('content') %></td>
+<td><%= query.get('description') %></td>
+<td><%= _.isNull( query.get('addDate') ) ? '' : query.get('addDate').format('MM/DD/YYYY') %></td>
+<td><%= _.isNull( query.get('setDate') ) ? '' : query.get('setDate').format('MM/DD/YYYY') %></td>
+<td class="action">
+	<div class="btn-group">
+		<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-danger" : "btn-success" %>"><%= parseInt( query.get('_isValid') ) ? "Invalider" : "Valider" %></button>
+		<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-danger" : "btn-success" %> dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right">
+			<li><a href="#"><i class="icon-edit"></i> Editer</a></li>
+			<li><a href="#"><i class="icon-remove"></i> Supprimer</a></li>
+		</ul>
+	</div>
+</td>

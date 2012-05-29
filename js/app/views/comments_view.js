@@ -9,6 +9,7 @@ define([
 	'Config',
 	
 	'app/collections/comments',
+	'app/views/comment_view',
 	
 	'text!app/templates/comments.tmpl.html',
 	
@@ -16,7 +17,7 @@ define([
 ], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
-	Comments,
+	Comments, CommentView,
 	template,
 	app_view) {
 	
@@ -50,6 +51,13 @@ define([
 				case "unvalid": comments = this.comments.unvalid(); break;
 			}
 			this.$el.html( _.template( template, { comments: comments, mode: this.mode } ) );
+			
+			var els = [];
+			_(comments).each( function (comment) {
+				var cv = new CommentView( { model: comment } );
+				els.push( cv.render().el );
+			});
+			this.$el.find("table tbody").append( els );
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;

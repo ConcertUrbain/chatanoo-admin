@@ -21,19 +21,10 @@
 			<th data-size="65%"><a href="#">Description</a></th>
 			<th data-size="90px"><a href="#">Date d'ajout</a></th>
 			<th data-size="100px"><a href="#">Date de modif</a></th>
-			<th data-size="60px"><a href="#">Actions</a></th>
+			<th data-size="80px"><a href="#">Actions</a></th>
 		</tr>
 	</thead>
 	<tbody>
-		<% _(queries).each( function(query) { %>
-		<tr data-query-id="<%= query.get('id') %>">
-			<td><%= query.get('id') %></td>
-			<td><%= query.get('content') %></td>
-			<td><%= query.get('description') %></td>
-			<td><%= _.isNull( query.get('addDate') ) ? '' : query.get('addDate').format('MM/DD/YYYY') %></td>
-			<td><%= _.isNull( query.get('setDate') ) ? '' : query.get('setDate').format('MM/DD/YYYY') %></td>
-			<td></td>
-		</tr>
-		<% }) %>
+		
 	</tbody>
 </table>

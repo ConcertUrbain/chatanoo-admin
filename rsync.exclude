@@ -2,5 +2,6 @@
 /build
 /design
 /test
+/js/app/config.js
 rsync.exclude
 rsync.sh

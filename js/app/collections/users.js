@@ -26,14 +26,14 @@ define([
 		},
 		
 		ban: function() {
-			return _(this.toArray()).filter( function(Users) {
-				return parseInt( Users.get('_isBan') );
+			return _(this.toArray()).filter( function(user) {
+				return parseInt( user.get('_isBan') );
 			});
 		},
 		
 		unban: function() {
-			return _(this.toArray()).filter( function(Users) {
-				return !parseInt( Users.get('_isBan') );
+			return _(this.toArray()).filter( function(user) {
+				return !parseInt( user.get('_isBan') );
 			});
 		}
 	});

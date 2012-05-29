@@ -9,6 +9,7 @@ define([
 	'Config',
 	
 	'app/collections/items',
+	'app/views/item_view',
 	
 	'text!app/templates/items.tmpl.html',
 	
@@ -16,7 +17,7 @@ define([
 ], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
-	Items,
+	Items, ItemView,
 	template,
 	app_view) {
 	
@@ -25,6 +26,8 @@ define([
 		el: $("#content"),
 		
 		items: new Items(),
+		
+		mode: "all",
 		
 		initialize: function() {
 			app_view.chatanoo.loadUrl('/queries/20');
@@ -36,6 +39,9 @@ define([
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
+			'click .all': 'showAll',
+			'click .valid': 'showValid',
+			'click .unvalid': 'showUnvalid',
 			'click .refresh': 'refresh',
 			'click tbody tr': 'selectRow'
 		}),
@@ -51,12 +57,41 @@ define([
 			}
 			this.$el.html( _.template( template, { items: items, mode: this.mode } ) );
 			
+			var els = [];
+			_(items).each( function (item) {
+				var iv = new ItemView( { model: item } );
+				els.push( iv.render().el );
+			});
+			this.$el.find("table tbody").append( els );
+			
 			AbstractTableView.prototype.render.call(this);
 			return this;
 		},
 		
+		// table controls
+		showAll: function( event ) {
+			this.mode = "all";
+			this.render();
+			
+			return false;
+		},
+		
+		showValid: function( event ) {
+			this.mode = "valid";
+			this.render();
+			
+			return false;
+		},
+		
+		showUnvalid: function( event ) {
+			this.mode = "unvalid";
+			this.render();
+			
+			return false;
+		},
+		
 		refresh: function( event ) {
-			this.items.loadItems();
+			this.queries.loadQueries();
 			return false;
 		},
 		

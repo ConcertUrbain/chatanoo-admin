@@ -1,0 +1,20 @@
+<td><%= user.get('id') %></td>
+<td><%= user.get('firstName') %></td>
+<td><%= user.get('lastName') %></td>
+<td><%= user.get('pseudo') %></td>
+<td><%= user.get('email') %></td>
+<td><%= user.get('role') %></td>
+<td><%= _.isNull( user.get('addDate') ) ? '' : user.get('addDate').format('MM/DD/YYYY') %></td>
+<td><%= _.isNull( user.get('setDate') ) ? '' : user.get('setDate').format('MM/DD/YYYY') %></td>
+<td class="action">
+	<div class="btn-group">
+		<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger" : "btn-success" %>"><%= !parseInt( user.get('_isBan') ) ? "Bannir" : "Accepter" %></button>
+		<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger" : "btn-success" %> dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right">
+			<li><a href="#"><i class="icon-edit"></i> Editer</a></li>
+			<li><a href="#"><i class="icon-remove"></i> Supprimer</a></li>
+		</ul>
+	</div>
+</td>

@@ -58,6 +58,14 @@
 	}
 }
 
+.btn-group .dropdown-menu a:hover {
+	background-color: @grey-light;
+}
+
+.btn-group button:first-child {
+	width: 56px;
+}
+
 @grey: #666666;
 @grey-light: #8E8E8E;
 @grey-dark: #4D4D4D;
@@ -91,6 +99,7 @@ body {
 		font-weight: bold;
 		margin: 0;
 		font-size: 1.5em;
+		line-height: 16px;
 		#hl.text-shadow();
 	}
 }
@@ -129,6 +138,7 @@ body {
 				border-bottom: 5px solid @grey-dark;
 				background-color: @grey;
 				color: white;
+				line-height: 20px;
 				padding: 8px;
 				#hl.box-sizing();
 				
@@ -144,6 +154,8 @@ body {
 				input {
 					width: 100%;
 					#hl.box-sizing();
+					margin-bottom: 0;
+					height: inherit;
 				}
 
 				input[type=submit], input[type=button] {
@@ -379,20 +391,20 @@ table {
 	/* http://www.alistapart.com/articles/zebratables/                             */
 	tbody td, tbody tr td {
 		background: #FFF;
-		border-bottom: none;
+		border-top: none;
 		border-left: none;
 		border-right: 1px solid #CCC;
+		border-bottom: 1px solid #DDD;
+		padding: 2px 3px 3px 4px;
+		line-height: 23px;
+	}
+	
+	tbody tr:first-child td {
 		border-top: 1px solid #DDD;
-		padding: 2px 3px 3px 4px
 	}
 
 	tbody tr:nth-child(2n) td {
 		background: #EEE;
-		border-bottom: none;
-		border-left: none;
-		border-right: 1px solid #CCC;
-		border-top: 1px solid #DDD;
-		padding: 2px 3px 3px 4px
 	}
 	
 	tbody tr:hover td {

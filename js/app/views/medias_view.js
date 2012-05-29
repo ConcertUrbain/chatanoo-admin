@@ -9,6 +9,7 @@ define([
 	'Config',
 	
 	'app/collections/medias',
+	'app/views/media_view',
 	
 	'text!app/templates/medias.tmpl.html',
 	
@@ -16,7 +17,7 @@ define([
 ], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
-	Medias,
+	Medias, MediaView,
 	template,
 	app_view) {
 	
@@ -50,6 +51,13 @@ define([
 				case "unvalid": medias = this.medias.unvalid(); break;
 			}
 			this.$el.html( _.template( template, { medias: medias, mode: this.mode } ) );
+			
+			var els = [];
+			_(medias).each( function (medias) {
+				var mv = new MediaView( { model: medias } );
+				els.push( mv.render().el );
+			});
+			this.$el.find("table tbody").append( els );
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;

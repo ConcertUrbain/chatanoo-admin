@@ -9,6 +9,7 @@ define([
 	'Config',
 	
 	'app/collections/users',
+	'app/views/user_view',
 	
 	'text!app/templates/users.tmpl.html',
 	
@@ -16,7 +17,7 @@ define([
 ], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
-	Users,
+	Users, UserView,
 	template,
 	app_view) {
 	
@@ -50,6 +51,13 @@ define([
 				case "unvalid": users = this.users.ban(); break;
 			}
 			this.$el.html( _.template( template, { users: users, mode: this.mode } ) );
+			
+			var els = [];
+			_(users).each( function (user) {
+				var uv = new UserView( { model: user } );
+				els.push( uv.render().el );
+			});
+			this.$el.find("table tbody").append( els );
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
