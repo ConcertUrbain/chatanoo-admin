@@ -21,11 +21,28 @@ define([
 	    },
 	
 		events: {
+			"click .retract": "retract",
+			"click .deploy": "deploy",
+			"click .refresh": "refresh"
 		},
 		
 		render: function() {
 			this.$el.html( _.template( template, { config: Config, hash: this.hash } ) );
 			return this;
+		},
+		
+		retract: function() {
+			$('body').addClass('retract');
+			$(window).resize();
+		},
+		
+		deploy: function() {
+			$('body').removeClass('retract');
+			$(window).resize();
+		},
+		
+		refresh: function() {
+			this.render();
 		},
 		
 		loadUrl: function( url ) {

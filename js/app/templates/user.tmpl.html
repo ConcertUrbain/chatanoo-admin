@@ -7,13 +7,17 @@
 <td><%= _.isNull( user.get('addDate') ) ? '' : user.get('addDate').format('MM/DD/YYYY') %></td>
 <td><%= _.isNull( user.get('setDate') ) ? '' : user.get('setDate').format('MM/DD/YYYY') %></td>
 <td class="action">
-	<div class="btn-group">
+	<div class="btn-group btn-group-action">
 		<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger" : "btn-success" %>"><%= !parseInt( user.get('_isBan') ) ? "Bannir" : "Accepter" %></button>
 		<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger" : "btn-success" %> dropdown-toggle" data-toggle="dropdown">
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu pull-right">
 			<li><a href="#"><i class="icon-edit"></i> Editer</a></li>
+			<li><a href="#"><i class="icon-lock"></i> Changer de mot de passe</a></li>
+			<li><a href="#"><i class="icon-hdd"></i> Données associés</a></li>
+			<li><a href="#"><i class="icon-signal"></i> Statistiques</a></li>
+			<li class="divider"></li>
 			<li><a href="#"><i class="icon-remove"></i> Supprimer</a></li>
 		</ul>
 	</div>

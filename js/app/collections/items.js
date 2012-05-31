@@ -10,6 +10,8 @@ define([
 	var Items = Backbone.Collection.extend({
     	model: Item,
 
+		filters: [],
+
 		loadItems: function() {
 			this.remove(this.toArray());
 			

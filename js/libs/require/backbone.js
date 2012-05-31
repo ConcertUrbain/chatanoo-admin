@@ -6,5 +6,5 @@ define([
 	console.log('Backbone loaded');
 	//_.noConflict();
 	//$.noConflict();
-	return Backbone.noConflict();
+	return Backbone;
 });

@@ -27,8 +27,6 @@ define([
 		
 		items: new Items(),
 		
-		mode: "all",
-		
 		initialize: function() {
 			app_view.chatanoo.loadUrl('/queries/20');
 			
@@ -64,30 +62,36 @@ define([
 			});
 			this.$el.find("table tbody").append( els );
 			
+			this.search();
+			
 			AbstractTableView.prototype.render.call(this);
 			return this;
 		},
 		
-		// table controls
-		showAll: function( event ) {
-			this.mode = "all";
-			this.render();
-			
-			return false;
-		},
-		
-		showValid: function( event ) {
-			this.mode = "valid";
-			this.render();
-			
-			return false;
-		},
-		
-		showUnvalid: function( event ) {
-			this.mode = "unvalid";
-			this.render();
-			
-			return false;
+		search: function() {
+			var mThis = this;
+			var visualSearch = VS.init({
+	          container  : $('#searchbox'),
+	          query      : '',
+	          callbacks  : {
+				search       : function(query, searchCollection) {
+					mThis.items.filters = searchCollection.facets();			
+					mThis.render();		
+				},
+	            facetMatches : function(callback) {
+	              callback([
+	                'id', 'Titre', 'Description', 'Date d\'ajout', 'Date de modif'
+	              ]);
+	            },
+	            valueMatches : function(facet, searchTerm, callback) {
+	              switch (facet) {
+	              	/*case 'account':
+	                  callback([]);
+	                  break;*/
+	              }
+	            }
+	          }
+	        });
 		},
 		
 		refresh: function( event ) {

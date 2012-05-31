@@ -10,6 +10,8 @@ define([
 	var Users = Backbone.Collection.extend({
     	model: User,
 
+		filters: [],
+
 		loadUsers: function() {
 			this.remove(this.toArray());
 			

@@ -62,7 +62,7 @@
 	background-color: @grey-light;
 }
 
-.btn-group button:first-child {
+.btn-group-action button:first-child {
 	width: 56px;
 }
 
@@ -105,7 +105,7 @@ body {
 }
 
 #wrapper {
-	
+	overflow: hidden;
 	position: absolute;
 	top: 40px;
 	left: 0;
@@ -261,8 +261,12 @@ body {
 	padding: 10px;
 }
 
+body.retract #content {
+	right: 37px;
+}
+
 .table-control {
-	margin-bottom: 10px;
+	margin-bottom: 6px;
 	
 	.left {
 		float: left;
@@ -270,6 +274,11 @@ body {
 	
 	.right {
 		float: right;
+	}
+	
+	#searchbox {
+		margin-top: -6px;
+		width: 400px;
 	}
 	
 	ul {
@@ -293,15 +302,6 @@ body {
 				background-color: @grey-dark;
 				color: white;
 				#hl.rounded-corners(10px, 10px, 10px, 10px);
-			}
-			
-			&.refresh {
-				padding-right: 20px;
-				background: url(../img/refresh.png) center right no-repeat transparent;
-				
-				&:hover {
-					background: url(../img/refresh.png) center right no-repeat @grey-dark;
-				}
 			}
 		}
 	}
@@ -428,9 +428,35 @@ table {
 	
 	border-left: 1px solid @grey-light;
 	
+	.btn-group {
+		z-index: 100;
+		margin-top: -2px;
+	}
+	
 	iframe {
+		position: absolute;
+		top:0;
+		
 		width: 100%;
 		height: 99%;
+	}
+	
+	button.deploy {
+		display: none;
+	}
+	button.retract {
+		display: inline-block;
+	}
+}
+
+body.retract #chatanoo {
+	right: -283px;
+	
+	button.deploy {
+		display: inline-block;
+	}
+	button.retract {
+		display: none;
 	}
 }
 

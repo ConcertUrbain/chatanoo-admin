@@ -59,8 +59,36 @@ define([
 			});
 			this.$el.find("table tbody").append( els );
 			
+			this.search();
+			
 			AbstractTableView.prototype.render.call(this);
 			return this;
+		},
+		
+		search: function() {
+			var mThis = this;
+			var visualSearch = VS.init({
+	          container  : $('#searchbox'),
+	          query      : '',
+	          callbacks  : {
+				search       : function(query, searchCollection) {
+					mThis.users.filters = searchCollection.facets();
+					mThis.render();
+				},
+	            facetMatches : function(callback) {
+	              callback([
+	                'id', 'Nom', 'Prénom', 'Pseudo', 'Email', 'Rôle', 'Date d\'ajout', 'Date de modif'
+	              ]);
+	            },
+	            valueMatches : function(facet, searchTerm, callback) {
+	              switch (facet) {
+	              	case 'Rôle':
+	                  callback(['admin', 'user', 'moderator']);
+	                  break;
+	              }
+	            }
+	          }
+	        });
 		},
 		
 		refresh: function( event ) {

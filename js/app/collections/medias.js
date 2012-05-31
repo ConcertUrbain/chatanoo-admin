@@ -10,6 +10,8 @@ define([
 	var Medias = Backbone.Collection.extend({
 	    model: Media,
 
+		filters: [],
+
 		loadMedias: function() {
 			this.remove(this.toArray());
 			

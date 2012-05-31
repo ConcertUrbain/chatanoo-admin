@@ -10,6 +10,8 @@ define([
 	var Comments = Backbone.Collection.extend({
     	model: Comment,
 
+		filters: [],
+
 		loadComments: function() {
 			this.remove(this.toArray());
 			

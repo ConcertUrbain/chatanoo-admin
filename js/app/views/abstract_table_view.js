@@ -112,7 +112,7 @@ define([
 				$(td).width( width );
 			});
 			
-			var h = $(window).height() - 40 - 46;
+			var h = $(window).height() - 40 - 52;
 			table.height( h );
 			table.find('tbody').height( h - 26 );
 			

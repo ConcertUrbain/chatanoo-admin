@@ -58,8 +58,38 @@ define([
 			});
 			this.$el.find("table tbody").append( els );
 			
+			this.search();
+			
 			AbstractTableView.prototype.render.call(this);
 			return this;
+		},
+		
+		_request: "",
+		search: function() {
+			var mThis = this;
+			var visualSearch = VS.init({
+	          container  : $('#searchbox'),
+	          query      : mThis._request,
+	          callbacks  : {
+				search       : function(query, searchCollection) {
+					mThis.queries.filters = searchCollection.facets();
+					mThis._request = query;
+					mThis.render();
+				},
+	            facetMatches : function(callback) {
+	              callback([
+	                'id', 'Contenu', 'Description', 'Date d\'ajout', 'Date de modif'
+	              ]);
+	            },
+	            valueMatches : function(facet, searchTerm, callback) {
+	              switch (facet) {
+	              	/*case 'account':
+	                  callback([]);
+	                  break;*/
+	              }
+	            }
+	          }
+	        });
 		},
 		
 		refresh: function( event ) {
