@@ -3,70 +3,52 @@ define([
 	'Underscore',
 	'jQuery',
 	
+	'Config',
+	
+	'app/views/abstract_row_view',
+	
 	'text!app/templates/media.tmpl.html',
 	
 	'app/views/app_view'
 ], function(Backbone, _, $,
+	Config,
+	AbstractRowView,
 	template,
 	app_view) {
 	
-	var MediaView = Backbone.View.extend(
-	{
-		tagName: "tr",
-		
-		model: null,
-		editing: false,
-		
-		events: {
-		},
-		
+	var MediaView = AbstractRowView.extend({	
+		deleteMessage: "Voulez vous vraiment supprimer ce média ?",
+    
+		events: _.extend( AbstractRowView.prototype.events, {
+    
+		}),
+    
 		initialize: function() {
-			this.model.on("change", this.render, this);
+			AbstractRowView.prototype.initialize.call(this);
 	    },
-		
+    
 		render: function() {
-			this.$el.data('query-id', this.model.get('id'));
-			this.$el.html(_.template( template, { media: this.model } ));
+			var type = "";
+			switch(  this.model.get('__className') ) {
+				case "Vo_Media_Picture": type = 'Picture'; break;
+				case "Vo_Media_Video": type = 'Video'; break;
+				case "Vo_Media_Sound": type = 'Sound'; break;
+				case "Vo_Media_Text": type = 'Text'; break;
+			}
+			this.$el.data('media-id', this.model.get('id'));
+			this.$el.data('media-type', type);
 			
+			this.$el.html(_.template( template, { media: this.model, editing: this.editing, Config: Config } ));
+    
+			AbstractRowView.prototype.render.call(this);
 			return this;
 		},
-		
-		validateQuery: function() {
-			this.model.validateMedia();
-		},
-        
-		unvalidateQuery: function() {
-			this.model.unvalidateMedia();
-		},
-        
-		editQuery: function() {
-			this.editing = true;
-			this.render();
-		},
-        
-		deleteQuery: function() {
-			var r = confirm("Voulez vous vraiment supprimer cette contribution ?");
-			if( r ) {
-				this.model.deleteMedia();
-			}
-		},
-		
-		//edit
-		validateEditQuery: function() {
-			this.editing = false;
-			this.model.editMedia({ 
-				//content: this.$el.find('textarea').val() 
-			});
-		},
-		
-		cancelEditQuery: function() {
-			this.editing = false;
-			this.render();
-		},
-		
-		kill: function() {
-			this.$el.unbind()
-			this.model.off();
+    
+		getEditingValue: function() {
+			return {
+				content: this.$el.find('textarea[name=title]').val(), 
+				description: this.$el.find('textarea[name=description]').val()
+			};
 		}
 	});
 	

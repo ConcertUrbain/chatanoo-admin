@@ -1,18 +1,18 @@
 define([
-	'Backbone',
 	'Underscore',
 	'Chatanoo',
+
+	'app/collections/abstract',
 	
 	'app/models/media_model'
-], function(Backbone, _, Chatanoo,
+], function( _, Chatanoo,
+	AbstractCollection,
 	Media) {
 	
-	var Medias = Backbone.Collection.extend({
+	var Medias = AbstractCollection.extend({
 	    model: Media,
 
-		filters: [],
-
-		loadMedias: function() {
+		load: function() {
 			this.remove(this.toArray());
 			
 			var mThis = this;
@@ -21,24 +21,9 @@ define([
 				_(medias).each( function(type, label) { 
 					_(type).each( function(media) { media.type = label; mThis.push(media); } ); 
 				}, this );
+				mThis.calculate();
 				mThis.trigger("change");
 			}, this);
-		},
-		
-		all: function() {
-			return this.toArray();
-		},
-		
-		valid: function() {
-			return _(this.toArray()).filter( function(media) {
-				return parseInt( media.get('_isValid') );
-			});
-		},
-		
-		unvalid: function() {
-			return _(this.toArray()).filter( function(media) {
-				return !parseInt( media.get('_isValid') );
-			});
 		}
 	});
 

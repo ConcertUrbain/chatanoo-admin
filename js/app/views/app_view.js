@@ -90,8 +90,8 @@ define([
 			if( !_.isNull( this.chatanoo ) ) {
 				//this.chatanoo.render();
 			} else if( $('#chatanoo').length > 0 ) {
-				this.chatanoo = new ChatanooView( { el: $('#chatanoo') } );
-				this.chatanoo.render();
+				mThis.chatanoo = new ChatanooView( { el: $('#chatanoo') } );
+				mThis.chatanoo.render();
 			}
 			
 			if( !_.isNull(this.content) )
@@ -102,6 +102,18 @@ define([
 		
 		logout: function() {
 			location.hash = '/login';
+		},
+		
+		// Retract the chatanoo iframe
+		retract: function() {
+			$('body').addClass('retract');
+			$(window).resize();
+		},
+		
+		// Deploy the chatanoo iframe
+		deploy: function() {
+			$('body').removeClass('retract');
+			$(window).resize();
 		},
 		
 		_gotoView: function(view, options, callback, isLogin) {

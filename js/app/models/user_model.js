@@ -15,7 +15,7 @@ define([
 		
 	    },
 		
-		unbanUser: function() {
+		unvalidateVo: function() {
 			var r = Chatanoo.users.banUser( this.get("id"), false );
 			Chatanoo.users.on( r.success, function( userId ) {
 				this.trigger("change change:validate");
@@ -23,7 +23,7 @@ define([
 			}, this);
 		},
 		
-		banUser: function() {
+		validateVo: function() {
 			var r = Chatanoo.users.banUser( this.get("id"), true );
 			Chatanoo.users.on( r.success, function( userId ) {
 				this.trigger("change change:unvalidate");
@@ -31,14 +31,14 @@ define([
 			}, this);
 		},
 		
-		deleteUser: function() {
+		deleteVo: function() {
 			var r = Chatanoo.users.deleteUser( this.get("id") );
 			Chatanoo.users.on( r.success, function( bool ) {
 				this.trigger("delete");
 			}, this);
 		},
 		
-		editUser: function(options) {
+		editVo: function(options) {
 			var user = _.extend(this.toJSON(), options);
 			var r = Chatanoo.users.setUser( user );
 			Chatanoo.users.on( r.success, function( usertId ) {

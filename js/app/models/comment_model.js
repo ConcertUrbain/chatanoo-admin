@@ -37,7 +37,7 @@ define([
 			}, mThis);
 		},
 		
-		validateComment: function() {
+		validateVo: function() {
 			var r = Chatanoo.comments.validateVo( this.get("id"), true, false );
 			Chatanoo.comments.on( r.success, function( commentId ) {
 				this.trigger("change change:validate");
@@ -45,7 +45,7 @@ define([
 			}, this);
 		},
 		
-		unvalidateComment: function() {
+		unvalidateVo: function() {
 			var r = Chatanoo.comments.validateVo( this.get("id"), false, false );
 			Chatanoo.comments.on( r.success, function( commentId ) {
 				this.trigger("change change:unvalidate");
@@ -53,14 +53,14 @@ define([
 			}, this);
 		},
 		
-		deleteComment: function() {
+		deleteVo: function() {
 			var r = Chatanoo.comments.deleteComment( this.get("id") );
 			Chatanoo.comments.on( r.success, function( bool ) {
 				this.trigger("delete");
 			}, this);
 		},
 		
-		editComment: function(options) {
+		editVo: function(options) {
 			var comment = _.extend(this.toJSON(), options);
 			var r = Chatanoo.comments.setComment( comment );
 			Chatanoo.comments.on( r.success, function( commentId ) {

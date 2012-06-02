@@ -25,75 +25,28 @@ define([
 	{
 		el: $("#content"),
 		
-		medias: new Medias(),
+		collection: new Medias(),
+		voClass: MediaView,
+		
+		facets: ['id', 'Type', 'Titre', 'Description', 'Url', 'Date d\'ajout', 'Date de modif'],
 		
 		initialize: function() {
 			//app_view.chatanoo.loadUrl('/queries/20');
-			
-			this.medias.loadMedias();
-			this.medias.on('change', function() { this.render(); }, this);
 			
 			AbstractTableView.prototype.initialize.call(this);
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click .refresh': 'refresh',
 			'click tbody tr': 'selectRow'
 		}),
 		
 		render: function() {
 			this.$el.removeClass().addClass('comments');
 			
-			var medias;
-			switch(this.mode) {
-				case "all": medias = this.medias.all(); break;
-				case "valid": medias = this.medias.valid(); break;
-				case "unvalid": medias = this.medias.unvalid(); break;
-			}
-			this.$el.html( _.template( template, { medias: medias, mode: this.mode } ) );
-			
-			var els = [];
-			_(medias).each( function (medias) {
-				var mv = new MediaView( { model: medias } );
-				els.push( mv.render().el );
-			});
-			this.$el.find("table tbody").append( els );
-			
-			this.search();
+			this.$el.html( _.template( template, { mode: this.mode } ) );
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		search: function() {
-			var mThis = this;
-			var visualSearch = VS.init({
-	          container  : $('#searchbox'),
-	          query      : '',
-	          callbacks  : {
-				search       : function(query, searchCollection) {
-					mThis.medias.filters = searchCollection.facets();
-					mThis.render();
-				},
-	            facetMatches : function(callback) {
-	              callback([
-	                'id', 'Type', 'Contenu', 'Description', 'Url', 'Date d\'ajout', 'Date de modif'
-	              ]);
-	            },
-	            valueMatches : function(facet, searchTerm, callback) {
-	              switch (facet) {
-	              	case 'Type':
-	                  callback(['image', 'viédo', 'audio', 'text']);
-	                  break;
-	              }
-	            }
-	          }
-	        });
-		},
-		
-		refresh: function( event ) {
-			this.medias.loadMedias();
-			return false;
 		},
 		
 		selectRow: function( event ) {

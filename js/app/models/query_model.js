@@ -37,8 +37,8 @@ define([
 			var r = Chatanoo.queries.getQueryById( this.get("id") );
 			Chatanoo.queries.on( r.success, function(query) {
 				mThis.set( query );
-				if( mThis.get('_user') > 0)
-					mThis.loadUser();
+				//if( mThis.get('_user') > 0)
+				//	mThis.loadUser();
 			}, mThis);
 			Chatanoo.queries.on( r.error, function(query) {
 				mThis.isOnError = true;
@@ -55,7 +55,7 @@ define([
 			}, this);
 		},
 
-		editQuery: function(options) {
+		editVo: function(options) {
 			var query = _.extend(this.toJSON(), options);
 			var r = Chatanoo.queries.setQuery( query );
 			Chatanoo.queries.on( r.success, function( queryId ) {
@@ -65,25 +65,25 @@ define([
 		},
 		
 		
-		validateQuery: function() {
+		validateVo: function() {
 			var r = Chatanoo.queries.validateVo( this.get("id"), true, false );
 			Chatanoo.queries.on( r.success, function( queryId ) {
 				this.trigger("change:validate");
 				this.loadQuery();
-				this.loadItems();
+				//this.loadItems();
 			}, this);
 		},
 		
-		unvalidateQuery: function() {
+		unvalidateVo: function() {
 			var r = Chatanoo.queries.validateVo( this.get("id"), false, false );
 			Chatanoo.queries.on( r.success, function( queryId ) {
 				this.trigger("change:unvalidate");
 				this.loadQuery();
-				this.loadItems();
+				//this.loadItems();
 			}, this);
 		},
 		
-		deleteQuery: function() {
+		deleteVo: function() {
 			var r = Chatanoo.queries.deleteQuery( this.get("id") );
 			Chatanoo.queries.on( r.success, function( bool ) {
 				this.trigger("delete");

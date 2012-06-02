@@ -7,11 +7,18 @@ define([
 	var AbstractTableView = Backbone.View.extend(
 	{
 		blockResize: false,
+		collection: null,
+		voClass: null,
 		
 		mode: 'all',
+		facets: ['id', 'Contenu', 'Date d\'ajout', 'Date de modif'],
 		
 		initialize: function() {
 			var mThis = this;
+			
+			this.collection.load();
+			this.collection.on('change', function() { this.render(); }, this);
+			
 			$(window).resize( function( event ) {
 				if( !mThis.blockResize )
 					mThis.resize();
@@ -25,11 +32,72 @@ define([
 			'click a.unvalid': 'showUnvalid',
 			'click table tbody tr': '_selectRow',
 			'click table tbody tr td.action': '_actionClick',
+			'click .refresh': 'refresh',
 		},
 		
 		render: function() {
+			this.renderResult();
+			this.search();
+			
 			this.resize(false);
 			return this;
+		},
+		
+		refresh: function( event ) {
+			this.collection.load();
+			return false;
+		},
+
+		_request: "",
+		renderResult: function() {
+			var mThis = this;
+			this.$el.find("table tbody").html('');
+        
+			var collection;
+			switch(this.mode) {
+				case "all": collection = this.collection.all(); break;
+				case "valid": collection = this.collection.valid(); break;
+				case "unvalid": collection = this.collection.unvalid(); break;
+			}
+        
+			var els = [];
+			_(collection).each( function (vo) {
+				var v = new mThis.voClass( { model: vo } );
+				v.model.on('change', function() {
+					mThis.collection.calculate();
+					mThis.renderResult();
+					$(window).resize();
+				});
+				els.push( v.render().el );
+			});
+			this.$el.find("table tbody").append( els );
+		},
+        
+		_request: '',
+		search: function() {
+			var mThis = this;
+			var visualSearch = VS.init({
+		      container  : $('#searchbox'),
+		      query      : mThis._request,
+		      callbacks  : {
+				search       : function(query, searchCollection) {
+					mThis.collection.filters = searchCollection.facets();
+					mThis._request = query;
+					mThis.renderResult();
+					$(window).resize();
+				},
+		        facetMatches : function(callback) {
+		          callback(mThis.facets);
+		        },
+		        valueMatches : function(facet, searchTerm, callback) {
+		          switch (facet) {
+		          	/*case 'account':
+		              callback([]);
+		              break;*/
+		          }
+		        }
+		      }
+		    });
 		},
 
 		// table controls

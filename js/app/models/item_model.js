@@ -23,17 +23,17 @@ define([
 	
 		loadItem: function() {
 			this.isOnError = false;
-			this.comments.remove(this.comments.toArray());
-			this.medias.remove(this.medias.toArray());
+			//this.comments.remove(this.comments.toArray());
+			//this.medias.remove(this.medias.toArray());
 				
 			var mThis = this;
 			var r = Chatanoo.items.getItemById( this.get("id") );
 			Chatanoo.items.on( r.success, function(item) {
 				this.set(item);				
-				this.loadUser();		
-				this.loadComments();
-				this.loadMedias();
-				mThis.trigger("change");
+				//this.loadUser();		
+				//this.loadComments();
+				//this.loadMedias();
+				//mThis.trigger("change");
 			}, mThis);
 			Chatanoo.items.on( r.error, function() {
 				this.isOnError = true;
@@ -60,7 +60,7 @@ define([
 			}, this);
 		},
 
-		editItem: function(options) {
+		editVo: function(options) {
 			var item = _.extend(this.toJSON(), options);
 			delete item.query_id;
 			
@@ -71,7 +71,7 @@ define([
 			}, this);
 		},
 		
-		validateItem: function() {
+		validateVo: function() {
 			var r = Chatanoo.items.validateVo( this.get("id"), true, false );
 			Chatanoo.items.on( r.success, function( itemId ) {
 				this.trigger("change:validate");
@@ -79,7 +79,7 @@ define([
 			}, this);
 		},
 		
-		unvalidateItem: function() {
+		unvalidateVo: function() {
 			var r = Chatanoo.items.validateVo( this.get("id"), false, false );
 			Chatanoo.items.on( r.success, function( itemId ) {
 				this.trigger("change:unvalidate");
@@ -87,7 +87,7 @@ define([
 			}, this);
 		},
 		
-		deleteItem: function() {
+		deleteVo: function() {
 			var r = Chatanoo.items.deleteItem( this.get("id") );
 			Chatanoo.items.on( r.success, function( bool ) {
 				this.trigger("delete");

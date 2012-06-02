@@ -1,42 +1,27 @@
 define([
-	'Backbone',
 	'Underscore',
 	'Chatanoo',
 	
+	'app/collections/abstract',
+	
 	'app/models/comment_model'
-], function(Backbone, _, Chatanoo,
+], function( _, Chatanoo,
+	AbstractCollection,
 	Comment) {
 
-	var Comments = Backbone.Collection.extend({
+	var Comments = AbstractCollection.extend({
     	model: Comment,
-
-		filters: [],
-
-		loadComments: function() {
+		
+		load: function() {
 			this.remove(this.toArray());
 			
 			var mThis = this;
 			var r = Chatanoo.comments.getComments( {} );
 			Chatanoo.comments.on( r.success, function(comments) {
 				_(comments).each( function (comment) { mThis.push( comment ); } );
+				mThis.calculate();
 				mThis.trigger("change");
 			}, this);
-		},
-		
-		all: function() {
-			return this.toArray();
-		},
-		
-		valid: function() {
-			return _(this.toArray()).filter( function(comment) {
-				return parseInt( comment.get('_isValid') );
-			});
-		},
-		
-		unvalid: function() {
-			return _(this.toArray()).filter( function(comment) {
-				return !parseInt( comment.get('_isValid') );
-			});
 		}
 	});
 	

@@ -32,13 +32,15 @@ define([
 		},
 		
 		retract: function() {
-			$('body').addClass('retract');
-			$(window).resize();
+			require(['app/views/app_view'], function(app_view) {
+				app_view.retract();
+			});
 		},
 		
 		deploy: function() {
-			$('body').removeClass('retract');
-			$(window).resize();
+			require(['app/views/app_view'], function(app_view) {
+				app_view.deploy();
+			});
 		},
 		
 		refresh: function() {

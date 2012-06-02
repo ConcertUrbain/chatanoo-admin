@@ -1,42 +1,28 @@
 define([
-	'Backbone',
 	'Underscore',
 	'Chatanoo',
+
+	'app/collections/abstract',
 	
 	'app/models/user_model'
-], function(Backbone, _, Chatanoo,
+], function( _, Chatanoo,
+	AbstractCollection,
 	User) {
 	
-	var Users = Backbone.Collection.extend({
+	var Users = AbstractCollection.extend({
     	model: User,
+		isValidKey: "_isBan",
 
-		filters: [],
-
-		loadUsers: function() {
+		load: function() {
 			this.remove(this.toArray());
 			
 			var mThis = this;
 			var r = Chatanoo.users.getUsers( {} );
 			Chatanoo.users.on( r.success, function(users) {
 				_(users).each( function (Users) { mThis.push( Users ); } );
+				mThis.calculate();
 				mThis.trigger("change");
 			}, this);
-		},
-		
-		all: function() {
-			return this.toArray();
-		},
-		
-		ban: function() {
-			return _(this.toArray()).filter( function(user) {
-				return parseInt( user.get('_isBan') );
-			});
-		},
-		
-		unban: function() {
-			return _(this.toArray()).filter( function(user) {
-				return !parseInt( user.get('_isBan') );
-			});
 		}
 	});
 	

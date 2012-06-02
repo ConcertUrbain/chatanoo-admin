@@ -25,75 +25,28 @@ define([
 	{
 		el: $("#content"),
 		
-		comments: new Comments(),
+		collection: new Comments(),
+		voClass: CommentView,
+		
+		facets: ['id', 'Contenu', 'Date d\'ajout', 'Date de modif'],
 		
 		initialize: function() {
 			//app_view.chatanoo.loadUrl('/queries/20');
-			
-			this.comments.loadComments();
-			this.comments.on('change', function() { this.render(); }, this);
 			
 			AbstractTableView.prototype.initialize.call(this);
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click .refresh': 'refresh',
 			'click tbody tr': 'selectRow'
 		}),
 		
 		render: function() {
 			this.$el.removeClass().addClass('comments');
 			
-			var comments;
-			switch(this.mode) {
-				case "all": comments = this.comments.all(); break;
-				case "valid": comments = this.comments.valid(); break;
-				case "unvalid": comments = this.comments.unvalid(); break;
-			}
-			this.$el.html( _.template( template, { comments: comments, mode: this.mode } ) );
-			
-			var els = [];
-			_(comments).each( function (comment) {
-				var cv = new CommentView( { model: comment } );
-				els.push( cv.render().el );
-			});
-			this.$el.find("table tbody").append( els );
-			
-			this.search();
+			this.$el.html( _.template( template, { mode: this.mode } ) );
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		search: function() {
-			var mThis = this;
-			var visualSearch = VS.init({
-	          container  : $('#searchbox'),
-	          query      : '',
-	          callbacks  : {
-				search       : function(query, searchCollection) {
-					mThis.comments.filters = searchCollection.facets();
-					mThis.render();
-				},
-	            facetMatches : function(callback) {
-	              callback([
-	                'id', 'Contenu', 'Date d\'ajout', 'Date de modif'
-	              ]);
-	            },
-	            valueMatches : function(facet, searchTerm, callback) {
-	              switch (facet) {
-	              	/*case 'account':
-	                  callback([]);
-	                  break;*/
-	              }
-	            }
-	          }
-	        });
-		},
-		
-		refresh: function( event ) {
-			this.comments.loadComments();
-			return false;
 		},
 		
 		selectRow: function( event ) {
