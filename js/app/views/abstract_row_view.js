@@ -59,6 +59,8 @@ define([
 			event.preventDefault();
 			this.editing = true;
 			this.render();
+			
+			this.trigger('change');
 		},
         
 		deleteVo: function( event ) {
@@ -73,7 +75,10 @@ define([
 		validateEditing: function( event ) {
 			if( _.isUndefined( event.keyCode ) || event.keyCode == 13 ) {
 				this.editing = false;
-				this.model.editVo( this.getEditingValue() );	
+				if( this.$el.hasClass('new') )
+					this.model.addVo( this.getEditingValue() );
+				else		
+					this.model.editVo( this.getEditingValue() );
 			}
 		},
 		
@@ -85,6 +90,8 @@ define([
 			event.preventDefault();
 			this.editing = false;
 			this.render();
+			
+			this.trigger('change');
 		},
 		
 		createPopin: function( Klass, options ) {
@@ -93,7 +100,7 @@ define([
 				popin.kill();
 				popin.remove();
 			});
-			this.$el.append( popin.render().$el );
+			$('body').append( popin.render().$el );
 			popin.$el.modal({});
 			popin.$el.modal('show');
 		},

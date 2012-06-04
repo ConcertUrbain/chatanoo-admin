@@ -2,27 +2,60 @@ define([
 	'Backbone',
 	'Underscore',
 	'jQuery',
+	'Chatanoo',
+	
+	'app/views/abstract_table_view',
+	
+	'Config',
+	
+	'app/collections/metas',
+	'app/views/meta_view',
 	
 	'text!app/templates/metas_popin.tmpl.html',
-], function(Backbone, _, $,
-	template) {
 	
-	var MetasPopinView = Backbone.View.extend(
-	{
-		model: null,
+	'app/views/app_view'
+], function(Backbone, _, $, Chatanoo,
+	AbstractTableView,
+	Config,
+	Metas, MetaView,
+	template,
+	app_view) {
+	
+	var MetasPopinView = AbstractTableView.extend(
+	{	
+		collection: new Metas(),
+		voClass: MetaView,
 		
-		events: {
-		},
+		facets: ['id', 'Name', 'Contenu'],
 		
-		initialize: function() {
-			//this.model.on("change", this.render, this);
-			this.$el.addClass("modal hide fade");
+		tableHeight: 365,
+		
+		initialize: function( options ) {
+			this.addOptions = options;
+			this.addOptions.__className = "Vo_Meta";
+			
+			this.collection.voId = options.voId;
+			this.collection.voType = options.voType;
+			
+			AbstractTableView.prototype.initialize.call(this);
 	    },
+	
+		events: _.extend( AbstractTableView.prototype.events, {
+			'click tbody tr': 'selectRow'
+		}),
 		
 		render: function() {
-			this.$el.html(_.template( template, { } ));
+			this.$el.addClass("metas modal hide fade");
 			
+			this.$el.html( _.template( template, { mode: this.mode } ) );
+			
+			AbstractTableView.prototype.render.call(this);
 			return this;
+		},
+		
+		selectRow: function( event ) {
+			var metaId = $( event.currentTarget ).data('meta-id');
+			
 		},
 		
 		kill: function() {

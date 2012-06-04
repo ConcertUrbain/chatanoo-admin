@@ -10,8 +10,12 @@ define([
 		collection: null,
 		voClass: null,
 		
+		addOptions: {},
+		
 		mode: 'all',
 		facets: ['id', 'Contenu', 'Date d\'ajout', 'Date de modif'],
+		
+		tableHeight: null,
 		
 		initialize: function() {
 			var mThis = this;
@@ -30,9 +34,10 @@ define([
 			'click a.all': 'showAll',
 			'click a.valid': 'showValid',
 			'click a.unvalid': 'showUnvalid',
-			'click table tbody tr': '_selectRow',
+			'click table tbody td:not(.add) tr': '_selectRow',
 			'click table tbody tr td.action': '_actionClick',
 			'click .refresh': 'refresh',
+			'click button.add': "add"
 		},
 		
 		render: function() {
@@ -51,7 +56,7 @@ define([
 		_request: "",
 		renderResult: function() {
 			var mThis = this;
-			this.$el.find("table tbody").html('');
+			this.$el.find("table tbody tr:not(.add)").remove();
         
 			var collection;
 			switch(this.mode) {
@@ -62,36 +67,46 @@ define([
         
 			var els = [];
 			_(collection).each( function (vo) {
-				var v = new mThis.voClass( { model: vo } );
-				/*v.model.on('change', function() {
-					mThis.collection.calculate();
-					mThis.renderResult();
-					$(window).resize();
-				});*/
-				v.model.on("change:validate", function() {
-					mThis.collection.validateVo( v.model );
-					if( mThis.mode != "all" ) {
-						v.kill();
-						v.remove();
-					}
-				});
-				v.model.on("change:unvalidate", function() {
-					mThis.collection.unvalidateVo( v.model );
-					if( mThis.mode != "all" ) {
-						v.kill();
-						v.remove();
-					}
-				});
+				var v = mThis.createRowView( vo );
 				els.push( v.render().el );
 			});
-			this.$el.find("table tbody").append( els );
+			this.$el.find("table tbody").prepend( els );
+		},
+		
+		createRowView: function( model ) {
+			var mThis = this;
+			var v = new this.voClass( { model: model } );
+			v.on('change', function() {
+				$(window).resize();
+			});
+			v.model.on('change', function() {
+				$(window).resize();
+			});
+			v.model.on('added', function() {
+				v.removeClass('new');
+			});
+			v.model.on("change:validate", function() {
+				mThis.collection.validateVo( v.model );
+				if( mThis.mode != "all" ) {
+					v.kill();
+					v.remove();
+				}
+			});
+			v.model.on("change:unvalidate", function() {
+				mThis.collection.unvalidateVo( v.model );
+				if( mThis.mode != "all" ) {
+					v.kill();
+					v.remove();
+				}
+			});
+			return v;
 		},
         
 		_request: '',
 		search: function() {
 			var mThis = this;
 			var visualSearch = VS.init({
-		      container  : $('#searchbox'),
+		      container  : this.$el.find('#searchbox'),
 		      query      : mThis._request,
 		      callbacks  : {
 				search       : function(query, searchCollection) {
@@ -134,6 +149,14 @@ define([
 			this.render();
         
 			return false;
+		},
+		
+		add: function() {
+			var v = this.createRowView( new this.collection.model( this.addOptions ) );
+			v.$el.addClass('new');
+			v.editing = true;
+			this.$el.find("table tbody").append( v.render().$el );
+			//$(window).resize();
 		},
 		
 		_selectRow: function( event ) {
@@ -194,7 +217,11 @@ define([
 				$(td).width( width );
 			});
 			
-			var h = $(window).height() - 40 - 52;
+			var h;
+			if( _.isNull( this.tableHeight ) )
+				h = $(window).height() - 40 - 52;
+			else
+				h = this.tableHeight;
 			table.height( h );
 			table.find('tbody').height( h - 26 );
 			

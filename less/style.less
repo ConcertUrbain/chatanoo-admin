@@ -407,7 +407,7 @@ table {
 		background: #EEE;
 	}
 	
-	tbody tr:hover td {
+	tbody tr:not(.add):hover td {
 		background-color: @grey-light;
 		color: white;
 	}
@@ -417,9 +417,16 @@ table {
 		color: white;
 	}
 	
-	tbody tr textarea, tbody tr select {
+	tbody tr textarea, tbody tr select, tbody tr input[type=text] {
 		width: 100%;
 		#hl.box-sizing();
+	}
+}
+
+.modal {
+	&.metas {
+		width: 650px;
+		margin-left: -325px;
 	}
 }
 
@@ -475,6 +482,8 @@ body.retract #chatanoo {
 	width: 100%;
 	height: 100%;
 	//background-color: rgba(0, 0, 0, 0.5);
+	
+	z-index: 2000;
 	
 	& > div {
    		width: 150px;

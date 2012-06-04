@@ -47,6 +47,7 @@ define([
 				switch(key) {
 					case 'id': 				return [key,'id'];
 					case 'Titre': 			return [key,'title'];
+					case 'Name': 			return [key,'name'];
 					case 'Contenu': 		return [key,'content'];
 					case 'Url': 			return [key,'url'];
 					case 'Type': 			return [key,'type'];
@@ -59,6 +60,7 @@ define([
 					case 'Email': 			return [key,'email'];
 					case 'Rôle': 			return [key,'role'];
 					case 'text': 			return [key,'text'];
+					default: 				return [key,key];
 				}
 			};
 			return null;
@@ -73,6 +75,9 @@ define([
 		},
 		
 		calculate: function() {
+			if( !_.isNull( this.isValidKey ) )
+				return;
+			
 			var mThis = this;
 			this._valid = _(this.toArray()).filter( function(vo) {
 				var value = vo.get( mThis.isValidKey );

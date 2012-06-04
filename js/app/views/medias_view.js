@@ -54,15 +54,18 @@ define([
 			var mediaType = $( event.currentTarget ).data('media-type');
 			//app_view.chatanoo.loadUrl('/queries/' + queryId);
 			
-			var r = Chatanoo.items.getItemsByMediaId( mediaId, mediaType );
-			Chatanoo.items.on( r.success, function(items) {
-				var itemId = items[0].id;
-				
-				var r = Chatanoo.queries.getQueriesByItemId( itemId );
-				Chatanoo.queries.on( r.success, function(queries) {
-					app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
+			// Timeout for dblclick
+			setTimeout( function() {
+				var r = Chatanoo.items.getItemsByMediaId( mediaId, mediaType );
+				Chatanoo.items.on( r.success, function(items) {
+					var itemId = items[0].id;
+					
+					var r = Chatanoo.queries.getQueriesByItemId( itemId );
+					Chatanoo.queries.on( r.success, function(queries) {
+						app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
+					}, this);
 				}, this);
-			}, this);
+			}, 500);
 		},
 		
 		kill: function() {

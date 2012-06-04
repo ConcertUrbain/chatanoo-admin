@@ -51,7 +51,7 @@ define([
 			}, mThis);
 		},
 		
-		addItem: function(item) {
+		addVo: function(item) {
 			var r = Chatanoo.queries.addItemIntoQuery( item, this.get( 'query_id' ) );
 			Chatanoo.queries.on( r.success, function( itemId ) {
 				this.set( 'id', itemId );

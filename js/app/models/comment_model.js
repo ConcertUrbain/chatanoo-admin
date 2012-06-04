@@ -67,6 +67,10 @@ define([
 				this.set(options);
 				this.trigger("edited");
 			}, this);
+		},
+		
+		addVo: function() {
+			
 		}
 	});
 	//_.extend(Comment, Chatanoo.ValueObject.Comment);

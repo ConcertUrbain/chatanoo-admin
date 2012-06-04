@@ -38,7 +38,7 @@ define([
 			}, this);
 		},
 		
-		addMedia: function(media) {
+		addVo: function(media) {
 			var r = Chatanoo.items.addMediaIntoItem( media, this.get( 'item_id' ) );
 			Chatanoo.items.on( r.success, function( mediaId ) {
 				this.set( 'id', mediaId );

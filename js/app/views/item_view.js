@@ -54,22 +54,22 @@ define([
 		
 		showDatas: function( event ) {
 			event.preventDefault();
-			this.createPopin( DatasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
-		},
-		
-		showMetas: function( event ) {
-			event.preventDefault();
-			this.createPopin( MetasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
-		},
-		
-		showLinks: function( event ) {
-			event.preventDefault();
-			this.createPopin( LinksPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
-		},
-		
-		showStats: function( event ) {
-			event.preventDefault();
-			this.createPopin( StatsPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( DatasPopinView, { voType: "Item", voId: this.model.get('id') } );
+		},                                      
+		                                        
+		showMetas: function( event ) {          
+			event.preventDefault();             
+			this.createPopin( MetasPopinView, { voType: "Item", voId: this.model.get('id') } );
+		},                                      
+		                                        
+		showLinks: function( event ) {          
+			event.preventDefault();             
+			this.createPopin( LinksPopinView, { voType: "Item", voId: this.model.get('id') } );
+		},                                      
+		                                        
+		showStats: function( event ) {          
+			event.preventDefault();             
+			this.createPopin( StatsPopinView, { voType: "Item", voId: this.model.get('id') } );
 		}
 	});
 	

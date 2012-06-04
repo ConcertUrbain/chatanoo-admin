@@ -46,7 +46,7 @@ define([
 			}, mThis);
 		},		
 		
-		addQuery: function(query) {
+		addVo: function(query) {
 			var r = Chatanoo.queries.addQuery( query );
 			Chatanoo.queries.on( r.success, function( queryId ) {
 				this.set( 'id', queryId );

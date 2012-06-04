@@ -53,10 +53,13 @@ define([
 			var commentId = $( event.currentTarget ).data('comment-id');
 			var itemId = $( event.currentTarget ).data('item-id');
             
+			// Timeout for dblclick
+			setTimeout( function() {
 			var r = Chatanoo.queries.getQueriesByItemId( itemId );
-			Chatanoo.queries.on( r.success, function(queries) {
-				app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
-			}, this);
+				Chatanoo.queries.on( r.success, function(queries) {
+					app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
+				}, this);
+			}, 500);
 		},
 		
 		kill: function() {
