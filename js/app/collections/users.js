@@ -21,7 +21,7 @@ define([
 			Chatanoo.users.on( r.success, function(users) {
 				_(users).each( function (Users) { mThis.push( Users ); } );
 				mThis.calculate();
-				mThis.trigger("change");
+				mThis.trigger("load");
 			}, this);
 		}
 	});

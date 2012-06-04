@@ -96,6 +96,18 @@ define([
 		_unvalid: [],
 		unvalid: function() {
 			return this._filters( this._unvalid );
+		},
+		
+		validateVo: function( vo ) {
+			this._unvalid = _(this._unvalid).without( vo );
+			if( !_( this._valid ).contains( vo ) )
+				this._valid.push(vo);
+		},
+		
+		unvalidateVo: function( vo ) {
+			this._valid = _(this._valid).without( vo );
+			if( !_( this._unvalid ).contains( vo ) )
+				this._unvalid.push(vo);
 		}
 	});
 	

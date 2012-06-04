@@ -36,9 +36,9 @@ define([
 			AbstractTableView.prototype.initialize.call(this);
 	    },
 	
-		events: _.extend( AbstractTableView.prototype.events, {
+		events: _.extend( {
 			'click tbody tr': 'selectRow'
-		}),
+		}, AbstractTableView.prototype.events ),
 		
 		render: function() {
 			this.$el.removeClass().addClass('items');

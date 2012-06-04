@@ -9,19 +9,28 @@ define([
 	
 	'text!app/templates/user.tmpl.html',
 	
+	'app/views/datas_popin_view',
+	'app/views/change_password_popin_view',
+	'app/views/links_popin_view',
+	'app/views/stats_popin_view',
+	
 	'app/views/app_view'
 ], function(Backbone, _, $,
 	Config,
 	AbstractRowView,
 	template,
+	DatasPopinView, ChangePasswordPopinView, LinksPopinView, StatsPopinView,
 	app_view) {
 	
 	var UserView = AbstractRowView.extend({	
 		deleteMessage: "Voulez vous vraiment supprimer cet utilisateur ?",
     
-		events: _.extend( AbstractRowView.prototype.events, {
-    
-		}),
+		events: _.extend( {
+    		"click .datas": "showDatas",
+			"click .pass": "showChangePassword",
+			"click .link": "showLinks",
+			"click .stats": "showStats"
+		}, AbstractRowView.prototype.events ),
     
 		initialize: function() {
 			AbstractRowView.prototype.initialize.call(this);
@@ -43,6 +52,26 @@ define([
 				email: this.$el.find('textarea[name=email]').val(), 
 				role: this.$el.find('select[name=role]').val()
 			};
+		},
+		
+		showDatas: function( event ) {
+			event.preventDefault();
+			this.createPopin( DatasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+		},
+		
+		showChangePassword: function( event ) {
+			event.preventDefault();
+			this.createPopin( ChangePasswordPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+		},
+		
+		showLinks: function( event ) {
+			event.preventDefault();
+			this.createPopin( LinksPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+		},
+		
+		showStats: function( event ) {
+			event.preventDefault();
+			this.createPopin( StatsPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
 		}
 	});
 	

@@ -20,7 +20,7 @@ define([
 			Chatanoo.items.on( r.success, function(items) {
 				_(items).each( function (item) { mThis.push( item ); } );
 				mThis.calculate();
-				mThis.trigger("change");
+				mThis.trigger("load");
 			}, this);
 		}
 	});

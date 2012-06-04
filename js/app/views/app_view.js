@@ -33,6 +33,7 @@ define([
 		initialize: function() {
 			console.log("init");
 			this.$el.html(_.template(template, this.model));
+			
 			this.header = new HeaderView( { el: $('#header'), model: new Header() } );
 			this.header.on('logout', this.logout, this);
 			

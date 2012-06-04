@@ -9,19 +9,24 @@ define([
 	
 	'text!app/templates/comment.tmpl.html',
 	
+	'app/views/datas_popin_view',
+	'app/views/links_popin_view',
+	
 	'app/views/app_view'
 ], function(Backbone, _, $,
 	Config,
 	AbstractRowView,
 	template,
+	DatasPopinView, LinksPopinView,
 	app_view) {
 	
 	var CommentView = AbstractRowView.extend({	
 		deleteMessage: "Voulez vous vraiment supprimer ce commentaire ?",
     
-		events: _.extend( AbstractRowView.prototype.events, {
-    
-		}),
+		events: _.extend( {
+    		"click .datas": "showDatas",
+			"click .link": "showLinks"
+		}, AbstractRowView.prototype.events ),
     
 		initialize: function() {
 			AbstractRowView.prototype.initialize.call(this);
@@ -39,6 +44,16 @@ define([
 			return {
 				content: this.$el.find('textarea[name=content]').val()
 			};
+		},
+		
+		showDatas: function( event ) {
+			event.preventDefault();
+			this.createPopin( DatasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+		},
+		
+		showLinks: function( event ) {
+			event.preventDefault();
+			this.createPopin( LinksPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
 		}
 	});
 	

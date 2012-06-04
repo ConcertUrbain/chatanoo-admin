@@ -17,7 +17,7 @@ define([
 			var mThis = this;
 			
 			this.collection.load();
-			this.collection.on('change', function() { this.render(); }, this);
+			this.collection.on('load', function() { this.render(); }, this);
 			
 			$(window).resize( function( event ) {
 				if( !mThis.blockResize )
@@ -63,10 +63,24 @@ define([
 			var els = [];
 			_(collection).each( function (vo) {
 				var v = new mThis.voClass( { model: vo } );
-				v.model.on('change', function() {
+				/*v.model.on('change', function() {
 					mThis.collection.calculate();
 					mThis.renderResult();
 					$(window).resize();
+				});*/
+				v.model.on("change:validate", function() {
+					mThis.collection.validateVo( v.model );
+					if( mThis.mode != "all" ) {
+						v.kill();
+						v.remove();
+					}
+				});
+				v.model.on("change:unvalidate", function() {
+					mThis.collection.unvalidateVo( v.model );
+					if( mThis.mode != "all" ) {
+						v.kill();
+						v.remove();
+					}
 				});
 				els.push( v.render().el );
 			});

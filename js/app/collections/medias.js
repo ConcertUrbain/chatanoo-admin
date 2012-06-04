@@ -22,7 +22,7 @@ define([
 					_(type).each( function(media) { media.type = label; mThis.push(media); } ); 
 				}, this );
 				mThis.calculate();
-				mThis.trigger("change");
+				mThis.trigger("load");
 			}, this);
 		}
 	});

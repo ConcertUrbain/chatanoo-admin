@@ -20,7 +20,7 @@ define([
 			Chatanoo.queries.on( r.success, function(queries) {
 				_(queries).each( function (query) { mThis.push( query ); } );
 				mThis.calculate();
-				mThis.trigger("change");
+				mThis.trigger("load");
 			}, this);
 		}
 	});

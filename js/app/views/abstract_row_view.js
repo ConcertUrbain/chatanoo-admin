@@ -10,7 +10,7 @@ define([
 	template,
 	app_view) {
 	
-	var QueryView = Backbone.View.extend(
+	var RowView = Backbone.View.extend(
 	{
 		tagName: "tr",
 		
@@ -87,11 +87,22 @@ define([
 			this.render();
 		},
 		
+		createPopin: function( Klass, options ) {
+			var popin = new Klass( options );
+			popin.$el.on('hidden', function () {
+				popin.kill();
+				popin.remove();
+			});
+			this.$el.append( popin.render().$el );
+			popin.$el.modal({});
+			popin.$el.modal('show');
+		},
+		
 		kill: function() {
 			this.$el.unbind()
 			this.model.off();
 		}
 	});
 	
-	return QueryView;
+	return RowView;
 });
