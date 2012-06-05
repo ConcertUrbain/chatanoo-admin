@@ -155,7 +155,12 @@ define([
 			var v = this.createRowView( new this.collection.model( this.addOptions ) );
 			v.$el.addClass('new');
 			v.editing = true;
-			this.$el.find("table tbody").append( v.render().$el );
+			
+			var tr = this.$el.find("table tbody tr:not(.add)");
+			if( tr.length == 0 )
+				this.$el.find("table tbody").prepend( v.render().$el );
+			else
+				$(tr[tr.length - 1]).after( v.render().$el );
 			//$(window).resize();
 		},
 		
