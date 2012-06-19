@@ -24,7 +24,8 @@ require([
   'order!app/app',
 
   'order!libs/require/bootstrap',
-  'order!libs/require/visualsearch'
+  'order!libs/require/visualsearch',
+  'order!libs/require/gritter'
 ], function(App) {
 	console.log("App loaded");
   	App.initialize();

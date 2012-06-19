@@ -3,6 +3,7 @@ define([
 	'Underscore',
 	'jQuery',
 	'Chatanoo',
+	'Config',
 
 	'app/models/header_model',
 	'app/views/header_view',
@@ -11,7 +12,7 @@ define([
 	'app/views/overlay_view',
 	
 	'text!app/templates/app.tmpl.html'
-], function(Backbone, _, $, Chatanoo,
+], function(Backbone, _, $, Chatanoo, Config,
 	Header, HeaderView, MenuView, ChatanooView, OverlayView,
 	template) {
 	
@@ -30,6 +31,8 @@ define([
 		
 		isLogin: false,
 		
+		socket: null,
+		
 		initialize: function() {
 			console.log("init");
 			this.$el.html(_.template(template, this.model));
@@ -47,7 +50,36 @@ define([
 			Chatanoo.on('finish', function() {
 				this.overlay.hide('loading');
 			}, this);
-	    },	 
+			
+			this.socket = io.connect( Config.notify.url );
+			this.socket.on('connect', function (data) {
+			  console.log("Connected to Chatanoo Notify Server!");
+			});
+			this.socket.on('queries', function (data) {
+			  $.gritter.add({
+					title: 'Question',
+					text: 'La methode ' + data.method + ' a été sur la question ' + data.result + ' par l\'utilisateur ' + data.byUser + '.' 
+				});
+			});
+			this.socket.on('search', function (data) {
+			  console.log(data);
+			});
+			this.socket.on('comments', function (data) {
+			  console.log(data);
+			});
+			this.socket.on('medias', function (data) {
+			  console.log(data);
+			});
+			this.socket.on('items', function (data) {
+			  console.log(data);
+			});
+			this.socket.on('datas', function (data) {
+			  console.log(data);
+			});
+			this.socket.on('users', function (data) {
+			  console.log(data);
+			});
+	  },	 
 
 		getCurrentUser: function() {  
 			if( _.isUndefined( Chatanoo.connection ) )
