@@ -12,6 +12,7 @@ define([
 	var Users = AbstractCollection.extend({
     	model: User,
 		isValidKey: "_isBan",
+		badgeName: "users",
 
 		load: function() {
 			this.remove(this.toArray());

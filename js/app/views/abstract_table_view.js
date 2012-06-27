@@ -23,34 +23,89 @@ define([
 			this.collection.load();
 			this.collection.on('load', function() { this.render(); }, this);
 			
+			var mThis = this;
 			$(window).resize( function( event ) {
-				if( !mThis.blockResize )
-					mThis.resize();
+				mThis.renderHead();
 			});
+			$(window).on( "scroll", function(event) {
+				mThis.processScroll(event);
+			} );
 	    },
 	
 		events: {
 			// table controls
-			'click a.all': 'showAll',
-			'click a.valid': 'showValid',
-			'click a.unvalid': 'showUnvalid',
+			'click .all a': 'showAll',
+			'click .valid a': 'showValid',
+			'click .unvalid a': 'showUnvalid',
 			'click table tbody td:not(.add) tr': '_selectRow',
 			'click table tbody tr td.action': '_actionClick',
 			'click .refresh': 'refresh',
-			'click button.add': "add"
+			'click .add': "add"
 		},
 		
 		render: function() {
 			this.renderResult();
 			this.search();
+			this.renderHead();
 			
-			this.resize(false);
+			var mThis = this;
+			this.$el.find(".modal-body").on( "scroll", function(event) {
+				//mThis.processScroll(event);
+			} );
+			
+			this.nav = null;
+			this.navTop = 0;
+			this.navIsFixed = 0;
+			this.tableHead = null;
+			this.tableHeadTop = 0;
+			this.tableHeadIsFixed = 0;
+			this.processScroll();
+		
 			return this;
 		},
 		
 		refresh: function( event ) {
 			this.collection.load();
 			return false;
+		},
+		
+		nav: null,
+		navTop: 0,
+		navIsFixed: 0,
+		tableHead: null,
+		tableHeadTop: 0,
+		tableHeadIsFixed: 0,
+		processScroll: function(event) {
+			var scrollTop; 
+			if( event )
+				scrollTop = $(event.currentTarget).scrollTop();
+			else
+				scrollTop = $(window).scrollTop();
+			
+			if( _.isNull( this.nav ) ) {
+				this.nav = this.$el.find('.subnav');
+				this.navTop = this.nav.length && this.nav.offset().top - 40;
+			}
+			if (scrollTop >= this.navTop && !this.navIsFixed) {
+				this.navIsFixed = 1
+				this.nav.addClass('subnav-fixed')
+			} else if (scrollTop <= this.navTop && this.navIsFixed) {
+				this.navIsFixed = 0
+				this.nav.removeClass('subnav-fixed')
+			}
+			
+			if( _.isNull( this.tableHead ) ) {
+				this.tableHead = this.$el.find('.table-fixed-head');
+				var tableRef = this.$el.find( this.tableHead.data('target') );
+				this.tableHeadTop = this.tableHead.length && tableRef.offset().top - 40 - 40;
+			}
+			if (scrollTop >= this.tableHeadTop && !this.tableHeadIsFixed) {
+				this.tableHeadIsFixed = 1;
+				this.tableHead.css("display", "block");
+			} else if (scrollTop <= this.tableHeadTop && this.tableHeadIsFixed) {
+				this.tableHeadIsFixed = 0;
+				this.tableHead.css("display", "none");
+			}
 		},
 
 		_request: "",
@@ -64,7 +119,7 @@ define([
 				case "valid": collection = this.collection.valid(); break;
 				case "unvalid": collection = this.collection.unvalid(); break;
 			}
-        
+
 			var els = [];
 			_(collection).each( function (vo) {
 				var v = mThis.createRowView( vo );
@@ -83,7 +138,7 @@ define([
 				$(window).resize();
 			});
 			v.model.on('added', function() {
-				v.removeClass('new');
+				v.$el.removeClass('new');
 			});
 			v.model.on("change:validate", function() {
 				mThis.collection.validateVo( v.model );
@@ -128,6 +183,31 @@ define([
 		      }
 		    });
 		},
+		
+		renderHead: function() {
+			var mThis = this;
+			this.$el.find(".table-fixed-head").each( function(index, table) {
+				var tableRef = mThis.$el.find( $(table).data("target") );
+				$(table).html("");
+				
+				var ul = $("<ul />");
+				tableRef.find('th').each( function(i, th) {
+					var el = $("<li />");
+					
+					var w = $(th).width();
+					w += parseInt( $(th).css("padding-left").substring(0, $(th).css("padding-left").length - 2) );
+					w += parseInt( $(th).css("padding-right").substring(0, $(th).css("padding-right").length - 2) );
+					if(i > 0)
+						w += 1;
+					el.width( w );
+					
+					el.html( $(th).html() );
+					ul.append( el );
+				});
+				
+				$(table).append( ul );
+			});
+		},
 
 		// table controls
 		showAll: function( event ) {
@@ -161,7 +241,8 @@ define([
 				this.$el.find("table tbody").prepend( v.render().$el );
 			else
 				$(tr[tr.length - 1]).after( v.render().$el );
-			//$(window).resize();
+			
+			return false;
 		},
 		
 		_selectRow: function( event ) {
@@ -171,74 +252,8 @@ define([
 		
 		_actionClick: function( event ) {
 			event.preventDefault();
-		},
-		
-		resize: function( blockResize ) {
-			this.blockResize = _.isUndefined( blockResize ) ? true : blockResize;
-			
-			var table = this.$el.find('table');
-			var col = table.find('thead th').length;
-			
-			table.width('100%');
-			var tablePer = table.width() - 16;
-			table.find('thead th').each( function(index, td) {
-				var size = $(td).data('size');
-				if(size.indexOf('px') != -1) {
-					tablePer -= size.replace('px', '') * 1;
-				}
-			});
-			
-			table.find('thead th').each( function(index, td) {
-				var size = $(td).data('size');
-				var width = 0;
-				switch(true) {
-					case size.indexOf('%') != -1:
-						var per = size.replace('%', '') / 100;
-						width = (index == col - 1) ? tablePer * per + 16 : tablePer * per;
-						break;
-					case size.indexOf('px') != -1:
-						var val = size.replace('px', '') * 1;
-						width = (index == col - 1) ? val + 16 : val;
-						break;
-				}
-				
-				$(td).width( width );
-			});
-			
-			table.find('tbody td').each( function(index, td) {
-				var size = table.find('thead th:eq(' + (index % col) + ')').data('size');
-				var width = 0;
-				switch(true) {
-					case size.indexOf('%') != -1:
-						var per = size.replace('%', '') / 100;
-						width = (tablePer - 16) * per;
-						break;
-					case size.indexOf('px') != -1:
-						var val = size.replace('px', '') * 1;
-						width = val;
-						break;
-				}
-				
-				$(td).width( width );
-			});
-			
-			var h;
-			if( _.isNull( this.tableHeight ) )
-				h = $(window).height() - 40 - 52;
-			else
-				h = this.tableHeight;
-			table.height( h );
-			table.find('tbody').height( h - 26 );
-			
-			if( !this.blockResize )
-				return;
-			
-			var mThis = this;
-			setTimeout( function() {
-				mThis.blockResize = false;
-				mThis.resize(false);
-			}, 300);
 		}
+		
 	});
 	
 	return AbstractTableView;

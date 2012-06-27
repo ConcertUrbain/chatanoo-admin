@@ -31,7 +31,13 @@ define([
 		
 		isLogin: false,
 		
-		socket: null,
+		nb: {
+			queries: 0,
+			items: 0,
+			comments: 0,
+			medias: 0,
+			users: 0
+		},
 		
 		initialize: function() {
 			console.log("init");
@@ -50,36 +56,7 @@ define([
 			Chatanoo.on('finish', function() {
 				this.overlay.hide('loading');
 			}, this);
-			
-			this.socket = io.connect( Config.notify.url );
-			this.socket.on('connect', function (data) {
-			  console.log("Connected to Chatanoo Notify Server!");
-			});
-			this.socket.on('queries', function (data) {
-			  $.gritter.add({
-					title: 'Question',
-					text: 'La methode ' + data.method + ' a été sur la question ' + data.result + ' par l\'utilisateur ' + data.byUser + '.' 
-				});
-			});
-			this.socket.on('search', function (data) {
-			  console.log(data);
-			});
-			this.socket.on('comments', function (data) {
-			  console.log(data);
-			});
-			this.socket.on('medias', function (data) {
-			  console.log(data);
-			});
-			this.socket.on('items', function (data) {
-			  console.log(data);
-			});
-			this.socket.on('datas', function (data) {
-			  console.log(data);
-			});
-			this.socket.on('users', function (data) {
-			  console.log(data);
-			});
-	  },	 
+	  	},	 
 
 		getCurrentUser: function() {  
 			if( _.isUndefined( Chatanoo.connection ) )
@@ -92,6 +69,12 @@ define([
 				this.trigger("change change:user");
 				this.render();
 			}, mThis);
+		},
+		
+		setMenuBadge: function(type, value) {
+			this.nb[type] = value;
+			if( !_.isNull( this.menu ) )
+				this.menu.render();
 		},
 		
 		render: function() {	

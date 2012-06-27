@@ -33,8 +33,8 @@ define([
 		initialize: function() {
 			AbstractRowView.prototype.initialize.call(this);
 	    },
-    
-		render: function() {
+	
+		getMediaType: function() {
 			var type = "";
 			switch(  this.model.get('__className') ) {
 				case "Vo_Media_Picture": type = 'Picture'; break;
@@ -42,6 +42,12 @@ define([
 				case "Vo_Media_Sound": type = 'Sound'; break;
 				case "Vo_Media_Text": type = 'Text'; break;
 			}
+			return type;
+		},
+    
+		render: function() {
+			var type = this.getMediaType();
+			
 			this.$el.data('media-id', this.model.get('id'));
 			this.$el.data('media-type', type);
 			
@@ -60,17 +66,17 @@ define([
 		
 		showDatas: function( event ) {
 			event.preventDefault();
-			this.createPopin( DatasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( DatasPopinView, { voType: this.getMediaType(), voId: this.model.get('id') } );
 		},
 		
 		showMetas: function( event ) {
 			event.preventDefault();
-			this.createPopin( MetasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( MetasPopinView, { voType: this.getMediaType(), voId: this.model.get('id') } );
 		},
 		
 		showLinks: function( event ) {
 			event.preventDefault();
-			this.createPopin( LinksPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( LinksPopinView, { voType: this.getMediaType(), voId: this.model.get('id') } );
 		}
 	});
 	

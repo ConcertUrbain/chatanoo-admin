@@ -56,22 +56,22 @@ define([
 		
 		showDatas: function( event ) {
 			event.preventDefault();
-			this.createPopin( DatasPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( DatasPopinView, { voType: "User", voId: this.model.get('id') } );
 		},
 		
 		showChangePassword: function( event ) {
 			event.preventDefault();
-			this.createPopin( ChangePasswordPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( ChangePasswordPopinView, { voType: "User", voId: this.model.get('id') } );
 		},
 		
 		showLinks: function( event ) {
 			event.preventDefault();
-			this.createPopin( LinksPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
-		},
-		
-		showStats: function( event ) {
-			event.preventDefault();
-			this.createPopin( StatsPopinView, { model: null, voType: "query", voId: this.model.get('id') } );
+			this.createPopin( LinksPopinView, { voType: "User", voId: this.model.get('id') } );
+		},                                      
+		                                        
+		showStats: function( event ) {          
+			event.preventDefault();             
+			this.createPopin( StatsPopinView, { voType: "User", voId: this.model.get('id') } );
 		}
 	});
 	

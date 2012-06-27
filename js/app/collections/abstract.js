@@ -8,6 +8,7 @@ define([
 	
 	var AbstractCollection = Backbone.Collection.extend({
 		isValidKey: "_isValid",
+		badgeName: null,
 		
 		filters: [],
 		
@@ -75,7 +76,7 @@ define([
 		},
 		
 		calculate: function() {
-			if( !_.isNull( this.isValidKey ) )
+			if( _.isNull( this.isValidKey ) )
 				return;
 			
 			var mThis = this;
@@ -86,6 +87,11 @@ define([
 			this._unvalid = _(this.toArray()).filter( function(vo) {
 				var value = vo.get( mThis.isValidKey );
 				return _.isBoolean( value ) ? !value : !parseInt( vo.get( mThis.isValidKey ) );
+			});
+			
+			require(['app/views/app_view'], function(app_view) {
+				if( !_.isNull( mThis.badgeName ) )
+					app_view.setMenuBadge( mThis.badgeName, mThis._unvalid.length );
 			});
 		},
 		
@@ -105,14 +111,28 @@ define([
 		
 		validateVo: function( vo ) {
 			this._unvalid = _(this._unvalid).without( vo );
+			
 			if( !_( this._valid ).contains( vo ) )
 				this._valid.push(vo);
+				
+			var mThis = this;
+			require(['app/views/app_view'], function(app_view) {
+				if( !_.isNull( mThis.badgeName ) )
+					app_view.setMenuBadge( mThis.badgeName, mThis._unvalid.length );
+			});
 		},
 		
 		unvalidateVo: function( vo ) {
 			this._valid = _(this._valid).without( vo );
+			
 			if( !_( this._unvalid ).contains( vo ) )
 				this._unvalid.push(vo);
+				
+			var mThis = this;
+			require(['app/views/app_view'], function(app_view) {
+				if( !_.isNull( mThis.badgeName ) )
+					app_view.setMenuBadge( mThis.badgeName, mThis._unvalid.length );
+			});
 		}
 	});
 	

@@ -11,6 +11,7 @@ define([
 	
 	var Queries = AbstractCollection.extend({
     	model: Query,
+		badgeName: "queries",
 
 		load: function() {
 			this.remove(this.toArray());

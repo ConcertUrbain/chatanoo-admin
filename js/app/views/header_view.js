@@ -27,9 +27,6 @@ define([
 		
 		render: function() 
 		{
-			this.$el.removeClass();
-			if(this.model.get("section"))
-				this.$el.addClass(this.model.get("section"));
 			this.$el.html( _.template( template, { model: this.model ? this.model.toJSON() : {}, config: Config } ) );
 			
 			return this;

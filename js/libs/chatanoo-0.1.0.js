@@ -675,12 +675,12 @@
 			args = [itemId, queryId];
 			return this.getRequest("removeItemFromQuery", args);
 		},
-		addMediaIntoQuery: function(media, mediaType, queryId) {
-			args = [media, mediaType, queryId];
+		addMediaIntoQuery: function(media, queryId) {
+			args = [media, queryId];
 			return this.getRequest("addMediaIntoQuery", args);
 		},
-		removeMediaFromQuery: function(mediaId, mediaType) {
-			args = [mediaId, mediaType];
+		removeMediaFromQuery: function(mediaId, mediaType, queryId) {
+			args = [mediaId, mediaType, queryId];
 			return this.getRequest("removeMediaFromQuery", args);
 		},
 		addMetaIntoVo: function(meta, voId) {

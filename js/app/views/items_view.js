@@ -28,7 +28,7 @@ define([
 		collection: new Items(),
 		voClass: ItemView,
 		
-		facets: ['id', 'Contenu', 'Description', 'Date d\'ajout', 'Date de modif'],
+		facets: ['id', 'Titre', 'Description', 'Date d\'ajout', 'Date de modif'],
 		
 		initialize: function() {
 			app_view.chatanoo.loadUrl('/queries/20');

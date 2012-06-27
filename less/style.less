@@ -23,41 +23,6 @@
 #blr.ns-helpers();
 @media print { #blr.media-print(); }
 
-.button (@color1, @color2) {
-	text-shadow: 0px 1px 0px @color2;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 30/16em;
-	padding: 10px;
-	color: #ffffff;
-	background-color: @color1;
-	border:0;
-	border-bottom: 2px solid @color2;
-	font-weight: bold;
-	#hl.rounded-corners(10px, 10px, 10px, 10px);
-	
-	&:hover, &:active, &:focus {
-		background-color: @color2;
-		text-shadow: 0px -1px 0px rgba(142,142,142,1);
-	}
-}
-
-.input {
-	color: #8E8E8E;
-	font-size: 24/16em;
-	padding: 3%;
-	
-	background-color: #FFFFFF;
-	border: 1px solid #8E8E8E;
-	
-	&::-webkit-input-placeholder {
-		font-style: italic;
-	}
-	
-	&:-moz-placeholder {
-		font-style: italic;
-	}
-}
-
 .btn-group .dropdown-menu a:hover {
 	background-color: @grey-light;
 }
@@ -66,393 +31,160 @@
 	width: 56px;
 }
 
+@import 'libs/bootstrap-subnav.less';
+
 @grey: #666666;
 @grey-light: #8E8E8E;
 @grey-dark: #4D4D4D;
 
-///
-
-html, body {
-	height: 100%
-}
-
-body {
-	font-family: Arial;
-}
-
-#header {
-	height: 40px;
-	border-bottom: 5px solid @grey-dark;
-	background-color: @grey;
-	color: white;
-	padding: 8px;
-	#hl.box-sizing();
+.middle {
+	margin: 0 auto;
 	
-	position: absolute;
+	position: relative;
 	top: 0;
 	left: 0;
-	width: 100%;
-	z-index: 1000;
+	right: 0;
+	bottom: 0;
+}
+
+///
+
+#header {
+	.container {
+		margin-right: 0;
+		margin-left: 0;
+		width: inherit;
+	}
 	
-	
-	h1 {
-		font-weight: bold;
-		margin: 0;
-		font-size: 1.5em;
-		line-height: 16px;
-		#hl.text-shadow();
+	.brand {
+		margin-left: 0px;
 	}
 }
 
 #wrapper {
-	overflow: hidden;
-	position: absolute;
-	top: 40px;
-	left: 0;
-	bottom: 0;
-	right: 0;
 	#hl.box-sizing();
 	
 	& > div {
 		#hl.box-sizing();
 	}
-	
-	&.login-view {
-		
-		& > div {
-			width: 314px;
-			height: 200px;
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			margin: auto;
-			
-			background: url(../img/lineslight.jpg) repeat top left;
-			
-			#hl.drop-shadow(0px, 0px, 40px);
-			
-			h2 {
-				font-weight: bold;
-				border-bottom: 5px solid @grey-dark;
-				background-color: @grey;
-				color: white;
-				line-height: 20px;
-				padding: 8px;
-				#hl.box-sizing();
-				
-				font-size: 1.5em;
-				#hl.text-shadow();
-				margin: 0;
-			}
-			
-			form {	
-				font-size: 0.7em;
-				margin: 5%;
-
-				input {
-					width: 100%;
-					#hl.box-sizing();
-					margin-bottom: 0;
-					height: inherit;
-				}
-
-				input[type=submit], input[type=button] {
-					.button(#AAB973, #71873B);
-				}
-
-				input[type=text], input[type=password] {
-					.input();
-					border-bottom: 0;
-				}
-
-				input:first-child {
-					#hl.rounded-corners(10px, 10px, 0px, 0px);
-				}
-
-				input:nth-child(2) {
-					border-bottom: 1px solid #8E8E8E;
-					#hl.rounded-corners(0px, 0px, 10px, 10px);
-					margin-bottom: 15px;
-				}
-			}
-		}
-		
-	}
-	
 }
 
 #menu {
-	background: url(../img/lineslight.jpg) repeat top left;
-	
-	width: 155px;
-	position: absolute;
-	
-	top: 0;
+	width: 200px;
+	position: fixed;
+
+	top: 40px;
 	bottom: 0;
 	left: 0;
 	
-	color: white;
-	#hl.text-shadow();
-	
-	h3 {
-		font-weight: bold;
-		font-size: 13px;
-		padding-left: 5px;
+	.well {
+		margin: 10px;
+		padding: 8px 0;
 	}
+}
+
+.subnav ~ table {
+	margin-top: 10px;
+	margin-bottom: 200px;
+	
+	th, td {
+		#hl.box-sizing();
+	}
+	
+	textarea, input[type=text] {
+		width: 100%;
+		#hl.box-sizing();
+		margin-bottom: 0;
+	}
+	
+	tr.active {
+		background-color: #08C;
+		color: white;
+	}
+	
+	&.table {
+	  	tbody tr.active:hover td,
+	  	tbody tr.active:hover th {	
+	  	  	background-color: #08C;
+	  	}
+	}
+	
+}
+
+.subnav.subnav-fixed ~ table {
+	margin-top: 50px;
+}
+
+.table-fixed-head {
+	position: fixed;
+	display: none;
+	background-color: white;
+	top: 75px;
+	z-index: 1;
 	
 	ul {
-		margin: 0;
-		padding: 0;
-		margin-bottom: 30px;
-	}
-	
-	li {
 		list-style: none;
-		
-		ul {
-			border-top: 1px solid #1A1A1A;
-			border-bottom: 1px solid #666666;
-		}
+		padding: 0;
+		margin: 0;
+		border: 1px solid #DDD;
 		
 		li {
-			padding: 10px 10px 10px 30px;
-			
-			border-top: 1px solid #666666;
-			border-bottom: 1px solid #1A1A1A;
-			
-			font-size: 11px;
-			
-			cursor: pointer;
-			
-			&:hover, &.selected {
-				background: #f2f2f2; /* Old browsers */
-				background: -moz-linear-gradient(top, #f2f2f2 0%, #afafaf 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* IE10+ */
-				background: linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* W3C */
-				
-				a {
-					color: black;
-					#hl.text-shadow(1px, 1px, 1px, rgba(255, 255, 255, .6));
-				}
-			}
+			font-weight: bold;
+			#hl.box-sizing();
+			float: left;
+			padding: 8px;
+			border-left: 1px solid #DDD;
+			line-height: 18px;
 		}
+		
+		li:first-child {
+			border-left: 0;
+		}
+		
+		float: left;
+		clear: left;
 	}
-	
-	a {
-		color: white;
-		text-decoration: none;
-		font-weight: normal;
-	}
+}
+
+table .action .btn-group {
+	width: 80px;
 }
 
 #content {
-	position: absolute;
-
-	top: 0;
-	bottom: 0;
-	left: 155px;
-	right: 320px;
-	
 	padding: 10px;
+	
+	margin-top: 40px;
+	margin-left: 200px;
+	margin-right: 320px;
 }
 
 body.retract #content {
-	right: 37px;
-}
-
-.table-control {
-	margin-bottom: 6px;
-	
-	.left {
-		float: left;
-	}
-	
-	.right {
-		float: right;
-	}
-	
-	#searchbox {
-		margin-top: -6px;
-		width: 400px;
-	}
-	
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-	
-	li {
-		float: left;
-		margin-right: 2px;
-		
-		a {
-			color: @grey-dark;
-			text-decoration: none;
-			font-weight: bold;
-			
-			padding: 2px 8px;
-			
-			&:hover, &.selected {
-				background-color: @grey-dark;
-				color: white;
-				#hl.rounded-corners(10px, 10px, 10px, 10px);
-			}
-		}
-	}
-	
-	&:after {
-		visibility: hidden;
-		display: block;
-		font-size: 0;
-		content: " ";
-		clear: both;
-		height: 0;
-	}
-	
-}
-
-* html .table-control             { zoom: 1; } /* IE6 */
-*:first-child+html .table-control { zoom: 1; } /* IE7 */
-
-table {
-	#hl.box-sizing();
-	border: 1px solid #BCBCBC;
-	
-	/* set table header to a fixed position. WinIE 6.x only                                       */
-	/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
-	/* an element that has an overflow property set, the relative value translates into fixed.    */
-	/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
-	thead tr {
-		position: relative
-	}
-
-	/* set THEAD element to have block level attributes. All other non-IE browsers            */
-	/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
-	thead tr {
-		display: block
-	}
-
-	/* make the TH elements pretty */
-	thead th {
-		background: #f2f2f2; /* Old browsers */
-		background: -moz-linear-gradient(top, #f2f2f2 0%, #afafaf 100%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* IE10+ */
-		background: linear-gradient(top, #f2f2f2 0%,#afafaf 100%); /* W3C */
-	
-		border-right: 1px solid #CCC;
-	
-		padding: 4px 3px;
-		text-align: left
-	}
-	
-	thead th:last-child {
-		border: 0;
-	}
-
-	/* make the A elements pretty. makes for nice clickable headers                */
-	thead a, thead a:link, thead a:visited {
-		color: black;
-		#hl.text-shadow(1px, 1px, 1px, rgba(255, 255, 255, .6));
-		
-		display: block;
-		text-decoration: none;
-		width: 100%
-	}
-
-	/* make the A elements pretty. makes for nice clickable headers                */
-	/* WARNING: swapping the background on hover may cause problems in WinIE 6.x   */
-	thead a:hover {
-		display: block;
-		width: 100%
-	}
-
-	/* define the table content to be scrollable                                              */
-	/* set TBODY element to have block level attributes. All other non-IE browsers            */
-	/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
-	/* induced side effect is that child TDs no longer accept width: auto                     */
-	tbody {
-		display: block;
-		height: 262px;
-		//overflow: auto;
-		overflow-y : scroll;
-		width: 100%
-	}
-
-	/* make TD elements pretty. Provide alternating classes for striping the table */
-	/* http://www.alistapart.com/articles/zebratables/                             */
-	tbody td, tbody tr td {
-		background: #FFF;
-		border-top: none;
-		border-left: none;
-		border-right: 1px solid #CCC;
-		border-bottom: 1px solid #DDD;
-		padding: 2px 3px 3px 4px;
-		line-height: 23px;
-	}
-	
-	tbody tr:first-child td {
-		border-top: 1px solid #DDD;
-	}
-
-	tbody tr:nth-child(2n) td {
-		background: #EEE;
-	}
-	
-	tbody tr:not(.add):hover td {
-		background-color: @grey-light;
-		color: white;
-	}
-	 
-	tbody tr.selected td {
-		background-color: @grey;
-		color: white;
-	}
-	
-	tbody tr textarea, tbody tr select, tbody tr input[type=text] {
-		width: 100%;
-		#hl.box-sizing();
-	}
-}
-
-.modal {
-	&.metas {
-		width: 650px;
-		margin-left: -325px;
-	}
+	margin-right: 37px;
 }
 
 #chatanoo {
 	width: 320px;
-	position: absolute;
-	
-	top: 0;
+	position: fixed;
+
+	top: 40px;
 	bottom: 0;
 	right: 0;
-	
+
 	border-left: 1px solid @grey-light;
-	
+
 	.btn-group {
 		z-index: 100;
 		margin-top: -2px;
 	}
-	
+
 	iframe {
 		position: absolute;
 		top:0;
-		
+
 		width: 100%;
 		height: 99%;
 	}
-	
+
 	button.deploy {
 		display: none;
 	}
@@ -463,12 +195,178 @@ table {
 
 body.retract #chatanoo {
 	right: -283px;
-	
+
 	button.deploy {
 		display: inline-block;
 	}
 	button.retract {
 		display: none;
+	}
+}
+
+.subnav {
+	width: inherit;
+	
+	&.subnav-fixed {
+		margin-left: 210px;
+		margin-right: 330px;
+	}
+	
+	#searchbox {
+		margin-top: 3px;
+		margin-left: 2px;
+		width: 400px;
+	}
+}
+
+.modal .subnav.subnav-fixed {
+	margin-left: auto;
+	margin-right: auto;
+	width: 617px;
+}
+
+body.retract .subnav.subnav-fixed {
+	margin-right: 48px;
+}
+
+.login-view {
+	.well {
+		margin-top: 125px;
+		
+		width: 482px;
+		height: 240px;
+	}
+}
+
+.dashboard {
+	.hero-unit {
+		background-color: transparent;
+	}
+	
+	.arrow {
+		position: fixed;
+		color: #999999;
+		width: 200px;
+	}
+	
+	#tuto-menu {
+		top: 54px;
+		left: 195px;
+		padding-left: 94px;
+		background: url(../img/arrow-1.png) 0px 27px no-repeat;
+		
+		& > div {
+			#hl.rotate(-3deg);
+		}
+	}
+	#tuto-notif {
+		top: 284px;
+		left: 196px;
+		padding-left: 94px;
+		padding-top: 23px;
+		background: url(../img/arrow-2.png) 0px 0px no-repeat;
+		
+		& > div {
+			#hl.rotate(2deg);
+		}
+	}
+	#tuto-connected {
+		top: 366px;
+		left: 109px;
+		padding-left: 99px;
+		padding-top: 94px;
+		background: url(../img/arrow-3.png) 0px 0px no-repeat;
+		
+		& > div {
+			#hl.rotate(10deg);
+		}
+	}
+	#tuto-retract {
+		display: block;
+		
+		top: 50px;
+		right: 327px;
+		padding-right: 76px;
+		padding-top: 16px;
+		background: url(../img/arrow-4.png) top right no-repeat;
+		text-align: right;
+		
+		& > div {
+			#hl.rotate(-3deg);
+		}
+	}
+	#tuto-deploy {
+		display: none;
+		
+		top: 50px;
+		right: 50px;
+		padding-right: 76px;
+		padding-top: 16px;
+		background: url(../img/arrow-4.png) top right no-repeat;
+		text-align: right;
+		
+		& > div {
+			#hl.rotate(-3deg);
+		}
+	}
+	#tuto-chatanoo {
+		display: block;
+		
+		top: 260px;
+		right: 327px;
+		padding-right: 83px;
+		padding-top: 31px;
+		background: url(../img/arrow-5.png) top right no-repeat;
+		text-align: right;
+		
+		& > div {
+			#hl.rotate(-9deg);
+		}
+	}
+}
+body.retract #tuto-deploy {
+	display: block;
+}
+body.retract #tuto-retract {
+	display: none;
+}
+body.retract #tuto-chatanoo {
+	display: none;
+}
+
+#menu .well.menu {
+	padding: 5px 15px;
+}
+
+.notifications {
+	.alert {
+		&:first-child {
+			margin-top: 10px;
+		}
+		
+		margin-bottom: 5px;
+		padding: 7px;
+		
+		.close {
+			top: -8px;
+			right: -2px;
+		}
+	}
+}
+
+.connected {
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		margin-top: 10px;
+	}
+}
+
+.modal {
+	&.metas {
+		width: 650px;
+		margin-left: -325px;
 	}
 }
 

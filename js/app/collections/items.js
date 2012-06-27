@@ -11,6 +11,7 @@ define([
 	
 	var Items = AbstractCollection.extend({
     	model: Item,
+		badgeName: "items",
 
 		load: function() {
 			this.remove(this.toArray());

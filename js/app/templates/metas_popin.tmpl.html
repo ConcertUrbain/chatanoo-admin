@@ -4,41 +4,43 @@
 </div>
 <div class="modal-body">
 	
-	<div class="table-control">
-		<div class="left">
-			<ul>
-				<li>
-					<div id="searchbox"></div>
-				</li>
-			</ul>
-		</div>
-		<div class="right">
-			<ul>
-				<li><a href="" class='refresh'>Rafraichir <i class="icon-refresh" /></a></li>
-			</ul>
-		</div>
+	<div class="subnav">  	
+		<ul class="nav nav-pills pull-left">
+			<li class="pull-left">
+				<div id="searchbox"></div>
+			</li>
+		</ul>
+
+		<ul class="nav nav-pills pull-right">
+			<li class="pull-left">
+				<a href="" class='refresh'>Rafraichir <i class="icon-refresh" /></a>
+			</li>
+		</ul>
 	</div>
 
-	<table class="scrollTable">
+	<div class="table-fixed-head" data-target="#table"></div>
+
+	<table id="table" class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th data-size="30px"><a href="#">id</a></th>
-				<th data-size="35%"><a href="#">Name</a></th>
-				<th data-size="65%"><a href="#">Contenu</a></th>
-				<th data-size="80px"><a href="#">Actions</a></th>
+				<th><a href="#">id</a></th>
+				<th><a href="#">Name</a></th>
+				<th><a href="#">Contenu</a></th>
+				<th><a href="#">Actions</a></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="add">
+			<!-- <tr class="add">
 				<td></td>
 				<td colspan="3">
 					<button class="btn btn-primary add">Ajouter un tag</buttom>
 				</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 	
 </div>
 <div class="modal-footer">
+	<a href="#" class="btn add">Ajouter un tag</a>
 	<a href="#" class="btn btn-primary" data-dismiss="modal">Fermer</a>
 </div>

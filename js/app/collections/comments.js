@@ -11,6 +11,7 @@ define([
 
 	var Comments = AbstractCollection.extend({
     	model: Comment,
+		badgeName: "comments",
 		
 		load: function() {
 			this.remove(this.toArray());

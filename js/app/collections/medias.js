@@ -11,6 +11,7 @@ define([
 	
 	var Medias = AbstractCollection.extend({
 	    model: Media,
+		badgeName: "medias",
 
 		load: function() {
 			this.remove(this.toArray());
