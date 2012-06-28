@@ -58,6 +58,9 @@
 	
 	.brand {
 		margin-left: 0px;
+		font-weight: bold;
+		color: black;
+		text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
 	}
 }
 
@@ -97,7 +100,7 @@
 		margin-bottom: 0;
 	}
 	
-	tr.active {
+	tr.active td, tr.active:nth-child(odd) td {
 		background-color: #08C;
 		color: white;
 	}

@@ -37,7 +37,7 @@ define([
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click tbody tr': 'selectRow'
+			
 		}),
 		
 		render: function() {
@@ -47,25 +47,6 @@ define([
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		selectRow: function( event ) {
-			var mediaId = $( event.currentTarget ).data('media-id');
-			var mediaType = $( event.currentTarget ).data('media-type');
-			//app_view.chatanoo.loadUrl('/queries/' + queryId);
-			
-			// Timeout for dblclick
-			setTimeout( function() {
-				var r = Chatanoo.items.getItemsByMediaId( mediaId, mediaType );
-				Chatanoo.items.on( r.success, function(items) {
-					var itemId = items[0].id;
-					
-					var r = Chatanoo.queries.getQueriesByItemId( itemId );
-					Chatanoo.queries.on( r.success, function(queries) {
-						app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
-					}, this);
-				}, this);
-			}, 500);
 		},
 		
 		kill: function() {

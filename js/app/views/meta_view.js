@@ -34,6 +34,10 @@ define([
 			AbstractRowView.prototype.render.call(this);
 			return this;
 		},
+		
+		onSelectRow: function() {
+			var metaId = $( event.currentTarget ).data('meta-id');
+		},
     
 		getEditingValue: function() {
 			return {

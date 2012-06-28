@@ -44,6 +44,10 @@ define([
 			return this;
 		},
 		
+		onSelectRow: function() {
+			var userId = this.$el.data('user-id');
+		},
+		
 		getEditingValue: function() {
 			return {
 				firstName: this.$el.find('textarea[name=firstName]').val(), 

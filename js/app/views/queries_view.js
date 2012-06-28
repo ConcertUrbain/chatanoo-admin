@@ -36,8 +36,7 @@ define([
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click .refresh': 'refresh',
-			'click tbody tr': 'selectRow'
+			
 		}),
 		
 		render: function() {
@@ -47,11 +46,6 @@ define([
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		selectRow: function( event ) {
-			var queryId = $( event.currentTarget ).data('query-id');
-			app_view.chatanoo.loadUrl('/queries/' + queryId);
 		},
 		
 		kill: function() {

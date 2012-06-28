@@ -2,6 +2,7 @@ define([
 	'Backbone',
 	'Underscore',
 	'jQuery',
+	'Chatanoo',
 	
 	'Config',
 	
@@ -15,7 +16,7 @@ define([
 	'app/views/stats_popin_view',
 	
 	'app/views/app_view'
-], function(Backbone, _, $,
+], function(Backbone, _, $, Chatanoo,
 	Config,
 	AbstractRowView,
 	template,
@@ -42,6 +43,18 @@ define([
     
 			AbstractRowView.prototype.render.call(this);
 			return this;
+		},
+		
+		onSelectRow: function() {
+			var itemId = this.$el.data('item-id');
+			
+			// Timeout for dblclick
+			setTimeout( function() {
+				var r = Chatanoo.queries.getQueriesByItemId( itemId );
+				Chatanoo.queries.on( r.success, function(queries) {
+					app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
+				}, this);
+			}, 500);
 		},
     
 		getEditingValue: function() {

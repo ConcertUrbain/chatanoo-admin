@@ -37,7 +37,7 @@ define([
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click tbody tr': 'selectRow'
+			
 		}),
 		
 		render: function() {
@@ -47,19 +47,6 @@ define([
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		selectRow: function( event ) {
-			var commentId = $( event.currentTarget ).data('comment-id');
-			var itemId = $( event.currentTarget ).data('item-id');
-            
-			// Timeout for dblclick
-			setTimeout( function() {
-			var r = Chatanoo.queries.getQueriesByItemId( itemId );
-				Chatanoo.queries.on( r.success, function(queries) {
-					app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
-				}, this);
-			}, 500);
 		},
 		
 		kill: function() {

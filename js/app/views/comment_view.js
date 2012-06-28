@@ -39,6 +39,19 @@ define([
 			AbstractRowView.prototype.render.call(this);
 			return this;
 		},
+		
+		onSelectRow: function() {
+			var commentId = this.$el.data('comment-id');
+			var itemId = this.$el.data('item-id');
+            
+			// Timeout for dblclick
+			setTimeout( function() {
+			var r = Chatanoo.queries.getQueriesByItemId( itemId );
+				Chatanoo.queries.on( r.success, function(queries) {
+					app_view.chatanoo.loadUrl('/queries/' + queries[0].id + '/items/' + itemId);
+				}, this);
+			}, 500);
+		},
     
 		getEditingValue: function() {
 			return {

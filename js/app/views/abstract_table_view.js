@@ -11,9 +11,12 @@ define([
 		voClass: null,
 		
 		addOptions: {},
+		addViewClass: "row",
 		
 		mode: 'all',
 		facets: ['id', 'Contenu', 'Date d\'ajout', 'Date de modif'],
+		
+		currentRow: null,
 		
 		tableHeight: null,
 		
@@ -37,7 +40,6 @@ define([
 			'click .all a': 'showAll',
 			'click .valid a': 'showValid',
 			'click .unvalid a': 'showUnvalid',
-			'click table tbody td:not(.add) tr': '_selectRow',
 			'click table tbody tr td.action': '_actionClick',
 			'click .refresh': 'refresh',
 			'click .add': "add"
@@ -133,6 +135,13 @@ define([
 			var v = new this.voClass( { model: model } );
 			v.on('change', function() {
 				$(window).resize();
+			});
+			v.on('selected', function() {
+				if( !_.isNull( mThis.currentRow ) ) {
+					mThis.currentRow.cancelEditing();
+					mThis.currentRow.$el.removeClass('active');
+				}
+				mThis.currentRow = v;
 			});
 			v.model.on('change', function() {
 				$(window).resize();
@@ -232,22 +241,20 @@ define([
 		},
 		
 		add: function() {
-			var v = this.createRowView( new this.collection.model( this.addOptions ) );
-			v.$el.addClass('new');
-			v.editing = true;
-			
-			var tr = this.$el.find("table tbody tr:not(.add)");
-			if( tr.length == 0 )
-				this.$el.find("table tbody").prepend( v.render().$el );
-			else
-				$(tr[tr.length - 1]).after( v.render().$el );
+			if( this.addViewClass == "row" ) {
+				var v = this.createRowView( new this.collection.model( this.addOptions ) );
+				v.$el.addClass('new');
+				v.editing = true;
+				
+				var tr = this.$el.find("table tbody tr:not(.add)");
+				if( tr.length == 0 ) {
+					this.$el.find("table tbody").prepend( v.render().$el );
+				} else {
+					$(tr[tr.length - 1]).after( v.render().$el );
+				}
+			}
 			
 			return false;
-		},
-		
-		_selectRow: function( event ) {
-			this.$el.find('tbody tr.selected').removeClass('selected');
-			$( event.currentTarget ).addClass('selected');
 		},
 		
 		_actionClick: function( event ) {

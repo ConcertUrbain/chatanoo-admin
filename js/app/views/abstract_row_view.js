@@ -20,12 +20,13 @@ define([
 		deleteMessage: "",
 		
 		events: {
+			"click": "selectRow",
 			"click .validate": "validateVo",
 			"click .unvalidate": "unvalidateVo",
 			"dblclick td": "editVo",
 			"click .edit": "editVo",
 			"click .validate-edit": "validateEditing",
-			"keydown td": "validateEditing",
+			"keydown td": "keyDownHandler",
 			"click .cancel-edit": "cancelEditing",
 			"click .delete": "deleteVo"
 		},
@@ -47,6 +48,18 @@ define([
 			this.$el.find('textarea').elastic();
 			
 			return this;
+		},
+		
+		selectRow: function() {
+			if( !this.$el.hasClass('active') ) {
+				this.trigger('selected');
+				this.$el.addClass('active');
+				this.onSelectRow();
+			}
+		},
+		
+		onSelectRow: function() {
+			// abstract
 		},
 		
 		validateVo: function() {
@@ -75,15 +88,24 @@ define([
 			}
 		},
 		
+		keyDownHandler: function(event) {
+			switch( event.keyCode ) {
+				case 13: // Enter
+					this.validateEditing( event );
+					break;
+				case 27: // Esc
+					this.cancelEditing( event );
+					break;
+			}
+		},
+		
 		//edit
 		validateEditing: function( event ) {
-			if( _.isUndefined( event.keyCode ) || event.keyCode == 13 ) {
-				this.editing = false;
-				if( this.$el.hasClass('new') )
-					this.model.addVo( this.getEditingValue() );
-				else		
-					this.model.editVo( this.getEditingValue() );
-			}
+			this.editing = false;
+			if( this.$el.hasClass('new') )
+				this.model.addVo( this.getEditingValue() );
+			else		
+				this.model.editVo( this.getEditingValue() );
 		},
 		
 		getEditingValue: function() {
@@ -91,7 +113,10 @@ define([
 		},
 		
 		cancelEditing: function( event ) {
-			event.preventDefault();
+			if( !_.isNull( event ) && !_.isUndefined( event ) ) {
+				event.preventDefault();
+			}
+			
 			this.editing = false;
 			this.render();
 			

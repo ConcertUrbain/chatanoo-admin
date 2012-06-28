@@ -41,7 +41,7 @@ define([
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click tbody tr': 'selectRow'
+			
 		}),
 		
 		render: function() {
@@ -51,11 +51,6 @@ define([
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		selectRow: function( event ) {
-			var metaId = $( event.currentTarget ).data('meta-id');
-			
 		},
 		
 		kill: function() {

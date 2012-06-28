@@ -44,6 +44,11 @@ define([
 			return this;
 		},
 		
+		onSelectRow: function() {
+			var queryId = this.$el.data('query-id');
+			app_view.chatanoo.loadUrl('/queries/' + queryId);
+		},
+		
 		getEditingValue: function() {
 			return {
 				content: this.$el.find('textarea[name=content]').val(), 

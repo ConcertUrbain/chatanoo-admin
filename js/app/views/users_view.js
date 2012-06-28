@@ -37,7 +37,7 @@ define([
 	    },
 	
 		events: _.extend( AbstractTableView.prototype.events, {
-			'click tbody tr': 'selectRow'
+			
 		}),
 		
 		render: function() {
@@ -47,10 +47,6 @@ define([
 			
 			AbstractTableView.prototype.render.call(this);
 			return this;
-		},
-		
-		selectRow: function( event ) {
-			var userId = $( event.currentTarget ).data('user-id');
 		},
 		
 		kill: function() {
