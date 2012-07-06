@@ -3,10 +3,13 @@ define([
 	'Underscore',
 	'jQuery',
 	
+	'app/helpers/create_popin',
+	
 	'text!app/templates/query.tmpl.html',
 	
 	'app/views/app_view'
 ], function(Backbone, _, $,
+	createPopin,
 	template,
 	app_view) {
 	
@@ -77,6 +80,8 @@ define([
 			this.editing = true;
 			this.render();
 			
+			$(window).resize();
+			
 			this.trigger('change');
 		},
         
@@ -106,6 +111,8 @@ define([
 				this.model.addVo( this.getEditingValue() );
 			else		
 				this.model.editVo( this.getEditingValue() );
+			
+			$(window).resize();
 		},
 		
 		getEditingValue: function() {
@@ -117,21 +124,20 @@ define([
 				event.preventDefault();
 			}
 			
-			this.editing = false;
-			this.render();
+			if( this.$el.hasClass('new') ) {
+				this.$el.remove();
+			} else {
+				this.editing = false;
+				this.render();
+			}
+			
+			$(window).resize();
 			
 			this.trigger('change');
 		},
 		
 		createPopin: function( Klass, options ) {
-			var popin = new Klass( options );
-			popin.$el.on('hidden', function () {
-				popin.kill();
-				popin.remove();
-			});
-			$('body').append( popin.render().$el );
-			popin.$el.modal({});
-			popin.$el.modal('show');
+			createPopin( Klass, options );
 		},
 		
 		kill: function() {

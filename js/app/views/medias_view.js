@@ -10,6 +10,7 @@ define([
 	
 	'app/collections/medias',
 	'app/views/media_view',
+	'app/views/add_media_popin',
 	
 	'text!app/templates/medias.tmpl.html',
 	
@@ -17,7 +18,7 @@ define([
 ], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
-	Medias, MediaView,
+	Medias, MediaView, AddMediaPopin,
 	template,
 	app_view) {
 	
@@ -27,8 +28,17 @@ define([
 		
 		collection: new Medias(),
 		voClass: MediaView,
+		addViewClass: AddMediaPopin,
 		
-		facets: ['id', 'Type', 'Titre', 'Description', 'Url', 'Date d\'ajout', 'Date de modif'],
+		facets: [
+			{ label: 'id', 				value: 'id' },
+			{ label: 'Type', 			value: 'type' },
+			{ label: 'Titre', 			value: 'title' },
+			{ label: 'Description', 	value: 'description' },
+			{ label: 'Url', 			value: 'url' },
+			{ label: 'Date d\'ajout', 	value: 'addDate' },
+			{ label: 'Date de modif', 	value: 'setDate' }
+		],
 		
 		initialize: function() {
 			//app_view.chatanoo.loadUrl('/queries/20');

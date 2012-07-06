@@ -3,19 +3,19 @@ define([
 	'Underscore',
 	'jQuery',
 	
-	'text!app/templates/links_popin.tmpl.html',
+	'Config',
+	
+	'text!app/templates/add_media_popin.tmpl.html',
 ], function(Backbone, _, $,
+	Config,
 	template) {
 	
-	var LinksPopinView = Backbone.View.extend(
-	{
-		model: null,
-		
+	var AddMediaPopinView = Backbone.View.extend(
+	{	
 		events: {
 		},
 		
-		initialize: function() {
-			//this.model.on("change", this.render, this);
+		initialize: function( ) {
 			var mThis = this;
 			this.$el.addClass("modal hide fade");
 			this.$el.on('hidden', function () {
@@ -25,16 +25,15 @@ define([
 		
 		render: function() {
 			this.$el.html(_.template( template, { } ));
-			
 			return this;
 		},
 		
 		kill: function() {
-			this.$el.unbind()
+			this.$el.unbind();
 			//this.model.off();
 			this.$el.remove();
 		}
 	});
 	
-	return LinksPopinView;
+	return AddMediaPopinView;
 });

@@ -16,7 +16,7 @@ define([
 	    },
 
 		validateVo: function() {
-			var r = Chatanoo.medias.validateMedia( this.get("id"), 'Video', true );
+			var r = Chatanoo.medias.validateMedia( this.get("id"), this.get('type'), true );
 			Chatanoo.medias.on( r.success, function( mediaId ) {
 				this.trigger("change change:validate");
 				this.set('_isValid', 1);
@@ -24,7 +24,7 @@ define([
 		},
         
 		unvalidateVo: function() {
-			var r = Chatanoo.medias.validateMedia( this.get("id"), 'Video', false );
+			var r = Chatanoo.medias.validateMedia( this.get("id"), this.get('type'), false );
 			Chatanoo.medias.on( r.success, function( mediaId ) {
 				this.trigger("change change:unvalidate");
 				this.set('_isValid', 0);
@@ -32,15 +32,15 @@ define([
 		},
         
 		deleteVo: function() {
-			var r = Chatanoo.medias.deleteMedia( this.get("id") );
+			var r = Chatanoo.medias.deleteMedia( this.get("id"), this.get('type') );
 			Chatanoo.medias.on( r.success, function( bool ) {
 				this.trigger("delete");
 			}, this);
 		},
 		
 		addVo: function(media) {
-			var r = Chatanoo.items.addMediaIntoItem( media, this.get( 'item_id' ) );
-			Chatanoo.items.on( r.success, function( mediaId ) {
+			var r = Chatanoo.medias.addMedia( media );
+			Chatanoo.medias.on( r.success, function( mediaId ) {
 				this.set( 'id', mediaId );
 				this.set( media );
 				this.trigger("added");
@@ -49,6 +49,8 @@ define([
         
 		editVo: function(options) {
 			var media = _.extend(this.toJSON(), options);
+			delete media.type;
+			
 			var r = Chatanoo.medias.setMedia( media );
 			Chatanoo.medias.on( r.success, function( mediaId ) {
 				this.set(options);

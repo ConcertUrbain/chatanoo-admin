@@ -88,16 +88,19 @@
 
 .subnav ~ table {
 	margin-top: 10px;
-	margin-bottom: 200px;
 	
 	th, td {
 		#hl.box-sizing();
 	}
 	
-	textarea, input[type=text] {
+	textarea, input[type=text], select {
 		width: 100%;
-		#hl.box-sizing();
 		margin-bottom: 0;
+		#hl.box-sizing();
+	}
+	
+	input[type=text] {
+		height: 18+4+4px;
 	}
 	
 	tr.active td, tr.active:nth-child(odd) td {
@@ -116,6 +119,10 @@
 
 .subnav.subnav-fixed ~ table {
 	margin-top: 50px;
+}
+
+.subnav.subnav-fixed-bottom ~ table {
+	margin-bottom: 50px;
 }
 
 .table-fixed-head {
@@ -210,7 +217,8 @@ body.retract #chatanoo {
 .subnav {
 	width: inherit;
 	
-	&.subnav-fixed {
+	&.subnav-fixed,
+	&.subnav-fixed-bottom {
 		margin-left: 210px;
 		margin-right: 330px;
 	}
@@ -222,13 +230,25 @@ body.retract #chatanoo {
 	}
 }
 
-.modal .subnav.subnav-fixed {
-	margin-left: auto;
-	margin-right: auto;
-	width: 617px;
+.modal .table-fixed-head {
+	position: absolute;	
+	top: 82px;
 }
 
-body.retract .subnav.subnav-fixed {
+.modal .subnav-fixed {
+	position: absolute;	
+	top: 46px;
+	margin-left: 15px;
+	width: 605px;
+}
+
+.modal.datas {
+	width: 800px;
+	margin: -250px 0 0 -400px;
+}
+
+body.retract .subnav.subnav-fixed,
+body.retract .subnav-fixed-bottom {
 	margin-right: 48px;
 }
 

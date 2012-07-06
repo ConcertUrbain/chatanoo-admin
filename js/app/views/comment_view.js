@@ -2,6 +2,7 @@ define([
 	'Backbone',
 	'Underscore',
 	'jQuery',
+	'Chatanoo',
 	
 	'Config',
 	
@@ -13,7 +14,7 @@ define([
 	'app/views/links_popin_view',
 	
 	'app/views/app_view'
-], function(Backbone, _, $,
+], function(Backbone, _, $, Chatanoo,
 	Config,
 	AbstractRowView,
 	template,

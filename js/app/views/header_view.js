@@ -5,9 +5,16 @@ define([
 	
 	'Config',
 	
+	'app/helpers/create_popin',
+	
+	'app/views/profil_popin_view',
+	'app/views/search_popin_view',
+	
 	'text!app/templates/header.tmpl.html'
 ], function(Backbone, _, $,
 	Config,
+	createPopin,
+	ProfilPopinView, SearchPopinView,
 	template) {
 	
 	var HeaderView = Backbone.View.extend(
@@ -17,7 +24,9 @@ define([
 		model: null,
 		
 		events: {
-			'click input[name=logout]': 'logout'
+			"click .logout": "logout",
+			"click .profil": "profil",
+			"submit .navbar-search": "search"
 		},
 		
 		initialize: function() 
@@ -27,14 +36,33 @@ define([
 		
 		render: function() 
 		{
-			this.$el.html( _.template( template, { model: this.model ? this.model.toJSON() : {}, config: Config } ) );
+			var mThis = this;
+			require(['app/views/app_view'], function(app_view) {
+				mThis.$el.html( _.template( template, { model: mThis.model ? mThis.model.toJSON() : {}, config: Config, user: app_view.user } ) );
+			});
 			
 			return this;
 		},
 		
 		logout: function() {
-			bou();
-			this.trigger('logout');
+			require(['app/views/app_view'], function(app_view) {
+				$.cookie('session_key', null);
+				app_view.user = null;
+				location.hash = "/login";
+			});
+			return false;
+		},
+		
+		profil: function() {
+			require(['app/views/app_view'], function(app_view) {
+				createPopin( ProfilPopinView, { user: app_view.user } );
+			});
+			return false;
+		},
+		
+		search: function() {
+			createPopin( SearchPopinView, {} );
+			return false;
 		},
 
 		kill: function() {

@@ -26,16 +26,28 @@ define([
 		collection: new Metas(),
 		voClass: MetaView,
 		
-		facets: ['id', 'Name', 'Contenu'],
+		facets: [
+			{ label: 'id', 		value: 'id' },
+			{ label: 'Type', 	value: 'name' },
+			{ label: 'Contenu', value: 'content' }
+		],
 		
-		tableHeight: 365,
+		scrollReferer: ".modal-body",
 		
 		initialize: function( options ) {
+			var mThis = this;
+			this.$el.addClass("modal hide fade metas");
+			this.$el.on('hidden', function () {
+			 	mThis.kill();
+			});
+			
 			this.addOptions = options;
 			this.addOptions.__className = "Vo_Meta";
 			
 			this.collection.voId = options.voId;
 			this.collection.voType = options.voType;
+			if( !_.isUndefined( options.isMedia ) )
+				this.collection.isMedia = options.isMedia;
 			
 			AbstractTableView.prototype.initialize.call(this);
 	    },
@@ -45,8 +57,6 @@ define([
 		}),
 		
 		render: function() {
-			this.$el.addClass("metas modal hide fade");
-			
 			this.$el.html( _.template( template, { mode: this.mode } ) );
 			
 			AbstractTableView.prototype.render.call(this);
@@ -56,6 +66,7 @@ define([
 		kill: function() {
 			this.$el.unbind()
 			//this.model.off();
+			this.$el.remove();
 		}
 	});
 	

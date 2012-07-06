@@ -52,8 +52,10 @@ define([
 		},
 		
 		addVo: function(item) {
-			var r = Chatanoo.queries.addItemIntoQuery( item, this.get( 'query_id' ) );
-			Chatanoo.queries.on( r.success, function( itemId ) {
+			item.__className = "Vo_Item";
+			
+			var r = Chatanoo.items.addItem( item );
+			Chatanoo.items.on( r.success, function( itemId ) {
 				this.set( 'id', itemId );
 				this.set( item );
 				this.trigger("added");

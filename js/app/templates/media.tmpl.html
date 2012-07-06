@@ -11,8 +11,8 @@
 	<td><%= media.get('title') %></td>
 	<td><%= media.get('description') %></td>
 	<td><%= media.get('url') %></td>
-	<td><%= _.isNull( media.get('addDate') ) ? '' : media.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( media.get('setDate') ) ? '' : media.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( media.get('addDate') ).isUsable() ? '' : media.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( media.get('setDate') ).isUsable() ? '' : media.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini <%= parseInt( media.get('_isValid') ) ? "btn-danger unvalidate" : "btn-success validate" %>"><%= parseInt( media.get('_isValid') ) ? "Invalider" : "Valider" %></button>
@@ -42,8 +42,8 @@
 	<td><textarea name="title"><%= media.get('title') %></textarea></td>
 	<td><textarea name="description"><%= media.get('description') %></textarea></td>
 	<td><textarea name="url"><%= media.get('url') %></textarea></td>
-	<td><%= _.isNull( media.get('addDate') ) ? '' : media.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( media.get('setDate') ) ? '' : media.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( media.get('addDate') ).isUsable() ? '' : media.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( media.get('setDate') ).isUsable() ? '' : media.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini btn-success validate-edit">Valider</button>

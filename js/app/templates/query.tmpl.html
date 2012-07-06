@@ -2,8 +2,8 @@
 	<td><%= query.get('id') %></td>
 	<td><%= query.get('content') %></td>
 	<td><%= query.get('description') %></td>
-	<td><%= _.isNull( query.get('addDate') ) ? '' : query.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( query.get('setDate') ) ? '' : query.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( query.get('addDate') ).isUsable() ? '' : query.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( query.get('setDate') ).isUsable() ? '' : query.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-danger unvalidate" : "btn-success validate" %>"><%= parseInt( query.get('_isValid') ) ? "Invalider" : "Valider" %></button>
@@ -25,8 +25,8 @@
 	<td><%= query.get('id') %></td>
 	<td><textarea name="content"><%= query.get('content') %></textarea></td>
 	<td><textarea name="description"><%= query.get('description') %></textarea></td>
-	<td><%= _.isNull( query.get('addDate') ) ? '' : query.get('addDate').format('DD/MM/YYYY') %></td>
-	<td><%= _.isNull( query.get('setDate') ) ? '' : query.get('setDate').format('DD/MM/YYYY') %></td>
+	<td><%= !_( query.get('addDate') ).isUsable() ? '' : query.get('addDate').format('DD/MM/YYYY') %></td>
+	<td><%= !_( query.get('setDate') ).isUsable() ? '' : query.get('setDate').format('DD/MM/YYYY') %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini btn-success validate-edit">Valider</button>

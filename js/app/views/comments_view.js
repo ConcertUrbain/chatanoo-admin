@@ -28,7 +28,12 @@ define([
 		collection: new Comments(),
 		voClass: CommentView,
 		
-		facets: ['id', 'Contenu', 'Date d\'ajout', 'Date de modif'],
+		facets: [
+			{ label: 'id', 				value: 'id' },
+			{ label: 'Contenu', 		value: 'content' },
+			{ label: 'Date d\'ajout', 	value: 'addDate' },
+			{ label: 'Date de modif', 	value: 'setDate' }
+		],
 		
 		initialize: function() {
 			//app_view.chatanoo.loadUrl('/queries/20');

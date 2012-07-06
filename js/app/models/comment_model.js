@@ -69,8 +69,15 @@ define([
 			}, this);
 		},
 		
-		addVo: function() {
+		addVo: function(comment) {
+			comment.__className = "Vo_Comment";
 			
+			var r = Chatanoo.comments.addComment( comment );
+			Chatanoo.comments.on( r.success, function( commentId ) {
+				this.set( 'id', commentId );
+				this.set( comment );
+				this.trigger("added");
+			}, this);
 		}
 	});
 	//_.extend(Comment, Chatanoo.ValueObject.Comment);

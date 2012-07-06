@@ -4,6 +4,7 @@ define([
 	'jQuery',
 	
 	'Config',
+	'app/helpers/metas_typeahead',
 	
 	'app/views/abstract_row_view',
 	
@@ -11,7 +12,7 @@ define([
 	
 	'app/views/app_view'
 ], function(Backbone, _, $,
-	Config,
+	Config, typeahead,
 	AbstractRowView,
 	template,
 	app_view) {
@@ -28,8 +29,13 @@ define([
 	    },
     
 		render: function() {
+			var src = {
+				name: JSON.stringify( typeahead.name ),
+				content: JSON.stringify( typeahead.content )
+			}
+			
 			this.$el.data('meta-id', this.model.get('id'));
-			this.$el.html(_.template( template, { meta: this.model, editing: this.editing, Config: Config } ));
+			this.$el.html(_.template( template, { meta: this.model, editing: this.editing, Config: Config, source: src } ));
     
 			AbstractRowView.prototype.render.call(this);
 			return this;

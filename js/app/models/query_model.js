@@ -47,6 +47,8 @@ define([
 		},		
 		
 		addVo: function(query) {
+			query.__className = "Vo_Query";
+			
 			var r = Chatanoo.queries.addQuery( query );
 			Chatanoo.queries.on( r.success, function( queryId ) {
 				this.set( 'id', queryId );

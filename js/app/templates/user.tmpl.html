@@ -5,8 +5,8 @@
 	<td><%= user.get('pseudo') %></td>
 	<td><%= user.get('email') %></td>
 	<td><%= user.get('role') %></td>
-	<td><%= _.isNull( user.get('addDate') ) ? '' : user.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( user.get('setDate') ) ? '' : user.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( user.get('addDate') ).isUsable() ? '' : user.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( user.get('setDate') ).isUsable() ? '' : user.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger unvalidate" : "btn-success validate" %>"><%= !parseInt( user.get('_isBan') ) ? "Bannir" : "Accepter" %></button>
@@ -37,8 +37,8 @@
 			<option <% if( user.get('role') == "admin") print('selected="seelcted"') %>>admin</option>
 		</select>
 	</td>
-	<td><%= _.isNull( user.get('addDate') ) ? '' : user.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( user.get('setDate') ) ? '' : user.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( user.get('addDate') ).isUsable() ? '' : user.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( user.get('setDate') ).isUsable() ? '' : user.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini btn-success validate-edit">Valider</button>

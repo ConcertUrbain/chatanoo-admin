@@ -17,8 +17,9 @@
 	</td>
 <% } else { %>
 	<td><%= meta.get('id') %></td>
-	<td><input type="text" name="name" value="<%= meta.get('name') %>"></td>
-	<td><input type="text" name="content" value="<%= meta.get('content') %>"></textarea></td>
+	
+	<td><input type="text" name="name" value="<%= meta.get('name') %>" data-provide="typeahead" data-source="<%- source.name %>" /></td>
+	<td><input type="text" name="content" value="<%= meta.get('content') %>" data-provide="typeahead" data-source="<%- source.content %>" /></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini btn-success validate-edit">Valider</button>

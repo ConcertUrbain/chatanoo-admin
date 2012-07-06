@@ -90,25 +90,34 @@ define([
 			this.render();
 		},
 		
+		createNotif: function(data, title) {
+			var n = new Notif();
+			n.set('title', title);
+			
+			return n;
+		},
+		
+		setUser: function(data, notif) {
+			/*if(data.byUser == this.user.id)
+				return false;*/
+				
+			var user = data.byUser;
+			if( _( user.firstName ).isUsable() && _( user.lastName ).isUsable() ) {
+				notif.set('user', user.lastName + " " + user.firstName );
+			} else if( _( user.pseudo ).isUsable() ) {
+				notif.set('user', user.pseudo);
+			} else {
+				notif.set('user', user);
+			}
+			
+			return true;
+		},
+		
 		queries: function(data) {
 			console.log(data);
 			
-			if(data.byUser == this.user.id)
-				return;
-			
-			var n = new Notif();
-			n.set('title', 'Question');
-			
-			var user = data.byUser;
-			if( (!_.isNull( user.firstName ) && !_.isUndefined( user.firstName ) &&  user.firstName != "")
-				&& (!_.isNull( user.lastName ) && !_.isUndefined( user.lastName ) &&  user.lastName != "") ) 
-			{
-				n.set('user', user.lastName + " " + user.firstName );
-			} else if( !_.isNull( user.pseudo ) && !_.isUndefined( user.pseudo ) &&  user.pseudo != "" ) {
-				n.set('user', user.pseudo);
-			} else {
-				n.set('user', user);
-			}
+			var n = this.createNotif( data, 'Question' );
+			if( !this.setUser( data, n ) ) return;
 			
 			var query = 0;
 			switch( data.method ) {
@@ -128,7 +137,7 @@ define([
 					n.set('type', 'error');
 					break;
 				case "addItemIntoQuery":
-					var item = data.params[0].id;
+					var item = data.result;
 					query = data.params[1];
 					n.set('description', 'L\'item ' + item + ' a été ajouté à la question ' + query + '.');
 					n.set('type', 'info');
@@ -140,7 +149,7 @@ define([
 					n.set('type', 'info');
 					break;
 				case "addMediaIntoQuery":
-					var media = data.params[0].id;
+					var media = data.result;
 					query = data.params[1];
 					n.set('description', 'Le média ' + media + ' a été ajouté à la question ' + query + '.');
 					n.set('type', 'info');
@@ -152,7 +161,7 @@ define([
 					n.set('type', 'info');
 					break;
 				case "addMetaIntoVo":
-					var meta = data.params[0].id;
+					var meta = data.result;
 					query = data.params[1];
 					n.set('description', 'Le tag ' + meta + ' a été ajouté à la question ' + query + '.');
 					n.set('type', 'info');
@@ -179,15 +188,15 @@ define([
 					}
 					break;
 				case "addDataIntoVo":
-					var data = data.params[0].id;
+					var d = data.result;
 					query = data.params[1];
-					n.set('description', 'La donnée associée ' + data + ' a été ajouté à la question ' +  + '.');
+					n.set('description', 'La donnée associée ' + d + ' a été ajouté à la question ' +  + '.');
 					n.set('type', 'info');
 					break;
 				case "removeDataFromVo":
-					var data = data.params[0];
+					var d = data.params[0];
 					query = data.params[2];
-					n.set('description', 'Le donnée associée ' + data + ' a été retiré à la question ' +  + '.');
+					n.set('description', 'Le donnée associée ' + d + ' a été retiré à la question ' +  + '.');
 					n.set('type', 'info');
 					break;
 			}
@@ -201,12 +210,100 @@ define([
 		search: function(data) {
 			console.log(data);
 			
+			var n = this.createNotif( data, 'Tag' );
+			if( !this.setUser( data, n ) ) return;
+			
+			var meta = 0;
+			switch( data.method ) {
+				case "addMeta":
+					meta = data.result;
+					n.set('description', 'Le tag ' + meta + ' a été ajouté.');
+					n.set('type', 'success');
+					break;
+				case "setMeta":
+					meta = data.params[0].id;
+					n.set('description', 'Le tag ' + meta + ' a été modifié.');
+					n.set('type', 'info');
+					break;
+				case "deleteMeta":
+					meta = data.params[0];
+					n.set('description', 'Le tag ' + meta + ' a été supprimé.');
+					n.set('type', 'error');
+					break;
+			}
+
+			this.addNotification( n );
+			
 			this.render(); 
 			this.highlight();
 		},
 		
 		comments: function(data) {
 			console.log(data);
+			
+			var n = this.createNotif( data, 'Commentaire' );
+			if( !this.setUser( data, n ) ) return;
+			
+			var comment = 0;
+			switch( data.method ) {
+				case "addComment":
+					comment = data.result;
+					n.set('description', 'Le commentaire ' + comment + ' a été ajouté.');
+					n.set('type', 'warn');
+					break;
+				case "setComment":
+					comment = data.params[0].id;
+					n.set('description', 'Le commentaire ' + comment + ' a été modifié.');
+					n.set('type', 'info');
+					break;
+				case "setItemOfComment":
+					comment = data.params[0].id;
+					item = data.params[1];
+					n.set('description', 'Le commentaire ' + comment + ' a été ajouté à  l\'item ' + item + '.');
+					n.set('type', 'success');
+					break;
+				case "deleteComment":
+					comment = data.params[0];
+					n.set('description', 'Le commentaire ' + comment + ' a été supprimer.');
+					n.set('type', 'error');
+					break;
+				case "setUserOfVo":
+					var user = data.params[0];
+					comment = data.params[1];
+					n.set('description', 'L\'auteur du commentaire ' + comment + ' a été changé.');
+					n.set('type', 'info');
+					break;
+				case "validateVo":
+					comment = data.params[0];
+					if ( data.params[1] ) {
+						n.set('description', 'Le commentaire ' + comment + ' a été validé.');
+						n.set('type', 'success');
+					} else {
+						n.set('description', 'Le commentaire ' + comment + ' a été invalidé.');
+						n.set('type', 'error');
+					}
+					break;
+				case "addDataIntoVo":
+					var d = data.result;
+					comment = data.params[1];
+					n.set('description', 'La donnée associée ' + d + ' a été ajoutée au commentaire ' + comment + '.');
+					n.set('type', 'success');
+					break;
+				/*case "addVoteIntoItemPatch":
+					comment = data.result;
+					n.set('description', 'Le commentaire ' + comment + ' a été ajouté.');
+					n.set('type', 'success');
+					break;*/
+				case "removeDataFromVo":
+					var d = data.params[0];
+					var dataType = data.params[1];
+					comment = data.params[2];
+					n.set('description', 'La donnée associée ' + d + ' a été supprimée du commentaire ' + comment + '.');
+					n.set('type', 'error');
+					break;
+			}
+
+			this.addNotification( n );
 			
 			this.render(); 
 			this.highlight();
@@ -215,12 +312,180 @@ define([
 		medias: function(data) {
 			console.log(data);
 			
+			var n = this.createNotif( data, 'Médias' );
+			if( !this.setUser( data, n ) ) return;
+			
+			var media = 0;
+			switch( data.method ) {
+				case "addMedia":
+					media = data.result;
+					n.set('description', 'Le média ' + media + ' a été ajouté.');
+					n.set('type', 'warn');
+					break;
+				case "setMedia":
+					media = data.params[0].id;
+					var mediaType = data.params[1];
+					n.set('description', 'Le média ' + media + ' a été modifié.');
+					n.set('type', 'info');
+					break;
+				case "deleteMedia":
+					media = data.params[0];
+					var mediaType = data.params[1];
+					n.set('description', 'Le média ' + media + ' a été suprimmé.');
+					n.set('type', 'error');
+					break;
+				case "setUserOfMedia":
+					var user = data.params[0];
+					media = data.params[1];
+					var mediaType = data.params[2];
+					n.set('description', 'L\'auteur du média ' + media + ' a été changé.');
+					n.set('type', 'info');
+					break;
+				case "addMetaIntoMedia":
+					var meta = data.result;
+					media = data.params[1];
+					var mediaType = data.params[2];
+					n.set('description', 'Le tag ' + meta + ' a été ajouté au média ' + media + '.');
+					n.set('type', 'success');
+					break;
+				case "removeMetaFromMedia":
+					var meta = data.params[0];
+					media = data.params[1];
+					var mediaType = data.params[2];
+					n.set('description', 'Le tag ' + meta + ' a été supprimé du média ' + media + '.');
+					n.set('type', 'error');
+					break;
+				case "validateMedia":
+					media = data.params[0];
+					var mediaType = data.params[1];
+					if ( data.params[2] ) {
+						n.set('description', 'Le média ' + media + ' a été validé.');
+						n.set('type', 'success');
+					} else {
+						n.set('description', 'Le média ' + media + ' a été invalidé.');
+						n.set('type', 'error');
+					}
+					break;
+				case "addDataIntoMedia":
+					media = data.result;
+					var mediaType = data.params[2];
+					var d = data.result;
+					n.set('description', 'La donnée associée ' + d + ' a été ajoutée au média ' + media + '.');
+					n.set('type', 'success');
+					break;
+				case "removeDataFromMedia":
+					media = data.params[2];
+					var mediaType = data.params[3];
+					var d = data.params[0];
+					var dataType = data.params[1];
+					n.set('description', 'La donnée associée ' + d + ' a été supprimé du média ' + media + '.');
+					n.set('type', 'error');
+					break;
+			}
+			
+			this.addNotification( n );
+			
 			this.render(); 
 			this.highlight();
 		},
 		
 		items: function(data) {
 			console.log(data);
+			
+			var n = this.createNotif( data, 'Item' );
+			if( !this.setUser( data, n ) ) return;
+			
+			var item = 0;
+			switch( data.method ) {
+				case "addItem":
+					item = data.result;
+					n.set('description', 'L\'item ' + item + ' a été ajouté.');
+					n.set('type', 'warn');
+					break;
+				case "setItem":
+					item = data.params[0].id;
+					n.set('description', 'L\'item ' + item + ' a été modifié.');
+					n.set('type', 'info');
+					break;
+				case "deleteItem":
+					item = data.params[0];
+					n.set('description', 'L\'item ' + item + ' a été supprimé.');
+					n.set('type', 'error');
+					break;
+				case "addCommentIntoItem":
+					var comment = data.result;
+					item = data.params[1];
+					n.set('description', 'Le commentaire ' + comment + ' a été ajouté à l\'item ' + item + '.');
+					n.set('type', 'success');
+					break;
+				/*case "addCommentIntoItemPatch":
+					item = data.result;
+					n.set('description', 'L\'item ' + item + ' a été ajouté.');
+					n.set('type', 'warn');
+					break;*/
+				case "removeCommentFromItem":
+					var comment = data.params[0];
+					item = data.params[1];
+					n.set('description', 'Le commentaire ' + comment + ' a été supprimé à l\'item ' + item + '.');
+					n.set('type', 'error');
+					break;
+				case "addMediaIntoItem":
+					var media = data.result;
+					item = data.params[1];
+					n.set('description', 'Le média ' + media + ' a été ajouté à l\'item ' + item + '.');
+					n.set('type', 'success');
+					break;
+				case "removeMediaFromItem":
+					var media = data.params[0];
+					var mediaType = data.params[1];
+					item = data.params[2];
+					n.set('description', 'Le média ' + media + ' a été supprimé à l\'item ' + item + '.');
+					n.set('type', 'error');
+					break;
+				case "validateVo":
+					item = data.params[0];
+					if ( data.params[1] ) {
+						n.set('description', 'L\'item ' + item + ' a été validé.');
+						n.set('type', 'success');
+					} else {
+						n.set('description', 'L\'item ' + item + ' a été invalidé.');
+						n.set('type', 'error');
+					}
+					break;
+				case "addMetaIntoVo":
+					var meta = data.result;
+					item = data.params[1];
+					n.set('description', 'Le tag ' + meta + ' a été ajouté à l\'item ' + item + '.');
+					n.set('type', 'success');
+					break;
+				case "removeMetaFromVo":
+					var meta = data.params[0];
+					item = data.params[1];
+					n.set('description', 'Le tag ' + meta + ' a été supprimé à l\'item ' + item + '.');
+					n.set('type', 'error');
+					break;
+				case "setUserOfVo":
+					var user = data.params[0];
+					item = data.params[1];
+					n.set('description', 'L\'auteur de l\'item ' + item + ' a été changé.');
+					n.set('type', 'info');
+					break;
+				case "addDataIntoVo":
+					var d = data.result;
+					item = data.params[1];
+					n.set('description', 'La donnée associée ' + d + ' a été ajoutée à l\'item ' + item + '.');
+					n.set('type', 'success');
+					break;
+				case "removeDataFromVo":
+					var d = data.params[0];
+					var dataType = data.params[1];
+					item = data.params[2];
+					n.set('description', 'La donnée associée ' + d + ' a été supprimée de l\'item ' + item + '.');
+					n.set('type', 'error');
+					break;
+			}
+			
+			this.addNotification( n );
 			
 			this.render(); 
 			this.highlight();
@@ -229,12 +494,83 @@ define([
 		datas: function(data) {
 			console.log(data);
 			
+			var n = this.createNotif( data, 'Données associée' );
+			if( !this.setUser( data, n ) ) return;
+			
+			var data = 0;
+			switch( data.method ) {
+				case "addData":
+					d = data.result;
+					n.set('description', 'La donnée associée ' + d + ' a été ajoutée.');
+					n.set('type', 'success');
+					break;
+				case "setData":
+					d = data.params[0].id;
+					n.set('description', 'La donnée associée ' + d + ' a été modifiée.');
+					n.set('type', 'info');
+					break;
+				case "deleteData":
+					d = data.params[1];
+					n.set('description', 'La donnée associée ' + d + ' a été supprimée.');
+					n.set('type', 'error');
+					break;
+			}
+			
+			this.addNotification( n );
+			
 			this.render(); 
 			this.highlight();
 		},
 		
 		users: function(data) {
 			console.log(data);
+			
+			var n = this.createNotif( data, 'Utilisateur' );
+			if( !this.setUser( data, n ) ) return;
+			
+			var user = 0;
+			switch( data.method ) {
+				case "addUser":
+					user = data.result;
+					n.set('description', 'L\'utilisateur ' + user + ' a été ajouté.');
+					n.set('type', 'success');
+					break;
+				case "setUser":
+					user = data.params[0].id;
+					n.set('description', 'L\'utilisateur ' + user + ' a été modifié.');
+					n.set('type', 'info');
+					break;
+				case "deleteUser":
+					user = data.params[0];
+					n.set('description', 'L\'utilisateur ' + user + ' a été supprimé.');
+					n.set('type', 'error');
+					break;
+				case "banUser":
+					user = data.params[0];
+					if ( data.params[1] ) {
+						n.set('description', 'L\'utilisateur ' + user + ' a été banni.');
+						n.set('type', 'error');
+					} else {
+						n.set('description', 'L\'utilisateur ' + user + ' a été accepté.');
+						n.set('type', 'success');
+					}
+					break;
+				case "addDataIntoVo":
+					var d = data.result;
+					user = data.params[1];
+					n.set('description', 'La donnée associée ' + d + ' a été ajoutée à l\'utilisateur ' + user + '.');
+					n.set('type', 'success');
+					break;
+				case "removeDataFromVo":
+					var d = data.params[0];
+					var dataType = data.params[1];
+					user = data.params[2];
+					n.set('description', 'La donnée associée ' + d + ' a été supprimée de l\'utilisateur ' + user + '.');
+					n.set('type', 'error');
+					break;
+			}
+			
+			this.addNotification( n );
 			
 			this.render(); 
 			this.highlight();

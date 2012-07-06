@@ -8,6 +8,7 @@ define([
 	
 	var AbstractCollection = Backbone.Collection.extend({
 		isValidKey: "_isValid",
+		reverse: false,
 		badgeName: null,
 		
 		filters: [],
@@ -91,7 +92,7 @@ define([
 			
 			require(['app/views/app_view'], function(app_view) {
 				if( !_.isNull( mThis.badgeName ) )
-					app_view.setMenuBadge( mThis.badgeName, mThis._unvalid.length );
+					app_view.setMenuBadge( mThis.badgeName, mThis.reverse ? mThis._valid.length : mThis._unvalid.length );
 			});
 		},
 		
@@ -118,7 +119,7 @@ define([
 			var mThis = this;
 			require(['app/views/app_view'], function(app_view) {
 				if( !_.isNull( mThis.badgeName ) )
-					app_view.setMenuBadge( mThis.badgeName, mThis._unvalid.length );
+					app_view.setMenuBadge( mThis.badgeName, mThis.reverse ? mThis._valid.length : mThis._unvalid.length );
 			});
 		},
 		
@@ -131,7 +132,7 @@ define([
 			var mThis = this;
 			require(['app/views/app_view'], function(app_view) {
 				if( !_.isNull( mThis.badgeName ) )
-					app_view.setMenuBadge( mThis.badgeName, mThis._unvalid.length );
+					app_view.setMenuBadge( mThis.badgeName, mThis.reverse ? mThis._valid.length : mThis._unvalid.length );
 			});
 		}
 	});

@@ -1,0 +1,53 @@
+<% if( !editing ) { %>
+	<% _( structure ).each( function(field) { %>
+		<% if( field.type == 'date' ) { %>
+			<td><%= !_( data.get( field.name ) ).isUsable() ? '' : data.get( field.name ).format( Config.dateFormat ) %></td>
+		<% } else { %>
+			<td><%= data.get( field.name ) %></td>
+		<% } %>
+	<% }) %>
+	<td class="action">
+		<div class="btn-group btn-group-action">
+			<button class="btn btn-mini btn-success">Actions</button>
+			<button class="btn btn-mini btn-success dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li><a href="#" class="edit"><i class="icon-edit"></i> Editer</a></li>
+				<li class="divider"></li>
+				<li><a href="#" class="delete"><i class="icon-remove"></i> Supprimer</a></li>
+			</ul>
+		</div>
+	</td>
+<% } else { %>
+	<% _( structure ).each( function(field) { %>
+		<% if( field.type == 'static' ) { %>
+			<td><%= data.get( field.name ) %></td>
+		<% } else if( field.type == 'date' ) { %>
+			<td><%= !_( data.get( field.name ) ).isUsable() ? '' : data.get( field.name ).format( Config.dateFormat ) %></td>
+		<% } else if( field.type == 'text' ) { %>
+			<td><input type="text" name="<%= field.name %>" value="<%= data.get( field.name ) %>" /></td>
+		<% } else if( field.type == 'textarea' ) { %>
+			<td><textarea name="<%= field.name %>"><%= data.get( field.name ) %></textarea></td>
+		<% } else if( field.type == 'select' ) { %>
+			<td>
+				<select name="<%= field.name %>">
+					<% _( field.options ).each( function( name, value ) { %>
+					<option value="<%= value %>"<% if( value == data.get( field.name ) ) print(' selected="selected"'); %> ><%= name %></options>
+					<% }) %>
+				</select>
+			</td>
+		<% } %>
+	<% }) %>
+	<td class="action">
+		<div class="btn-group btn-group-action">
+			<button class="btn btn-mini btn-success validate-edit">Valider</button>
+			<button class="btn btn-mini btn-success dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li><a href="#" class="cancel-edit"><i class="icon-remove"></i> Annuler</a></li>
+			</ul>
+		</div>
+	</td>
+<% } %>

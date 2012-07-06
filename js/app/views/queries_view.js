@@ -27,7 +27,13 @@ define([
 		collection: new Queries(),
 		voClass: QueryView,
 		
-		facets: ['id', 'Contenu', 'Description', 'Date d\'ajout', 'Date de modif'],
+		facets: [
+			{ label: 'id', 				value: 'id' }, 
+			{ label: 'Contenu', 		value: 'content' }, 
+			{ label: 'Description', 	value: 'description' }, 
+			{ label: 'Date d\'ajout', 	value: 'addDate' }, 
+			{ label: 'Date de modif', 	value: 'setDate' }
+		],
 		
 		initialize: function() {
 			app_view.chatanoo.loadUrl('/session');

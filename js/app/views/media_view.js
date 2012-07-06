@@ -79,7 +79,7 @@ define([
     
 		getEditingValue: function() {
 			return {
-				content: this.$el.find('textarea[name=title]').val(), 
+				title: this.$el.find('textarea[name=title]').val(), 
 				description: this.$el.find('textarea[name=description]').val()
 			};
 		},
@@ -91,7 +91,7 @@ define([
 		
 		showMetas: function( event ) {
 			event.preventDefault();
-			this.createPopin( MetasPopinView, { voType: this.getMediaType(), voId: this.model.get('id') } );
+			this.createPopin( MetasPopinView, { voType: this.getMediaType(), voId: this.model.get('id'), isMedia: true } );
 		},
 		
 		showLinks: function( event ) {

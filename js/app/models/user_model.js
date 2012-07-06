@@ -16,18 +16,18 @@ define([
 	    },
 		
 		unvalidateVo: function() {
-			var r = Chatanoo.users.banUser( this.get("id"), false );
+			var r = Chatanoo.users.banUser( this.get("id"), true );
 			Chatanoo.users.on( r.success, function( userId ) {
+				this.set('_isBan', 1);
 				this.trigger("change change:validate");
-				this.set('_isValid', 1);
 			}, this);
 		},
 		
 		validateVo: function() {
-			var r = Chatanoo.users.banUser( this.get("id"), true );
+			var r = Chatanoo.users.banUser( this.get("id"), false );
 			Chatanoo.users.on( r.success, function( userId ) {
+				this.set('_isBan', 0);
 				this.trigger("change change:unvalidate");
-				this.set('_isValid', 0);
 			}, this);
 		},
 		

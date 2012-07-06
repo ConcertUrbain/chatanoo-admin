@@ -10,6 +10,7 @@ define([
 	
 	'app/collections/users',
 	'app/views/user_view',
+	'app/views/add_user_popin',
 	
 	'text!app/templates/users.tmpl.html',
 	
@@ -17,7 +18,7 @@ define([
 ], function(Backbone, _, $, Chatanoo,
 	AbstractTableView,
 	Config,
-	Users, UserView,
+	Users, UserView, AddUserPopin,
 	template,
 	app_view) {
 	
@@ -27,8 +28,18 @@ define([
 		
 		collection: new Users(),
 		voClass: UserView,
+		addViewClass: AddUserPopin,
 		
-		facets: ['id', 'Nom', 'Prénom', 'Pseudo', 'Email', 'Rôle', 'Date d\'ajout', 'Date de modif'],
+		facets: [
+			{ label: 'id', 				value: 'id' }, 
+			{ label: 'Nom',  			value: 'firstName' },
+			{ label: 'Prénom',  		value: 'lastName' },
+			{ label: 'Pseudo',  		value: 'pseudo' },
+			{ label: 'Email',  			value: 'email' },
+			{ label: 'Rôle',  			value: 'role' },
+			{ label: 'Date d\'ajout',  	value: 'addDate' },
+			{ label: 'Date de modif', 	value: 'setDate' }
+		],
 		
 		initialize: function() {
 			//app_view.chatanoo.loadUrl('/queries/20');

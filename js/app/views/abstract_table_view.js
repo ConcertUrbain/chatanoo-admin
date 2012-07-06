@@ -1,8 +1,11 @@
 define([
 	'Backbone',
 	'Underscore',
-	'jQuery'
-], function(Backbone, _, $) {
+	'jQuery',
+	
+	'app/helpers/create_popin'
+], function(Backbone, _, $,
+	createPopin) {
 	
 	var AbstractTableView = Backbone.View.extend(
 	{
@@ -18,7 +21,8 @@ define([
 		
 		currentRow: null,
 		
-		tableHeight: null,
+		scrollReferer: window,
+		$scrollReferer: null,
 		
 		initialize: function() {
 			var mThis = this;
@@ -30,9 +34,12 @@ define([
 			$(window).resize( function( event ) {
 				mThis.renderHead();
 			});
-			$(window).on( "scroll", function(event) {
-				mThis.processScroll(event);
-			} );
+			
+			if( this.scrollReferer === window ) {
+				$(window).on( "scroll", function(event) {
+					mThis.processScroll(event);
+				} );
+			}
 	    },
 	
 		events: {
@@ -50,17 +57,20 @@ define([
 			this.search();
 			this.renderHead();
 			
-			var mThis = this;
-			this.$el.find(".modal-body").on( "scroll", function(event) {
-				//mThis.processScroll(event);
-			} );
+			if( this.scrollReferer === window ) {
+				this.$scrollReferer = $(window);
+			} else {
+				this.$scrollReferer = this.$el.find( this.scrollReferer );
+				
+				var mThis = this;
+				this.$scrollReferer.on( "scroll", function(event) {
+					mThis.processScroll(event);
+				} );
+			}
 			
-			this.nav = null;
-			this.navTop = 0;
-			this.navIsFixed = 0;
+			this.topNav = null;
+			this.bottomNav = null;
 			this.tableHead = null;
-			this.tableHeadTop = 0;
-			this.tableHeadIsFixed = 0;
 			this.processScroll();
 		
 			return this;
@@ -71,42 +81,89 @@ define([
 			return false;
 		},
 		
-		nav: null,
-		navTop: 0,
-		navIsFixed: 0,
+		topNav: null,
+		bottomNav: null,
 		tableHead: null,
-		tableHeadTop: 0,
-		tableHeadIsFixed: 0,
 		processScroll: function(event) {
-			var scrollTop; 
-			if( event )
-				scrollTop = $(event.currentTarget).scrollTop();
-			else
-				scrollTop = $(window).scrollTop();
+			var scrollTop = this.$scrollReferer.scrollTop();
+			var offset = this.$scrollReferer.height();
 			
-			if( _.isNull( this.nav ) ) {
-				this.nav = this.$el.find('.subnav');
-				this.navTop = this.nav.length && this.nav.offset().top - 40;
+			// TOP NAV
+			if( _.isNull( this.topNav ) ) {
+				var nav = this.$el.find('.topnav');
+				if( nav.length > 0 ) { 
+					nav.removeClass('subnav-fixed');
+					this.topNav = {
+						el: nav,
+						top: nav.length && nav.offset().top,
+						isFixed: 0
+					}
+					if( this.scrollReferer === window ) { 
+						this.topNav.top -= 40;
+					} else {
+						this.topNav.top -= this.$scrollReferer.offset().top;
+					}
+				}
 			}
-			if (scrollTop >= this.navTop && !this.navIsFixed) {
-				this.navIsFixed = 1
-				this.nav.addClass('subnav-fixed')
-			} else if (scrollTop <= this.navTop && this.navIsFixed) {
-				this.navIsFixed = 0
-				this.nav.removeClass('subnav-fixed')
+			if( !_.isNull( this.topNav ) ) {
+				if (scrollTop > this.topNav.top && !this.topNav.isFixed) {
+					this.topNav.isFixed = 1;
+					this.topNav.el.addClass('subnav-fixed');
+				} else if (scrollTop <= this.topNav.top && this.topNav.isFixed) {
+					this.topNav.isFixed = 0;
+					this.topNav.el.removeClass('subnav-fixed');
+				}
 			}
 			
+			// TABLE HEAD
 			if( _.isNull( this.tableHead ) ) {
-				this.tableHead = this.$el.find('.table-fixed-head');
-				var tableRef = this.$el.find( this.tableHead.data('target') );
-				this.tableHeadTop = this.tableHead.length && tableRef.offset().top - 40 - 40;
+				var table = this.$el.find('.table-fixed-head');
+				if( table.length > 0 ) {
+					table.css("display", "none");
+					
+					var tableRef = this.$el.find( table.data('target') );
+					this.tableHead = {
+						el: table,
+						top: table.length && tableRef.offset().top - 40,
+						isFixed: 0
+					}
+					if( this.scrollReferer === window ) { 
+						this.tableHead.top -= 40;
+					} else {
+						this.tableHead.top -= this.$scrollReferer.offset().top;
+					}
+				}
 			}
-			if (scrollTop >= this.tableHeadTop && !this.tableHeadIsFixed) {
-				this.tableHeadIsFixed = 1;
-				this.tableHead.css("display", "block");
-			} else if (scrollTop <= this.tableHeadTop && this.tableHeadIsFixed) {
-				this.tableHeadIsFixed = 0;
-				this.tableHead.css("display", "none");
+			if( !_.isNull( this.tableHead ) ) {
+				if (scrollTop > this.tableHead.top && !this.tableHead.isFixed) {
+					this.tableHead.isFixed = 1;
+					this.tableHead.el.css("display", "block");
+				} else if (scrollTop <= this.tableHead.top && this.tableHead.isFixed) {
+					this.tableHead.isFixed = 0;
+					this.tableHead.el.css("display", "none");
+				}
+			}
+			
+			// BOTTOM NAV
+			if( _.isNull( this.bottomNav ) ) {
+				var nav = this.$el.find('.bottomnav');
+				if( nav.length > 0 ) { 
+					nav.removeClass('subnav-fixed-bottom');
+					this.bottomNav = {
+						el: nav,
+						top: nav.length && nav.offset().top,
+						isFixed: 0
+					}
+				}
+			}
+			if( !_.isNull( this.bottomNav ) ) {
+				if ((scrollTop + offset) < this.bottomNav.top && !this.bottomNav.isFixed) {
+					this.bottomNav.isFixed = 1;
+					this.bottomNav.el.addClass('subnav-fixed-bottom');
+				} else if ((scrollTop + offset) >= this.bottomNav.top && this.bottomNav.isFixed) {
+					this.bottomNav.isFixed = 0;
+					this.bottomNav.el.removeClass('subnav-fixed-bottom');
+				}
 			}
 		},
 
@@ -252,6 +309,12 @@ define([
 				} else {
 					$(tr[tr.length - 1]).after( v.render().$el );
 				}
+
+				$(window).resize();
+				this.$scrollReferer.scrollTop(10000);
+			} else {
+				$(window).resize();
+				createPopin( this.addViewClass, this.addOptions );
 			}
 			
 			return false;

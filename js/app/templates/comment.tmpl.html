@@ -1,8 +1,8 @@
 <% if( !editing ) { %>
 	<td><%= comment.get('id') %></td>
 	<td><%= comment.get('content') %></td>
-	<td><%= _.isNull( comment.get('addDate') ) ? '' : comment.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( comment.get('setDate') ) ? '' : comment.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( comment.get('addDate') ).isUsable() ? '' : comment.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( comment.get('setDate') ).isUsable() ? '' : comment.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini <%= parseInt( comment.get('_isValid') ) ? "btn-danger unvalidate" : "btn-success validate" %>"><%= parseInt( comment.get('_isValid') ) ? "Invalider" : "Valider" %></button>
@@ -21,8 +21,8 @@
 <% } else { %>
 	<td><%= comment.get('id') %></td>
 	<td><textarea name="content"><%= comment.get('content') %></textarea></td>
-	<td><%= _.isNull( comment.get('addDate') ) ? '' : comment.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= _.isNull( comment.get('setDate') ) ? '' : comment.get('setDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( comment.get('addDate') ).isUsable() ? '' : comment.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( comment.get('setDate') ).isUsable() ? '' : comment.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
 			<button class="btn btn-mini btn-success validate-edit">Valider</button>

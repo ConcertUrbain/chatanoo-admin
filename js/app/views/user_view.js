@@ -65,7 +65,7 @@ define([
 		
 		showChangePassword: function( event ) {
 			event.preventDefault();
-			this.createPopin( ChangePasswordPopinView, { voType: "User", voId: this.model.get('id') } );
+			this.createPopin( ChangePasswordPopinView, { user: this.model } );
 		},
 		
 		showLinks: function( event ) {

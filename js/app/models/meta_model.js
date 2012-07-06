@@ -1,8 +1,11 @@
 define([
 	'Backbone',
 	'Underscore',
-	'Chatanoo'
-], function(Backbone, _, Chatanoo) {
+	'Chatanoo',
+	
+	'app/helpers/metas_typeahead'
+], function(Backbone, _, Chatanoo,
+	typeahead) {
 	
 	var Meta = Backbone.Model.extend(
 	{
@@ -14,6 +17,9 @@ define([
 	    initialize: function() {
 		
 	    },
+
+		validateVo: function() {},
+		unvalidateVo: function() {},
 		
 		deleteVo: function() {
 			var r = Chatanoo.search.deleteMeta( this.get("id") );
@@ -47,15 +53,19 @@ define([
 			var meta = _.extend(this.toJSON(), options);
 			delete meta.voId;
 			delete meta.voType;
+			delete meta.isMedia;
 			
 			if( isMedia )
-				r = method( service, [ meta, this.get( 'voId' ), this.get( 'voType' ) ] );
+				r = method.apply( service, [ meta, this.get( 'voId' ), this.get( 'voType' ) ] );
 			else
 				r = method.apply( service, [ meta, this.get( 'voId' ) ] );
 			service.on( r.success, function( metaId ) {
 				this.set(options);
 				this.set("id", metaId);
 				this.trigger("added");
+				
+				if( _( typeahead.name ).contains( meta.name ) ) typeahead.name.push(meta.name);
+				if( _( typeahead.content ).contains( meta.content ) ) typeahead.content.push(meta.content);
 			}, this);
 		}
 	});

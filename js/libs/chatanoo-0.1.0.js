@@ -579,8 +579,8 @@
 			args = [media];
 			return this.getRequest("addMedia", args);
 		},
-		setMedia: function(dataId, dataType) {
-			args = [dataId, dataType];
+		setMedia: function(media) {
+			args = [media];
 			return this.getRequest("setMedia", args);
 		},
 		deleteMedia: function(mediaId, mediaType) {
@@ -840,6 +840,10 @@
 		setUser: function(user) {
 			args = [user];
 			return this.getRequest("setUser", args);
+		},
+		setUserPassword: function(userId, password) {
+			args = [userId, password];
+			return this.getRequest("setUserPassword", args);
 		},
 		deleteUser: function(userId) {
 			args = [userId];

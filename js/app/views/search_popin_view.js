@@ -3,11 +3,11 @@ define([
 	'Underscore',
 	'jQuery',
 	
-	'text!app/templates/links_popin.tmpl.html',
+	'text!app/templates/search_popin.tmpl.html',
 ], function(Backbone, _, $,
 	template) {
 	
-	var LinksPopinView = Backbone.View.extend(
+	var SearchPopinView = Backbone.View.extend(
 	{
 		model: null,
 		
@@ -36,5 +36,5 @@ define([
 		}
 	});
 	
-	return LinksPopinView;
+	return SearchPopinView;
 });

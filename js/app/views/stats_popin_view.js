@@ -16,7 +16,11 @@ define([
 		
 		initialize: function() {
 			//this.model.on("change", this.render, this);
+			var mThis = this;
 			this.$el.addClass("modal hide fade");
+			this.$el.on('hidden', function () {
+			 	mThis.kill();
+			});
 	    },
 		
 		render: function() {
@@ -28,6 +32,7 @@ define([
 		kill: function() {
 			this.$el.unbind()
 			//this.model.off();
+			this.$el.remove();
 		}
 	});
 	

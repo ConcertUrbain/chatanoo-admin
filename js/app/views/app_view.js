@@ -80,7 +80,7 @@ define([
 		render: function() {	
 			var mThis = this;
 			
-			if( _.isNull(this.user) )
+			if( _.isNull(this.user) && $.cookie('session_key') != null)
 				this.getCurrentUser();
 							
 			this.header.render();
