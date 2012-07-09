@@ -10,6 +10,7 @@ define([
 	
 	'text!app/templates/media.tmpl.html',
 	
+	'app/views/view_media_popin',
 	'app/views/datas_popin_view',
 	'app/views/metas_popin_view',
 	'app/views/links_popin_view',
@@ -19,13 +20,14 @@ define([
 	Config,
 	AbstractRowView,
 	template,
-	DatasPopinView, MetasPopinView, LinksPopinView,
+	ViewMediaPopin, DatasPopinView, MetasPopinView, LinksPopinView,
 	app_view) {
 	
 	var MediaView = AbstractRowView.extend({	
 		deleteMessage: "Voulez vous vraiment supprimer ce média ?",
     
 		events: _.extend( {
+    		"click .view": "showView",
     		"click .datas": "showDatas",
 			"click .tags": "showMetas",
 			"click .link": "showLinks"
@@ -84,6 +86,11 @@ define([
 			};
 		},
 		
+		showView: function( event ) {
+			event.preventDefault();
+			this.createPopin( ViewMediaPopin, { media: this.model } );
+		},
+		
 		showDatas: function( event ) {
 			event.preventDefault();
 			this.createPopin( DatasPopinView, { voType: this.getMediaType(), voId: this.model.get('id') } );
@@ -96,7 +103,7 @@ define([
 		
 		showLinks: function( event ) {
 			event.preventDefault();
-			this.createPopin( LinksPopinView, { voType: this.getMediaType(), voId: this.model.get('id') } );
+			this.createPopin( LinksPopinView, { voType: this.getMediaType(), voId: this.model.get('id'), vo: this.model } );
 		}
 	});
 	

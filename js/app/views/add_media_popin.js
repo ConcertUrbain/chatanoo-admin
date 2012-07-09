@@ -24,7 +24,7 @@ define([
 	    },
 		
 		render: function() {
-			this.$el.html(_.template( template, { } ));
+			this.$el.html(_.template( template, { Config: Config } ));
 			return this;
 		},
 		

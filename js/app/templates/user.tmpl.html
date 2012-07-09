@@ -20,7 +20,7 @@
 				<li><a href="#" class="datas"><i class="icon-hdd"></i> Données associés</a></li>
 				<li><a href="#" class="stats"><i class="icon-signal"></i> Statistiques</a></li>
 				<li class="divider"></li>
-				<li><a href="#" class="detete"><i class="icon-remove"></i> Supprimer</a></li>
+				<li><a href="#" class="delete"><i class="icon-remove"></i> Supprimer</a></li>
 			</ul>
 		</div>
 	</td>
@@ -32,9 +32,9 @@
 	<td><textarea name="email"><%= user.get('email') %></textarea></td>
 	<td>
 		<select name="role">
-			<option <% if( user.get('role') == "user") print('selected="seelcted"') %>>user</option>
-			<option <% if( user.get('role') == "moderator") print('selected="seelcted"') %>>moderator</option>
-			<option <% if( user.get('role') == "admin") print('selected="seelcted"') %>>admin</option>
+			<% _( Config.chatanoo.users.role ).each( function(label, value) { %>
+				<option value="<%= value %>" <% if( user.get('role') == value) print('selected="seelcted"') %>><%= label %></option>
+			<% }) %>
 		</select>
 	</td>
 	<td><%= !_( user.get('addDate') ).isUsable() ? '' : user.get('addDate').format( Config.dateFormat ) %></td>

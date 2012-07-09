@@ -9,6 +9,51 @@ define([], function() {
 				pass: "anonymous"
 			},
 			iframe: "http://chatanoo-mobile.dev/index-ios.html",
+			users: {
+				role: {
+					admin: 		'Administrateur',
+					modo: 		'Modérateur',
+					user: 		'Utilisateur',
+					anonymous: 	'Anonyme'
+				}
+			},
+			links: {
+				Query: {
+					parents: ['User'],
+					children: ['Meta', 'Data', 'Item', 'Media'],
+					cantDelete: false
+				},
+				Item: {
+					parents: ['Query', 'User'],
+					children: ['Meta', 'Data', 'Comment', 'Media'],
+					cantDelete: true
+				},
+				Comment: {
+					parents: ['Item', 'User'],
+					children: ['Data'],
+					cantDelete: true
+				},
+				Media: {
+					parents: ['Item', 'User'/*, 'Query'*/],
+					children: ['Meta', 'Data'],
+					cantDelete: true
+				},
+				Data: {
+					parents: ['Item', 'User', 'Query', 'Media', 'Comment'],
+					children: [],
+					cantDelete: true
+				},
+				Meta: {
+					parents: ['Item', 'Query', 'Media'],
+					children: [],
+					cantDelete: false
+				},
+				User: {
+					parents: [],
+					children: ['Item', 'Query', 'Media', 'Comment'],
+					cantDelete: false
+				}
+			},
 			datas: {
 				Adress: {
 					title: "Adresse",

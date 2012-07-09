@@ -51,10 +51,10 @@
 		    	<label class="control-label" for="input07">Rôle</label>
 		    	<div class="controls">
 		    		<select name="role" id="input07">
-						<option value="admin">Administrateur</option>
-						<option value="modo">Modérateur</option>
-						<option value="user">Utilisateur</option>
-						<option value="anonymous">Anonyme</option>
+						<option value="">Selectionner un rôle</option>
+						<% _( Config.chatanoo.users.role ).each( function(label, value) { %>
+							<option value="<%= value %>"><%= label %></option>
+						<% }) %>
 					</select>
 		    	</div>
 		    </div>

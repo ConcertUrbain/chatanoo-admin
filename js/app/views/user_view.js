@@ -70,7 +70,7 @@ define([
 		
 		showLinks: function( event ) {
 			event.preventDefault();
-			this.createPopin( LinksPopinView, { voType: "User", voId: this.model.get('id') } );
+			this.createPopin( LinksPopinView, { voType: "User", voId: this.model.get('id'), vo: this.model } );
 		},                                      
 		                                        
 		showStats: function( event ) {          
