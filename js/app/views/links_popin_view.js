@@ -92,7 +92,7 @@ define([
 					break;
 				case "Media":
 					switch( linkType ) {
-						case "Item": 	service = Chatanoo.items; 	method = Chatanoo.items.getItemsByMediaId; 		args = [vo.get('id')]; 								break;
+						case "Item": 	service = Chatanoo.items; 	method = Chatanoo.items.getItemsByMediaId; 		args = [vo.get('id'), vo.get('type')]; 				break;
 						//case "Query": 	service = Chatanoo.queries; method = Chatanoo.queries.getQueryById; 		args = [vo.get('_query')]; 							break;
 						case "User": 	service = Chatanoo.users; 	method = Chatanoo.users.getUserById; 			args = [vo.get('_user')]; 							uniq = true; break;
 						case "Meta": 	service = Chatanoo.search; 	method = Chatanoo.search.getMetasByVo; 			args = [vo.get('id'), 'Media_' + vo.get('type')]; 	break;
@@ -137,6 +137,13 @@ define([
 						});
 					}
 				}
+				mThis.count--;
+				if( mThis.count <= 0 ) {
+					mThis.render();
+				}
+			}, this);
+			service.on( r.error, function( results ) {
+				mThis.links[ linkType ] = [];
 				mThis.count--;
 				if( mThis.count <= 0 ) {
 					mThis.render();

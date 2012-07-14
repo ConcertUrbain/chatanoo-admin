@@ -103,7 +103,7 @@ define([
 		
 		showLinks: function( event ) {
 			event.preventDefault();
-			this.createPopin( LinksPopinView, { voType: this.getMediaType(), voId: this.model.get('id'), vo: this.model } );
+			this.createPopin( LinksPopinView, { voType: "Media", voId: this.model.get('id'), vo: this.model } );
 		}
 	});
 	
