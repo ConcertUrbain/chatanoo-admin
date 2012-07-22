@@ -160,23 +160,27 @@ define([
 				return this;
 			
 			var mThis = this;
+			var parents = [], children = [];
 			var conf = Config.chatanoo.links[ this.voType ];
-			var parenstMax = 0; _( conf.parents ).each( function( type ) { var size = mThis.links[type].length; if( parenstMax < size ) parenstMax = size; });
-			var childrenMax = 0; _( conf.children ).each( function( type ) { var size = mThis.links[type].length; if( childrenMax < size ) childrenMax = size; });
-			var horizonMax = ( conf.parents.length >= conf.children.length ) ? conf.parents.length : conf.children.length;
+			var parenstMax = 0; _( conf.parents ).each( function( type ) { if(mThis.links[type].length > 0) parents.push( type ); var size = mThis.links[type].length; if( parenstMax < size ) parenstMax = size; });
+			var childrenMax = 0; _( conf.children ).each( function( type ) { if(mThis.links[type].length > 0) children.push( type ); var size = mThis.links[type].length; if( childrenMax < size ) childrenMax = size; });
+			var horizonMax = ( parents.length >= children.length ) ? parents.length : children.length;
 			var padding = 10;
 			
 			var paperWidth = this.cellSize.width * horizonMax + this.cellSize.horizontalGap * (horizonMax - 1) + padding * 2;
 			var paperHeight = this.cellSize.height + this.cellSize.verticalTypeGap * 2 + this.cellSize.height * (parenstMax + childrenMax) + this.cellSize.verticalGap * (parenstMax + childrenMax - 2) + padding * 2;
 			
+			if(paperWidth < 580) paperWidth = 580;
+			if(paperHeight < 380) paperHeight = 380;				
+			
 			var paper = Raphael( this.$el.find('#graph')[0], paperWidth, paperHeight );
 			
 			var x, y;
-			var width = this.cellSize.width * conf.parents.length + this.cellSize.horizontalGap * (conf.parents.length - 1);
+			var width = this.cellSize.width * parents.length + this.cellSize.horizontalGap * (parents.length - 1);
 			var height = this.cellSize.height * parenstMax + this.cellSize.verticalGap * (parenstMax - 1);
 			
 			var block, blocks = [];
-			_( conf.parents ).each( function(type, index) {
+			_( parents ).each( function(type, index) {
 				var vos = mThis.links[ type ];
 				x = (paperWidth - width) / 2 + index * (mThis.cellSize.width + mThis.cellSize.horizontalGap) + padding;
 				_( vos ).each( function (vo, i) {
@@ -197,8 +201,8 @@ define([
 			blocks.push( center );
 			
 			var offsetY = height + padding + 2 * this.cellSize.verticalTypeGap + this.cellSize.height;
-			width = this.cellSize.width * conf.children.length + this.cellSize.horizontalGap * (conf.children.length - 1);
-			_( conf.children ).each( function(type, index) {
+			width = this.cellSize.width * children.length + this.cellSize.horizontalGap * (children.length - 1);
+			_( children ).each( function(type, index) {
 				var vos = mThis.links[ type ];
 				x = (paperWidth - width) / 2 + index * (mThis.cellSize.width + mThis.cellSize.horizontalGap) + padding;
 				_( vos ).each( function (vo, i) {
@@ -227,10 +231,19 @@ define([
 			});
 			
 			_( blocks ).each( function( block ) {
-				mThis.graphLinks.push( paper.createGraphCell( block.vo, block.x, block.y, mThis ) );
+				var b = paper.createGraphCell( block.vo, block.x, block.y, mThis); 
+				mThis.graphLinks.push( b );
+				if( block.position == "center" ) {
+					b.select(true);
+					mThis.renderVo( block.vo );
+				}
 			});
 			
 			return this;
+		},
+		
+		renderVo: function(vo) {
+			console.log( vo );
 		},
 		
 		addLink: function() {
@@ -299,7 +312,7 @@ define([
 			}
 		});
 		cell.click( function() {
-			console.log( vo );
+			delegate.renderVo( vo );	
 			_( delegate.graphLinks ).each( function(r) {
 				r.select(false);
 			})
