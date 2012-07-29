@@ -35,7 +35,9 @@ define([
 		count: 0,
 		
 		events: {
-			'click .add': 'addLink'
+			'click .add': 'addLink',
+			'click .graph-control .delete-link': 'deleteLink',
+			'click .graph-control .delete-vo': 'deleteVo',
 		},
 		
 		initialize: function(options) {
@@ -242,12 +244,43 @@ define([
 			return this;
 		},
 		
+		currentVo: null,
 		renderVo: function(vo) {
-			console.log( vo );
+			this.currentVo = vo;
+			
+			var tmpl = "";
+			switch( vo.__className ) {
+				case "Vo_Query": 	tmpl = "links_query.tmpl.html"; 	break;
+				case "Vo_Item": 	tmpl = "links_item.tmpl.html"; 		break;
+				case "Vo_Comment": 	tmpl = "links_comment.tmpl.html"; 	break;
+				case "Vo_User": 	tmpl = "links_user.tmpl.html"; 	break;
+				case "Vo_Meta": 	tmpl = "links_meta.tmpl.html"; 			break;
+			}
+			if( vo.__className.indexOf('Vo_Data') != -1 )
+				tmpl = "links_data.tmpl.html";
+			if( vo.__className.indexOf('Vo_Media') != -1 )
+				tmpl = "links_media.tmpl.html";
+			
+			var mThis = this;
+			require(['text!app/templates/' + tmpl], function(tmpl) {
+				mThis.$el.find('.graph-control').html( _.template( tmpl, { vo: vo, Config: Config } ) );
+			});
 		},
 		
 		addLink: function() {
 			createPopin( AddLinkPopin, {} );
+			return false;
+		},
+		
+		deleteLink: function() {
+			
+			
+			return false;
+		},
+		
+		deleteVo: function() {
+			
+			
 			return false;
 		},
 		
