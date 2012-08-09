@@ -15,6 +15,16 @@ define([
 		
 		load: function() {},
 		
+		getVoById: function(id) {
+			var objects = this.toArray();
+			var len = objects.length;
+			for(var i = 0; i < len; i++) {
+				var vo = objects[i];
+				if( vo.get('id') == id )
+					return vo;
+			}
+		},
+		
 		_filters: function(vos) {
 			var mThis = this;
 			var result = vos;
@@ -23,8 +33,8 @@ define([
 				if ( prop[1] != 'text' ) {
 					result = _(result).filter( function(vo) {
 						var value = mThis._normalizeValue( vo.get(prop[1]) );
-						if( !_.isNull( value ) && !_.isUndefined( value ) && value != "" )
-							return value.indexOf(facet[prop[0]]) != -1;
+						if( !_.isNull( value ) && !_.isUndefined( value ) && typeof value === "string" && value != "" )
+							return value.toLowerCase().indexOf(facet[prop[0]].toLowerCase()) != -1;
 						return false;
 					});
 				} else {
@@ -32,8 +42,8 @@ define([
 						var i = vo.toJSON();
 						for( var p in i ) {
 							var value = mThis._normalizeValue( vo.get(p) );
-							if( !_.isNull( value ) && !_.isUndefined( value ) && value != "" ) {
-								if( value.indexOf(facet[prop[0]]) != -1 )
+							if( !_.isNull( value ) && !_.isUndefined( value ) && typeof value === "string" && value != "" ) {
+								if( value.toLowerCase().indexOf(facet[prop[0]].toLowerCase()) != -1 )
 									return true;
 							}
 						}

@@ -268,7 +268,17 @@ define([
 		},
 		
 		addLink: function() {
-			createPopin( AddLinkPopin, {} );
+			var popin = createPopin( AddLinkPopin, {
+				voType: this.voType,
+				voId: 	this.voId,
+				vo: 	this.vo
+			} );
+			
+			popin.on('added', function() {
+				this.load();
+				popin.off();
+			}, this);
+			
 			return false;
 		},
 		

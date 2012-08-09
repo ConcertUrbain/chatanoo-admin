@@ -55,6 +55,19 @@ define([
 				if( _(callback).isUsable() && _.isFunction(callback))
 					callback();
 			}, this);
+		},
+		
+		getVoById: function(id, type) {
+			if( !_.isUsable( this.collections[type] ) )
+				return null;
+			
+			var objects = this.collections[type].toArray();
+			var len = objects.length;
+			for(var i = 0; i < len; i++) {
+				var vo = objects[i];
+				if( vo.get('id') == id )
+					return vo;
+			}
 		}
 	});
 	

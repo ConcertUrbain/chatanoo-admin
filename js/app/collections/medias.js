@@ -25,6 +25,16 @@ define([
 				mThis.calculate();
 				mThis.trigger("load");
 			}, this);
+		},
+		
+		getVoById: function(id, type) {
+			var objects = this.toArray();
+			var len = objects.length;
+			for(var i = 0; i < len; i++) {
+				var vo = objects[i];
+				if( vo.get('id') == id && vo.get('type') == type)
+					return vo;
+			}
 		}
 	});
 
