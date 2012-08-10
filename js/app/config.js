@@ -96,8 +96,8 @@ define([], function() {
 			url: 'http://localhost:3001'
 		},
 		mediasCenter: {
-			url: "http://ms.dring93.org/",
-			uploadURL: "http://ms.dring93.org/upload"
+			url: "http://mc.chatanoo.org/",
+			uploadURL: "http://mc.chatanoo.org/upload"
 		},
 		dateFormat: "DD/MM/YYYY"
 	}
