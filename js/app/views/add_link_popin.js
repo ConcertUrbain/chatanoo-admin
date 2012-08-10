@@ -123,7 +123,7 @@ define([
 				case 'Meta': 	properties = ['name', 'content']; 					break;
 				case 'Data': 	properties = 'all'; 								break;
 				case 'Item': 	properties = ['title']; 							break;
-				case 'Query': 	properties = ['title']; 							break;
+				case 'Query': 	properties = ['content']; 							break;
 				case 'Comment': properties = ['content']; 							break;
 				case 'Media': 	properties = ['title']; 							break;
 			}
@@ -243,7 +243,7 @@ define([
 						case 'User': 
 							service = Chatanoo.items; 	
 							method = Chatanoo.items.setItem; 	
-							vo.set('_user', voId);
+							this.vo.set('_user', voId);
 							args = [this.vo.toJSON()];
 							break;
 						case 'Meta': 	
@@ -280,7 +280,7 @@ define([
 						case 'User': 
 							service = Chatanoo.queries; 	
 							method = Chatanoo.queries.setQuery; 	
-							vo.set('_user', voId);
+							this.vo.set('_user', voId);
 							args = [this.vo.toJSON()];
 							break;
 						case 'Meta': 
@@ -313,7 +313,7 @@ define([
 						case 'User': 
 							service = Chatanoo.medias; 	
 							method = Chatanoo.medias.setMedia; 	
-							vo.set('_user', voId);
+							this.vo.set('_user', voId);
 							media = this.vo.toJSON(); delete media.type;
 							args = [media];
 							break;
@@ -346,7 +346,7 @@ define([
 						case 'User': 
 							service = Chatanoo.comments; 	
 							method = Chatanoo.comments.setComment; 	
-							vo.set('_user', voId);
+							this.vo.set('_user', voId);
 							args = [this.vo.toJSON()];
 							break;
 						case 'Data': 	

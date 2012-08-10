@@ -21,37 +21,37 @@ define([], function() {
 				Query: {
 					parents: ['User'],
 					children: ['Meta', 'Data', 'Item', 'Media'],
-					cantDelete: false
+					canDelete: false
 				},
 				Item: {
 					parents: ['Query', 'User'],
 					children: ['Meta', 'Data', 'Comment', 'Media'],
-					cantDelete: true
+					canDelete: true
 				},
 				Comment: {
 					parents: ['Item', 'User'],
 					children: ['Data'],
-					cantDelete: true
+					canDelete: true
 				},
 				Media: {
 					parents: ['Item', 'User'/*, 'Query'*/],
 					children: ['Meta', 'Data'],
-					cantDelete: true
+					canDelete: true
 				},
 				Data: {
 					parents: ['Item', 'User', 'Query', 'Media', 'Comment'],
 					children: [],
-					cantDelete: true
+					canDelete: true
 				},
 				Meta: {
 					parents: ['Item', 'Query', 'Media'],
 					children: [],
-					cantDelete: false
+					canDelete: false
 				},
 				User: {
 					parents: [],
 					children: ['Item', 'Query', 'Media', 'Comment'],
-					cantDelete: false
+					canDelete: false
 				}
 			},
 			datas: {

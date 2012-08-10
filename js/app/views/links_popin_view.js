@@ -6,6 +6,14 @@ define([
 	
 	'Config',
 	
+	'app/models/comment_model',
+	'app/models/data_model',
+	'app/models/item_model',
+	'app/models/media_model',
+	'app/models/meta_model',
+	'app/models/query_model',
+	'app/models/user_model',
+	
 	'app/helpers/create_popin',
 	
 	'app/views/add_link_popin',
@@ -15,6 +23,7 @@ define([
 	"libs/raphael-2.1.0"
 ], function(Backbone, _, $, Chatanoo,
 	Config,
+	Comment, Data, Item, Media, Meta, Query, User,
 	createPopin,
 	AddLinkPopin,
 	template) {
@@ -249,21 +258,25 @@ define([
 			this.currentVo = vo;
 			
 			var tmpl = "";
+			var canDelete = false;
 			switch( vo.__className ) {
-				case "Vo_Query": 	tmpl = "links_query.tmpl.html"; 	break;
-				case "Vo_Item": 	tmpl = "links_item.tmpl.html"; 		break;
-				case "Vo_Comment": 	tmpl = "links_comment.tmpl.html"; 	break;
-				case "Vo_User": 	tmpl = "links_user.tmpl.html"; 	break;
-				case "Vo_Meta": 	tmpl = "links_meta.tmpl.html"; 			break;
+				case "Vo_Query": 	tmpl = "links_query.tmpl.html"; 	canDelete = Config.chatanoo.links.Query.canDelete; 		break;
+				case "Vo_Item": 	tmpl = "links_item.tmpl.html"; 		canDelete = Config.chatanoo.links.Item.canDelete; 		break;
+				case "Vo_Comment": 	tmpl = "links_comment.tmpl.html"; 	canDelete = Config.chatanoo.links.Comment.canDelete; 	break;
+				case "Vo_User": 	tmpl = "links_user.tmpl.html"; 		canDelete = Config.chatanoo.links.User.canDelete; 		break;
+				case "Vo_Meta": 	tmpl = "links_meta.tmpl.html"; 		canDelete = Config.chatanoo.links.Meta.canDelete; 		break;
 			}
-			if( vo.__className.indexOf('Vo_Data') != -1 )
-				tmpl = "links_data.tmpl.html";
-			if( vo.__className.indexOf('Vo_Media') != -1 )
-				tmpl = "links_media.tmpl.html";
+			if( vo.__className.indexOf('Vo_Data') != -1 ) {
+				tmpl = "links_data.tmpl.html"; canDelete = Config.chatanoo.links.Data.canDelete;
+			}
+			if( vo.__className.indexOf('Vo_Media') != -1 ) {
+				tmpl = "links_media.tmpl.html"; canDelete = 
+				Config.chatanoo.links.Media.canDelete;
+			}
 			
 			var mThis = this;
 			require(['text!app/templates/' + tmpl], function(tmpl) {
-				mThis.$el.find('.graph-control').html( _.template( tmpl, { vo: vo, Config: Config } ) );
+				mThis.$el.find('.graph-control').html( _.template( tmpl, { vo: vo, canDelete: canDelete, Config: Config } ) );
 			});
 		},
 		
@@ -283,13 +296,195 @@ define([
 		},
 		
 		deleteLink: function() {
+			var service, method, args = [];
+			switch(true) {
+				case this.vo.get('__className') == "Vo_User":
+					switch(true) {
+						case this.currentVo__className == "Vo_Comment":
+							service = Chatanoo.comments;
+							method = Chatanoo.comments.setComment
+							this.currentVo._user = 0;
+							args = [this.currentVo];
+							break;
+						case this.currentVo.__className == "Vo_Item":
+							service = Chatanoo.items;
+							method = Chatanoo.items.setItem
+							this.currentVo._user = 0;
+							args = [this.currentVo];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Media") != -1:
+							service = Chatanoo.medias;
+							method = Chatanoo.medias.setMedia
+							this.currentVo._user = 0;
+							args = [this.currentVo];
+							break;
+						case this.currentVo.__className == "Vo_Query":
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.setQuery
+							this.currentVo._user = 0;
+							args = [this.currentVo];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Data") != -1:
+							service = Chatanoo.users;
+							method = Chatanoo.users.removeDataFromVo
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id')];
+							break;
+					}
+					break;
+				case this.vo.get('__className') == "Vo_Item":
+					switch(true) {
+						case this.currentVo.__className == "Vo_Comment":
+							service = Chatanoo.items;
+							method = Chatanoo.items.removeCommentFromItem
+							args = [this.currentVo.id, this.vo.get('id')];
+							break;
+						case this.currentVo.__className == "Vo_Query":
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.removeItemFromQuery
+							args = [this.vo.get('id'), this.currentVo.id];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Media") != -1:
+							service = Chatanoo.items;
+							method = Chatanoo.items.removeMediaFromItem
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id')];
+							break;
+						case this.currentVo.__className == "Vo_Meta":
+							service = Chatanoo.items;
+							method = Chatanoo.items.removeMetaFromVo
+							args = [this.currentVo.id, this.vo.get('id')];
+							break;
+						case this.currentVo.__className == "Vo_User":
+							service = Chatanoo.items;
+							method = Chatanoo.items.setItem
+							this.vo.set('_user', 0);
+							args = [this.vo.toJSON()];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Data") != -1:
+							service = Chatanoo.items;
+							method = Chatanoo.items.removeDataFromVo
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id')];
+							break;
+					}
+					break;
+				case this.vo.get('__className') == "Vo_Query":
+					switch(true) {
+						case this.currentVo.__className == "Vo_Item":
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.removeItemFromQuery
+							args = [this.currentVo.id, this.vo.get('id')];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Media") != -1:
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.removeMediaFromQuery
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id')];
+							break;
+						case this.currentVo.__className == "Vo_Meta":
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.removeMetaFromVo
+							args = [this.currentVo.id, this.vo.get('id')];
+							break;
+						case this.currentVo.__className == "Vo_User":
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.setQuery
+							this.vo.set('_user', 0);
+							args = [this.vo.toJSON()];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Data") != -1:
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.removeDataFromVo
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id')];
+							break;
+					}
+					break;
+				case this.vo.get('__className') == "Vo_Comment":
+					switch(true) {
+						case this.currentVo.__className == "Vo_Item":
+							service = Chatanoo.items;
+							method = Chatanoo.items.removeCommentFromItem
+							args = [this.vo.get('id'), this.currentVo.id];
+							break;
+						case this.currentVo.__className == "Vo_User":
+							service = Chatanoo.comments;
+							method = Chatanoo.comments.setComment
+							this.vo.set('_user', 0);
+							args = [this.vo.toJSON()];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Data") != -1:
+							service = Chatanoo.comments;
+							method = Chatanoo.comments.removeDataFromVo
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id')];
+							break;
+					}
+					break;
+				case this.vo.get('__className').indexOf("Vo_Media") != -1:
+					switch(true) {
+						case this.currentVo.__className == "Vo_Query":
+							service = Chatanoo.queries;
+							method = Chatanoo.queries.removeMediaFromQuery
+							args = [this.vo.get('id'), this.vo.get('type'), this.currentVo.id];
+							break;
+						case this.currentVo.__className == "Vo_Item":
+							service = Chatanoo.items;
+							method = Chatanoo.items.removeMediaFromItem
+							args = [this.vo.get('id'), this.vo.get('type'), this.currentVo.id];
+							break;
+						case this.currentVo.__className == "Vo_Meta":
+							service = Chatanoo.medias;
+							method = Chatanoo.medias.removeMetaFromMedia
+							args = [this.currentVo.id, this.vo.get('id'), this.vo.get('type')];
+							break;
+						case this.currentVo.__className == "Vo_User":
+							service = Chatanoo.medias;
+							method = Chatanoo.medias.setQuery;
+							this.vo.set('_user', 0);
+							args = [this.vo.toJSON()];
+							break;
+						case this.currentVo.__className.indexOf("Vo_Data") != -1:
+							service = Chatanoo.medias;
+							method = Chatanoo.medias.removeDataFromMedia
+							args = [this.currentVo.id, _.getLast( this.currentVo.__className ), this.vo.get('id'), this.vo.get('type')];
+							break;
+					}
+					break;
+			}
 			
+			if( !confirm( "Êtes-vous sûr de vouloir supprimer ce lien ?" ) )
+				return false;
+			
+			var r = method.apply( service, args );
+			service.on( r.success, function( results ) {
+				this.load();
+			}, this);
 			
 			return false;
 		},
 		
 		deleteVo: function() {
+			if( !confirm( "Êtes-vous sûr de vouloir supprimer cette objet ?" ) )
+				return false;
 			
+			var vo;
+			switch(true) {
+				case this.currentVo.__className == 'Vo_User': 		vo = new User(this.currentVo); 		break;
+				case this.currentVo.__className == 'Vo_Item': 		vo = new Item(this.currentVo); 		break;
+				case this.currentVo.__className == 'Vo_Query': 		vo = new Query(this.currentVo); 	break;
+				case this.currentVo.__className == 'Vo_Comment': 	vo = new Comment(this.currentVo); 	break;
+				case this.currentVo.__className == 'Vo_Meta': 		vo = new Meta(this.currentVo); 		break;
+				
+				case this.currentVo.__className.indexOf('Vo_Media') != -1: 
+					vo = new Media(this.currentVo); 
+					vo.set('type', _.getLast( this.currentVo.__className ));
+					break;
+				case this.currentVo.__className.indexOf('Vo_Data') != -1: 
+					vo = new Data(this.currentVo); 
+					vo.set('type', _.getLast( this.currentVo.__className ));
+					break;
+			}
+			
+			vo.on('delete', function() {
+				this.load();
+			}, this);
+			vo.deleteVo();
 			
 			return false;
 		},

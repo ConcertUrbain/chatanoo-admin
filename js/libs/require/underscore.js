@@ -6,6 +6,9 @@ define([
 	_.mixin({
 		isUsable: function(obj) {
 		  	return !_.isNull(obj) && !_.isUndefined(obj) && obj != "";
+		},
+		getLast: function(str) {
+		  	return _( str.split('_') ).last();
 		}
 	});
 	
