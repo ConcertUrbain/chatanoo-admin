@@ -324,6 +324,11 @@ define([
 							this.currentVo._user = 0;
 							args = [this.currentVo];
 							break;
+						case this.currentVo.__className == "Vo_Meta":
+							service = Chatanoo.users;
+							method = Chatanoo.users.removeMetaFromVo
+							args = [this.currentVo.id, this.vo.get('id')];
+							break;
 						case this.currentVo.__className.indexOf("Vo_Data") != -1:
 							service = Chatanoo.users;
 							method = Chatanoo.users.removeDataFromVo

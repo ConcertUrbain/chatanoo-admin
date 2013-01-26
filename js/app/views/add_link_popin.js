@@ -236,6 +236,11 @@ define([
 							media = media.toJSON(); delete media.type;
 							args = [media];	
 							break;
+						case 'Meta': 	
+							service = Chatanoo.users; 	
+							method = Chatanoo.users.addMetaIntoVo; 	
+							args = [this._collection.getVoById(voId).toJSON(), this.vo.get('id')];
+							break;
 					}
 					break;
 				case 'Item':

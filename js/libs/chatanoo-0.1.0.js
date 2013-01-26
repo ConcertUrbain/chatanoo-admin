@@ -853,6 +853,14 @@
 			args = [userId, trueOrFalse];
 			return this.getRequest("banUser", args);
 		},
+		addMetaIntoVo: function(meta, voId) {
+			args = [meta, voId];
+			return this.getRequest("addMetaIntoVo", args);
+		},
+		removeMetaFromVo: function(metaId, voId) {
+			args = [metaId, voId];
+			return this.getRequest("removeMetaFromVo", args);
+		},
 		addDataIntoVo: function(data, voId) {
 			args = [data, voId];
 			return this.getRequest("addDataIntoVo", args);

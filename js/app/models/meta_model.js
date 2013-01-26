@@ -43,6 +43,7 @@ define([
 				case 'Query': service = Chatanoo.queries; method = service.addMetaIntoVo; break;
 				case 'Item': service = Chatanoo.items; method = service.addMetaIntoVo; break;
 				case 'Comment': service = Chatanoo.comments; method = service.addMetaIntoVo; break;
+				case 'User': service = Chatanoo.users; method = service.addMetaIntoVo; break;
 				
 				case 'Sound':
 				case 'Video':

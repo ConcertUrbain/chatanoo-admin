@@ -13,13 +13,14 @@ define([
 	'app/views/change_password_popin_view',
 	'app/views/links_popin_view',
 	'app/views/stats_popin_view',
+	'app/views/metas_popin_view',
 	
 	'app/views/app_view'
 ], function(Backbone, _, $,
 	Config,
 	AbstractRowView,
 	template,
-	DatasPopinView, ChangePasswordPopinView, LinksPopinView, StatsPopinView,
+	DatasPopinView, ChangePasswordPopinView, LinksPopinView, StatsPopinView, MetasPopinView,
 	app_view) {
 	
 	var UserView = AbstractRowView.extend({	
@@ -29,6 +30,7 @@ define([
     		"click .datas": "showDatas",
 			"click .pass": "showChangePassword",
 			"click .link": "showLinks",
+			"click .tags": "showMetas",
 			"click .stats": "showStats"
 		}, AbstractRowView.prototype.events ),
     
@@ -71,7 +73,12 @@ define([
 		showLinks: function( event ) {
 			event.preventDefault();
 			this.createPopin( LinksPopinView, { voType: "User", voId: this.model.get('id'), vo: this.model } );
-		},                                      
+		},      
+
+		showMetas: function( event ) {          
+			event.preventDefault();             
+			this.createPopin( MetasPopinView, { voType: "User", voId: this.model.get('id') } );
+		},                                
 		                                        
 		showStats: function( event ) {          
 			event.preventDefault();             

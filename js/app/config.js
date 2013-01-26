@@ -2,13 +2,13 @@ define([], function() {
 	return {
 		chatanoo: {
 			//url: 'http://preprod.ws.dring93.org/services',
-			url: 'http://chatanoo-ws.dev/services',
-			api_key: 'D93_qJlCaSsBbYBYypwF9TT8KmCOxhuZ',
+			url: 'http://ws.chatanoo.org/services',
+			api_key: 'MJC94_5f86d751cf83daecf09c4493e8',
 			anonymous_user: {
 				login: "anonymous",
 				pass: "anonymous"
 			},
-			iframe: "http://chatanoo-mobile.dev/index-ios.html",
+			iframe: "http://m.test.chatanoo.org/index-ios.html",
 			users: {
 				role: {
 					admin: 		'Administrateur',
@@ -50,7 +50,7 @@ define([], function() {
 				},
 				User: {
 					parents: [],
-					children: ['Item', 'Query', 'Media', 'Comment'],
+					children: ['Item', 'Query', 'Media', 'Comment', 'Data', 'Meta'],
 					canDelete: false
 				}
 			},
@@ -93,7 +93,7 @@ define([], function() {
 			}
 		},
 		notify: {
-			url: 'http://localhost:3001'
+			url: 'http://notify.chatanoo.org:3131'
 		},
 		mediasCenter: {
 			url: "http://mc.chatanoo.org/",
