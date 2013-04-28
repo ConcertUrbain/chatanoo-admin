@@ -5,7 +5,7 @@
 	<td><%= !_( comment.get('setDate') ).isUsable() ? '' : comment.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
-			<button class="btn btn-mini <%= parseInt( comment.get('_isValid') ) ? "btn-success validate" : "btn-danger unvalidate" %>"><%= parseInt( comment.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
+			<button class="btn btn-mini <%= parseInt( comment.get('_isValid') ) ? "btn-success unvalidate" : "btn-danger validate" %>"><%= parseInt( comment.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
 			<button class="btn btn-mini <%= parseInt( comment.get('_isValid') ) ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 			</button>

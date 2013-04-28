@@ -6,7 +6,7 @@
 	<td><%= !_( item.get('setDate') ).isUsable() ? '' : item.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 	   <div class="btn-group btn-group-action">
-	   	<button class="btn btn-mini <%= item.get('_isValid') ? "btn-success validate" : "btn-danger unvalidate" %>"><%= item.get('_isValid') ? "Affichié" : "Masqué" %></button>
+	   	<button class="btn btn-mini <%= item.get('_isValid') ? "btn-success unvalidate" : "btn-danger validate" %>"><%= item.get('_isValid') ? "Affiché" : "Masqué" %></button>
 	   	<button class="btn btn-mini <%= item.get('_isValid') ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
 	   		<span class="caret"></span>
 	   	</button>

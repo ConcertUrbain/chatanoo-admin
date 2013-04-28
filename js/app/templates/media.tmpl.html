@@ -15,7 +15,7 @@
 	<td><%= !_( media.get('setDate') ).isUsable() ? '' : media.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
-			<button class="btn btn-mini <%= parseInt( media.get('_isValid') ) ? "btn-success validate" : "btn-danger unvalidate" %>"><%= parseInt( media.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
+			<button class="btn btn-mini <%= parseInt( media.get('_isValid') ) ? "btn-success unvalidate" : "btn-danger validate" %>"><%= parseInt( media.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
 			<button class="btn btn-mini <%= parseInt( media.get('_isValid') ) ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 			</button>

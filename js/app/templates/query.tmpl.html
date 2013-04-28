@@ -6,7 +6,7 @@
 	<td><%= !_( query.get('setDate') ).isUsable() ? '' : query.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
-			<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-success validate" : "btn-danger unvalidate" %>"><%= parseInt( query.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
+			<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-success unvalidate" : "btn-danger validate" %>"><%= parseInt( query.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
 			<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 			</button>
