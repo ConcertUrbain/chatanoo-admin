@@ -9,8 +9,8 @@
 	<td><%= !_( user.get('setDate') ).isUsable() ? '' : user.get('setDate').format( Config.dateFormat ) %></td>
 	<td class="action">
 		<div class="btn-group btn-group-action">
-			<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger unvalidate" : "btn-success validate" %>"><%= !parseInt( user.get('_isBan') ) ? "Bannir" : "Accepter" %></button>
-			<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-danger" : "btn-success" %> dropdown-toggle" data-toggle="dropdown">
+			<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-success validate" : "btn-danger unvalidate" %>"><%= !parseInt( user.get('_isBan') ) ? "Accepté" : "Banni" %></button>
+			<button class="btn btn-mini <%= !parseInt( user.get('_isBan') ) ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu pull-right">
