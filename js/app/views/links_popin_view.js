@@ -526,7 +526,7 @@ define([
 		var label = "";
 		switch( vo.__className ) {
 			case "Vo_Query": 	label = "Question"; 	break;
-			case "Vo_Item": 	label = "Item"; 		break;
+			case "Vo_Item": 	label = "Contribution";	break;
 			case "Vo_Comment": 	label = "Commentaire"; 	break;
 			case "Vo_User": 	label = "Utilisateur"; 	break;
 			case "Vo_Meta": 	label = "Tag"; 			break;

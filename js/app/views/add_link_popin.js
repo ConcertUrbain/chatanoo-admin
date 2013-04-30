@@ -179,7 +179,7 @@ define([
 					case 'Data': 	option.label = "Donnée associée"; 	break; 
 					case 'Meta': 	option.label = "Tag"; 				break; 
 					case 'Query': 	option.label = "Question"; 			break; 
-					case 'Item': 	option.label = "Item"; 				break; 
+					case 'Item': 	option.label = "Contribution";		break; 
 					case 'Comment': option.label = "Commentaire"; 		break; 
 					case 'Media': 	option.label = "Média"; 			break; 
 				}
