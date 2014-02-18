@@ -26,16 +26,18 @@ define([
 		
 		initialize: function() {
 			var mThis = this;
-			
-			this.socket = io.connect( Config.notify.url );
-			this.socket.on('connect', 	function(data) { mThis.connect(data); 	});
-			this.socket.on('queries', 	function(data) { mThis.queries(data); 	});
-			this.socket.on('search', 	function(data) { mThis.search(data); 	});
-			this.socket.on('comments', 	function(data) { mThis.comments(data); 	});
-			this.socket.on('medias', 	function(data) { mThis.medias(data); 	});
-			this.socket.on('items', 	function(data) { mThis.items(data); 	});
-			this.socket.on('datas', 	function(data) { mThis.datas(data); 	});
-			this.socket.on('users', 	function(data) { mThis.users(data); 	});
+				
+			if(window.io) {
+				this.socket = io.connect( Config.notify.url );
+				this.socket.on('connect', 	function(data) { mThis.connect(data); 	});
+				this.socket.on('queries', 	function(data) { mThis.queries(data); 	});
+				this.socket.on('search', 	function(data) { mThis.search(data); 	});
+				this.socket.on('comments', 	function(data) { mThis.comments(data); 	});
+				this.socket.on('medias', 	function(data) { mThis.medias(data); 	});
+				this.socket.on('items', 	function(data) { mThis.items(data); 	});
+				this.socket.on('datas', 	function(data) { mThis.datas(data); 	});
+				this.socket.on('users', 	function(data) { mThis.users(data); 	});
+			}
 	    },
 	
 		events: {

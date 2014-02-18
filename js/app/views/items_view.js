@@ -41,7 +41,8 @@ define([
 		},
 		
 		initialize: function() {
-			app_view.chatanoo.loadUrl('/queries/20');
+			if (app_view.chatanoo)
+				app_view.chatanoo.loadUrl('/queries/20');
 			
 			AbstractTableView.prototype.initialize.call(this);
 	    },

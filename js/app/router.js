@@ -101,6 +101,7 @@ define([
 
   	var initialize = function() {
 		var instance = new AppRouter;
+		instance.testConnection();
 		instance.app_view.render();
 		
     	Backbone.history.start();
