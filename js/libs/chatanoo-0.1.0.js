@@ -478,6 +478,10 @@
 			args = [queryId];
 			return this.getRequest("getItemsByQueryId", args);
 		},
+		getItemsByMetaId: function(metaId) {
+			args = [metaId];
+			return this.getRequest("getItemsByMetaId", args);
+		},
 		getItemsByMediaId: function(mediaId, mediaType) {
 			args = [mediaId, mediaType];
 			return this.getRequest("getItemsByMediaId", args);
@@ -575,6 +579,10 @@
 			args = [queryId];
 			return this.getRequest("getMediasByQueryId", args);
 		},
+		getMediasByMetaId: function(metaId) {
+			args = [metaId];
+			return this.getRequest("getMediasByMetaId", args);
+		},
 		addMedia: function(media) {
 			args = [media];
 			return this.getRequest("addMedia", args);
@@ -654,6 +662,10 @@
 		getQueriesByItemId: function(itemId) {
 			args = [itemId];
 			return this.getRequest("getQueriesByItemId", args);
+		},
+		getQueriesByMetaId: function(metaId) {
+			args = [metaId];
+			return this.getRequest("getQueriesByMetaId", args);
 		},
 		addQuery: function(query) {
 			args = [query];

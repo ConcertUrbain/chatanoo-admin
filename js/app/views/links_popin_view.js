@@ -122,7 +122,9 @@ define([
 					break;
 				case "Meta":
 					switch( linkType ) {
-                
+						case "Item": 	service = Chatanoo.items; 	method = Chatanoo.items.getItemsByMetaId; 		args = [vo.get('id')]; 	break;
+						case "Query": 	service = Chatanoo.queries; method = Chatanoo.queries.getQueriesByMetaId; 	args = [vo.get('id')]; 	break;
+						case "Media": 	service = Chatanoo.medias; 	method = Chatanoo.medias.getMediasByMetaId; 	args = [vo.get('id')]; 	break;
 					}
 					break;
 			}
