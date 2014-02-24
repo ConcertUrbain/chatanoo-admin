@@ -36,7 +36,8 @@ define([
 			items: 0,
 			comments: 0,
 			medias: 0,
-			users: 0
+			users: 0,
+			tags: 0
 		},
 		
 		initialize: function() {
@@ -186,6 +187,12 @@ define([
 		
 		gotoUsers: function() {
 			this._gotoView( 'app/views/users_view', {}, function ( users_view ) {
+				
+			} );
+		},
+
+		gotoTags: function() {
+			this._gotoView( 'app/views/tags_view', {}, function ( tags_view ) {
 				
 			} );
 		}

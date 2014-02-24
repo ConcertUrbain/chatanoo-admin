@@ -21,6 +21,7 @@ define([
 			"comments": "comments",
 			"medias": "medias",
 			"users": "users",
+			"tags": "tags",
 			
 		    "*actions": "defaultRoute" // Backbone will try match the route above first
 	    },
@@ -72,6 +73,13 @@ define([
 		{			
 			if( this.testConnection() ) {
 				this.app_view.gotoUsers();
+			}
+		},
+		
+		tags: function()
+		{			
+			if( this.testConnection() ) {
+				this.app_view.gotoTags();
 			}
 		},
 	

@@ -45,5 +45,12 @@
 				<a href="#/users">Utilisateurs</a>
 			<% } %>
 		</li>
+		<li>
+			<% if( nb.tags > 0 ) { %>
+				<a href="#/tags">Tags <span class="badge badge-info pull-right"><%= nb.tags %></span></a>
+			<% } else { %>
+				<a href="#/tags">Tags</a>
+			<% } %>
+		</li>
 	</ul>
 </div>
