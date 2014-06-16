@@ -637,7 +637,7 @@
 	_.extend(Plugins.prototype, AbstractService, Events, {
 		call: function(name, params) {
 			args = [name, params];
-			return this.getRequest("getDatas", args);
+			return this.getRequest("call", args);
 		}
 	});
 

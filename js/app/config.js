@@ -10,7 +10,7 @@ define([], function() {
 				login: "anonymous",
 				pass: "anonymous"
 			},
-			iframe: "http://m.test.chatanoo.org/index-ios.html",
+			iframe: "https://chatanoo-mobile.dev/index-ios.html",
 			users: {
 				role: {
 					admin: 		'Administrateur',
