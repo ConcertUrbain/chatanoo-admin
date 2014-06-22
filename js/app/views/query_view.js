@@ -104,6 +104,13 @@ define([
 
 					d.push( '"""' + _.flatten( _(entry.medias).map( function(medias) {
 						return _(medias).map( function(media) {
+							if (media.__className == "Vo_Media_Picture") {
+								return Config.mediasCenter.url + "m/" + media.url + ".jpg";
+							} else if (media.__className == "Vo_Media_Video") {
+								return Config.mediasCenter.url + "m/480x320/" + media.url + ".mp4";
+							} else if (media.__className == "Vo_Media_Sound") {
+								return Config.mediasCenter.url + "m/" + media.url + ".mp3";
+							}
 							return media.url;
 						});
 					}) ).join(' | ') + '"""' );
