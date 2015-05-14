@@ -44,7 +44,15 @@ define([
 				mThis.isOnError = true;
 				mThis.trigger("change");
 			}, mThis);
-		},		
+		},	
+
+		loadDetails: function(callback) {
+			var mThis = this;
+			var r = Chatanoo.plugins["call"]( "GetItemsWithDetailsByQuery", [this.get("id")] );
+			Chatanoo.plugins.on( r.success, function(items) {
+				callback(items);
+			}, mThis);
+		},
 		
 		addVo: function(query) {
 			query.__className = "Vo_Query";

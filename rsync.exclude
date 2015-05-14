@@ -1,4 +1,6 @@
 .svn
+.git
+.gitignore
 /build
 /design
 /test

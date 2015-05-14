@@ -20,6 +20,14 @@ define([
 
 		validateVo: function() {},
 		unvalidateVo: function() {},
+
+		loadDetails: function(callback) {
+			var mThis = this;
+			var r = Chatanoo.plugins["call"]( "GetItemsWithDetailsByTag", [this.get("id")] );
+			Chatanoo.plugins.on( r.success, function(items) {
+				callback(items);
+			}, mThis);
+		},
 		
 		deleteVo: function() {
 			var r = Chatanoo.search.deleteMeta( this.get("id") );

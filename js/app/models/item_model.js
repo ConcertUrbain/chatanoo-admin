@@ -90,11 +90,22 @@ define([
 		},
 		
 		deleteVo: function() {
-			var r = Chatanoo.items.deleteItem( this.get("id") );
-			Chatanoo.items.on( r.success, function( bool ) {
-				this.trigger("delete");
+			var r = Chatanoo.search.getMetasByVo( this.get("id"), 'Item' )
+			Chatanoo.search.on( r.success, function( metas ) {
+				var lock = _( metas ).find( function(meta) { 
+					return meta.name == "admin" && meta.content == "lock";
+				} ) || false;
+				if( lock ) {
+					alert("Vous ne pouvez pas supprimer cette contribution car elle a été bloquée par un administrateur.")
+				} else {
+					var r = Chatanoo.items.deleteItem( this.get("id") );
+					Chatanoo.items.on( r.success, function( bool ) {
+						this.trigger("delete");
+					}, this);
+				}
 			}, this);
 		}
+
 	});
 	//_.extend(Item, Chatanoo.ValueObject.Item);
 	
