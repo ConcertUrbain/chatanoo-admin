@@ -3,14 +3,14 @@ define([], function() {
 		chatanoo: {
 			//url: 'http://touratour.dev/services',
 			//url: 'http://preprod.ws.dring93.org/services',
-			url: 'http://chatanoo-core-staging.elasticbeanstalk.com',
+			url: 'http://chatanoo-core.elasticbeanstalk.com',
 			api_key: 'a24j2sW2ueaadyy9462EQF3dc3BUZUje',
 			//api_key: 'MJC94_5f86d751cf83daecf09c4493e8',
 			anonymous_user: {
 				login: "anonymous",
 				pass: "anonymous"
 			},
-			iframe: "http://chatanoo-mobile-staging.elasticbeanstalk.com/index-ios.html",
+			iframe: "http://chatanoo-mobile.elasticbeanstalk.com/index-ios.html",
 			users: {
 				role: {
 					admin: 		'Administrateur',

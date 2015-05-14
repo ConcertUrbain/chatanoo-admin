@@ -9,10 +9,10 @@ require.config({
 	text: 'libs/require/text',
 	
 	// libs
-    jQuery: 'libs/require/jquery',
-    Underscore: 'libs/require/underscore',
-    Backbone: 'libs/require/backbone',
-    Chatanoo: 'libs/require/chatanoo',
+  jQuery: 'libs/require/jquery',
+  Underscore: 'libs/require/underscore',
+  Backbone: 'libs/require/backbone',
+  Chatanoo: 'libs/require/chatanoo',
 
 	// configs
 	Config: 'app/config'
