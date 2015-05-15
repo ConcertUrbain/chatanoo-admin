@@ -1,0 +1,10 @@
+<h3>Commentaire <%= vo.id %></h3>
+<p>
+	<small>Actions</small><br />
+	<button class="btn btn-warning delete-link">Suppimmer ce lien</button>
+	<button class="btn btn-danger <% if(!canDelete) print("disabled "); %>delete-vo">Suppimmer ce commentaire</button>
+</p>
+<p>
+	<small>Contenu</small><br />
+	<%= vo.content %>
+</p>

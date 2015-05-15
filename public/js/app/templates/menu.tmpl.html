@@ -1,0 +1,56 @@
+<div class="well">
+	<ul class="nav nav-list">
+		<li class="nav-header">
+			Général
+		</li>
+		<li>
+			<a href="#/dashboard">Tableau de bord</a>
+		</li>
+		
+		<li class="nav-header">
+			Contributions
+		</li>	
+		<li>
+			<% if( nb.queries > 0 ) { %>
+				<a href="#/queries">Questions <span class="badge badge-info pull-right"><%= nb.queries %></span></a>
+			<% } else { %>
+				<a href="#/queries">Questions</a>
+			<% } %>
+		</li>
+		<li>
+			<% if( nb.items > 0 ) { %>
+				<a href="#/items">Contributions <span class="badge badge-info pull-right"><%= nb.items %></span></a>
+			<% } else { %>
+				<a href="#/items">Contributions</a>
+			<% } %>
+		</li>
+		<li>
+			<% if( nb.comments > 0 ) { %>
+				<a href="#/comments">Commentaires <span class="badge badge-info pull-right"><%= nb.comments %></span></a>
+			<% } else { %>
+				<a href="#/comments">Commentaires</a>
+			<% } %>
+		</li>
+		<li>
+			<% if( nb.medias > 0 ) { %>
+				<a href="#/medias">Médias <span class="badge badge-info pull-right"><%= nb.medias %></span></a>
+			<% } else { %>
+				<a href="#/medias">Médias</a>
+			<% } %>
+		</li>
+		<li>
+			<% if( nb.users > 0 ) { %>
+				<a href="#/users">Utilisateurs <span class="badge badge-info pull-right"><%= nb.users %></span></a>
+			<% } else { %>
+				<a href="#/users">Utilisateurs</a>
+			<% } %>
+		</li>
+		<li>
+			<% if( nb.tags > 0 ) { %>
+				<a href="#/tags">Tags <span class="badge badge-info pull-right"><%= nb.tags %></span></a>
+			<% } else { %>
+				<a href="#/tags">Tags</a>
+			<% } %>
+		</li>
+	</ul>
+</div>

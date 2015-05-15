@@ -1,0 +1,14 @@
+<h3>Contribution <%= vo.id %></h3>
+<p>
+	<small>Actions</small><br />
+	<button class="btn btn-warning delete-link">Suppimmer ce lien</button>
+	<button class="btn btn-danger <% if(!canDelete) print("disabled "); %>delete-vo">Suppimmer cette contribution</button>
+</p>
+<p>
+	<small>Titre</small><br />
+	<%= vo.title %>
+</p>
+<p>
+	<small>Description</small><br />
+	<%= vo.description %>
+</p>

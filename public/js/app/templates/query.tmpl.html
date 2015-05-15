@@ -1,0 +1,43 @@
+<% if( !editing ) { %>
+	<td><%= query.get('id') %></td>
+	<td><%= query.get('content') %></td>
+	<td><%= query.get('description') %></td>
+	<td><%= !_( query.get('addDate') ).isUsable() ? '' : query.get('addDate').format( Config.dateFormat ) %></td>
+	<td><%= !_( query.get('setDate') ).isUsable() ? '' : query.get('setDate').format( Config.dateFormat ) %></td>
+	<td class="action">
+		<div class="btn-group btn-group-action">
+			<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-success unvalidate" : "btn-danger validate" %>"><%= parseInt( query.get('_isValid') ) ? "Affiché" : "Masqué" %></button>
+			<button class="btn btn-mini <%= parseInt( query.get('_isValid') ) ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li><a href="#" class="edit"><i class="icon-edit"></i> Editer</a></li>
+				<li><a href="#" class="link"><i class="icon-random"></i> Liens</a></li>
+				<li><a href="#" class="datas"><i class="icon-hdd"></i> Données associés</a></li>
+				<li><a href="#" class="tags"><i class="icon-tags"></i> Tags associés</a></li>
+				<li><a href="#" class="stats"><i class="icon-signal"></i> Statistiques</a></li>
+				<li class="divider"></li>
+				<li><a href="#" class="export"><i class="icon-download"></i> Exporter</a></li>
+				<li class="divider"></li>
+				<li><a href="#" class="delete"><i class="icon-remove"></i> Supprimer</a></li>
+			</ul>
+		</div>
+	</td>
+<% } else { %>
+	<td><%= query.get('id') %></td>
+	<td><textarea name="content"><%= query.get('content') %></textarea></td>
+	<td><textarea name="description"><%= query.get('description') %></textarea></td>
+	<td><%= !_( query.get('addDate') ).isUsable() ? '' : query.get('addDate').format('DD/MM/YYYY') %></td>
+	<td><%= !_( query.get('setDate') ).isUsable() ? '' : query.get('setDate').format('DD/MM/YYYY') %></td>
+	<td class="action">
+		<div class="btn-group btn-group-action">
+			<button class="btn btn-mini btn-success validate-edit">Valider</button>
+			<button class="btn btn-mini btn-success dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li><a href="#" class="cancel-edit"><i class="icon-remove"></i> Annuler</a></li>
+			</ul>
+		</div>
+	</td>
+<% } %>

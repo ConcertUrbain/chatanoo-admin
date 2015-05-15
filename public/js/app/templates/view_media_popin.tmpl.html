@@ -1,0 +1,51 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h3>Titre du média</h3>
+</div>
+<div class="modal-body">
+	
+	<% var reg = new RegExp("^(MC-[a-zA-Z]+-[PVMS])$","g"); %>
+	<% if(model.get("__className") == "Vo_Media_Picture") { %>
+		<% var picture_url = reg.test(model.get('url')) ? Config.mediasCenter.url + "m/480x320/inner/" + model.get('url') + ".jpg" : model.get('url'); %>
+		<div class="media picture" style="width: 100%">
+			<img src="<%= picture_url %>" alt="<%= model.get('title') %>" />
+		</div>
+	<% } else if (model.get("__className") == "Vo_Media_Video") { %>
+		<% if (reg.test(model.get('url'))) { %>
+		<div class="media video" style="width: 100%">
+			<video width="100%" controls="controls">
+				<!-- VIDEO FORMATS -->
+			  	<source src="<%= Config.mediasCenter.url %>m/480x320/<%= model.get('url') %>.webm" type="video/x-webm" />
+			  	<source src="<%= Config.mediasCenter.url %>m/480x320/<%= model.get('url') %>.ogv" type="video/ogg" />
+			  	<source src="<%= Config.mediasCenter.url %>m/480x320/<%= model.get('url') %>.mp4" type="video/mp4" />
+			  	<source src="<%= Config.mediasCenter.url %>m/480x320/<%= model.get('url') %>.mov" type="video/quicktime" />
+			  	<source src="<%= Config.mediasCenter.url %>m/480x320/<%= model.get('url') %>.avi" type="video/x-sgi-movie" />
+
+				<!-- FLASH ALTERNATIVE
+				<object type="application/x-shockwave-flash" data="player.swf" width="480" height="320">
+				    <param name="movie" value="player.swf" />
+				    <param name="FlashVars" value="flv=http://ms.dring93.org/m/480x320/MC-SEWnjWaI-V.flv" /> -->
+            
+					<!-- PICTURE ALTERNATIVE  -->
+					<img src="<%= Config.mediasCenter.url %>m/preview/480x320/<%= model.get('url') %>.jpg"/>
+            
+				<!-- </object> -->
+            
+			</video>
+		</div>
+		<% } %>
+	<% } else if(model.get("__className") == "Vo_Media_Sound") { %>
+		<div class="media audio" style="width: 100%">
+			<audio width="100%" controls="controls">
+				<source src="<%= Config.mediasCenter.url %>m/<%= model.get('url') %>.ogg" type="audio/ogg" />
+				<source src="<%= Config.mediasCenter.url %>m/<%= model.get('url') %>.aac" type="audio/aac" />
+				<source src="<%= Config.mediasCenter.url %>m/<%= model.get('url') %>.mp3" type="audio/mp3" />
+				Your browser does not support the audio tag.
+			</audio>
+		</div>
+	<% } %>
+	
+</div>
+<div class="modal-footer">
+	<a href="#" class="btn btn-primary" data-dismiss="modal">Fermer</a>
+</div>

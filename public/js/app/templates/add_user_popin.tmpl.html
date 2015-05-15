@@ -1,0 +1,68 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h3>Ajouter un utilisateur</h3>
+</div>
+<div class="modal-body">
+	<form id="add-user-form" class="form-horizontal">
+		<fieldset>
+			<div class="control-group">
+		    	<label class="control-label" for="input01">Nom</label>
+		    	<div class="controls">
+		    		<input type="text" name="first-name" class="input-xlarge" id="input01" />
+		    	</div>
+		    </div>
+			<div class="control-group">
+		    	<label class="control-label" for="input02">Prénom</label>
+		    	<div class="controls">
+		    		<input type="text" name="last-name" class="input-xlarge" id="input02" />
+		    	</div>
+		    </div>
+		</fieldset>
+		<fieldset>
+			<div class="control-group">
+		    	<label class="control-label" for="input03">Identifiant</label>
+		    	<div class="controls">
+		    		<input type="text" name="pseudo" class="input-xlarge" id="input03" />
+		    	</div>
+		    </div>
+		    <div class="control-group">
+		    	<label class="control-label" for="input04">Mot de passe</label>
+		    	<div class="controls">
+		    		<input type="password" name="password" class="input-xlarge" id="input04" />
+		    	</div>
+		    </div>
+		    <div class="control-group">
+		    	<label class="control-label" for="input05">Confirmation</label>
+		    	<div class="controls">
+		    		<input type="password" name="confirm" class="input-xlarge" id="input05" />
+		    	</div>
+		    </div>
+		</fieldset>
+		<fieldset>
+			<div class="control-group">
+		    	<label class="control-label" for="input06">Email</label>
+		    	<div class="controls">
+					<div class="input-prepend">
+						<span class="add-on">@</span><input type="email" name="email" style="width: 243px;" />
+					</div>
+		    	</div>
+		    </div>
+			<div class="control-group">
+		    	<label class="control-label" for="input07">Rôle</label>
+		    	<div class="controls">
+		    		<select name="role" id="input07">
+						<option value="">Selectionner un rôle</option>
+						<% _( Config.chatanoo.users.role ).each( function(label, value) { %>
+							<option value="<%= value %>"><%= label %></option>
+						<% }) %>
+					</select>
+		    	</div>
+		    </div>
+			<input type="submit" style="margin-left: -65px; margin-top: -40px; float: left;" />
+		 </fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<a href="#" class="btn validate">Valider</a>
+	<a href="#" class="btn btn-primary" data-dismiss="modal">Fermer</a>
+</div>
