@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var express = require('express');
 var fs = require('fs');
 var _ = require('underscore');
@@ -15,6 +17,6 @@ server.get('/js/app/config.js', function(req, res){
 	  res.send(data);
   });
 });
-server.use( express.static('public') )
+server.use( express.static('public') );
 
 server.listen( process.env.PORT || 3000 );
