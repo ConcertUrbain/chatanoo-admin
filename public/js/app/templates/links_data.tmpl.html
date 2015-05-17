@@ -1,18 +1,18 @@
 <h3>Donnée <%= vo.id %></h3>
 <p>
-	<small>Actions</small><br />
-	<button class="btn btn-warning delete-link">Suppimmer ce lien</button>
-	<button class="btn btn-danger <% if(!canDelete) print("disabled "); %>delete-vo">Suppimmer cette donnée</button>
+  <small>Actions</small><br />
+  <button class="btn btn-warning delete-link">Suppimmer ce lien</button>
+  <button class="btn btn-danger <% if(!canDelete) print("disabled "); %>delete-vo">Suppimmer cette donnée</button>
 </p>
 <p>
-	<small>Type</small><br />
-	<%= vo.__className %>
+  <small>Type</small><br />
+  <%= vo.__className %>
 </p>
-	
+  
 <% _(vo).each( function( value, key ) { %>
-	<% if( key == "__className" || key == "id" ) return; %>
-	<p>
-		<small><%= key %></small><br />
-		<%= value %>
-	</p>
+  <% if( key == "__className" || key == "id" ) return; %>
+  <p>
+    <small><%= key %></small><br />
+    <%= value %>
+  </p>
 <% }) %>

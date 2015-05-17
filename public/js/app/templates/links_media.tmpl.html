@@ -1,22 +1,22 @@
 <h3>Média <%= vo.id %></h3>
 <p>
-	<small>Actions</small><br />
-	<button class="btn btn-warning delete-link">Suppimmer ce lien</button>
-	<button class="btn btn-danger <% if(!canDelete) print("disabled "); %>delete-vo">Suppimmer ce média</button>
+  <small>Actions</small><br />
+  <button class="btn btn-warning delete-link">Suppimmer ce lien</button>
+  <button class="btn btn-danger <% if(!canDelete) print("disabled "); %>delete-vo">Suppimmer ce média</button>
 </p>
 <p>
-	<small>Type</small><br />
-	<%= vo.__className %>
+  <small>Type</small><br />
+  <%= vo.__className %>
 </p>
 <p>
-	<small>Titre</small><br />
-	<%= vo.title %>
+  <small>Titre</small><br />
+  <%= vo.title %>
 </p>
 <p>
-	<small>Description</small><br />
-	<%= vo.description %>
+  <small>Description</small><br />
+  <%= vo.description %>
 </p>
 <p>
-	<small>Url</small><br />
-	<%= vo.url %>
+  <small>Url</small><br />
+  <%= vo.url %>
 </p>

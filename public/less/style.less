@@ -24,11 +24,11 @@
 @media print { #blr.media-print(); }
 
 .btn-group .dropdown-menu a:hover {
-	background-color: @grey-light;
+  background-color: @grey-light;
 }
 
 .btn-group-action button:first-child {
-	width: 56px;
+  width: 56px;
 }
 
 @import 'libs/bootstrap-subnav.less';
@@ -38,459 +38,459 @@
 @grey-dark: #4D4D4D;
 
 .middle {
-	margin: 0 auto;
-	
-	position: relative;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+  margin: 0 auto;
+  
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 ///
 
 #header {
-	.container {
-		margin-right: 0;
-		margin-left: 0;
-		width: inherit;
-	}
-	
-	.brand {
-		margin-left: 0px;
-		font-weight: bold;
-		color: black;
-		text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
-	}
+  .container {
+    margin-right: 0;
+    margin-left: 0;
+    width: inherit;
+  }
+  
+  .brand {
+    margin-left: 0px;
+    font-weight: bold;
+    color: black;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
+  }
 }
 
 #wrapper {
-	#hl.box-sizing();
-	
-	& > div {
-		#hl.box-sizing();
-	}
+  #hl.box-sizing();
+  
+  & > div {
+    #hl.box-sizing();
+  }
 }
 
 #menu {
-	width: 200px;
-	position: fixed;
+  width: 200px;
+  position: fixed;
 
-	top: 40px;
-	bottom: 0;
-	left: 0;
-	
-	.well {
-		margin: 10px;
-		padding: 8px 0;
-	}
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  
+  .well {
+    margin: 10px;
+    padding: 8px 0;
+  }
 }
 
 .subnav ~ table {
-	margin-top: 10px;
-	
-	th, td {
-		#hl.box-sizing();
-	}
-	
-	textarea, input[type=text], select {
-		width: 100%;
-		margin-bottom: 0;
-		#hl.box-sizing();
-	}
-	
-	input[type=text] {
-		height: 18+4+4px;
-	}
-	
-	tr.active td, tr.active:nth-child(odd) td {
-		background-color: #08C;
-		color: white;
-	}
-	
-	&.table {
-	  	tbody tr.active:hover td,
-	  	tbody tr.active:hover th {	
-	  	  	background-color: #08C;
-	  	}
-	}
-	
+  margin-top: 10px;
+  
+  th, td {
+    #hl.box-sizing();
+  }
+  
+  textarea, input[type=text], select {
+    width: 100%;
+    margin-bottom: 0;
+    #hl.box-sizing();
+  }
+  
+  input[type=text] {
+    height: 18+4+4px;
+  }
+  
+  tr.active td, tr.active:nth-child(odd) td {
+    background-color: #08C;
+    color: white;
+  }
+  
+  &.table {
+      tbody tr.active:hover td,
+      tbody tr.active:hover th {  
+          background-color: #08C;
+      }
+  }
+  
 }
 
 .subnav.subnav-fixed ~ table {
-	margin-top: 50px;
+  margin-top: 50px;
 }
 
 .subnav.subnav-fixed-bottom ~ table {
-	margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .table-fixed-head {
-	position: fixed;
-	display: none;
-	background-color: white;
-	top: 75px;
-	z-index: 1;
-	
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		border: 1px solid #DDD;
-		
-		li {
-			font-weight: bold;
-			#hl.box-sizing();
-			float: left;
-			padding: 8px;
-			border-left: 1px solid #DDD;
-			line-height: 18px;
-		}
-		
-		li:first-child {
-			border-left: 0;
-		}
-		
-		float: left;
-		clear: left;
-	}
+  position: fixed;
+  display: none;
+  background-color: white;
+  top: 75px;
+  z-index: 1;
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #DDD;
+    
+    li {
+      font-weight: bold;
+      #hl.box-sizing();
+      float: left;
+      padding: 8px;
+      border-left: 1px solid #DDD;
+      line-height: 18px;
+    }
+    
+    li:first-child {
+      border-left: 0;
+    }
+    
+    float: left;
+    clear: left;
+  }
 }
 
 table .action .btn-group {
-	width: 80px;
+  width: 80px;
 }
 
 #content {
-	padding: 10px;
-	
-	margin-top: 40px;
-	margin-left: 200px;
-	margin-right: 320px;
+  padding: 10px;
+  
+  margin-top: 40px;
+  margin-left: 200px;
+  margin-right: 320px;
 }
 
 body.retract #content {
-	margin-right: 37px;
+  margin-right: 37px;
 }
 
 #chatanoo {
-	width: 320px;
-	position: fixed;
+  width: 320px;
+  position: fixed;
 
-	top: 40px;
-	bottom: 0;
-	right: 0;
+  top: 40px;
+  bottom: 0;
+  right: 0;
 
-	border-left: 1px solid @grey-light;
+  border-left: 1px solid @grey-light;
 
-	.btn-group {
-		z-index: 100;
-		margin-top: -2px;
-	}
+  .btn-group {
+    z-index: 100;
+    margin-top: -2px;
+  }
 
-	iframe {
-		position: absolute;
-		top:0;
+  iframe {
+    position: absolute;
+    top:0;
 
-		width: 100%;
-		height: 99%;
-	}
+    width: 100%;
+    height: 99%;
+  }
 
-	button.deploy {
-		display: none;
-	}
-	button.retract {
-		display: inline-block;
-	}
+  button.deploy {
+    display: none;
+  }
+  button.retract {
+    display: inline-block;
+  }
 }
 
 body.retract #chatanoo {
-	right: -283px;
+  right: -283px;
 
-	button.deploy {
-		display: inline-block;
-	}
-	button.retract {
-		display: none;
-	}
+  button.deploy {
+    display: inline-block;
+  }
+  button.retract {
+    display: none;
+  }
 }
 
 .subnav {
-	width: inherit;
-	
-	&.subnav-fixed,
-	&.subnav-fixed-bottom {
-		margin-left: 210px;
-		margin-right: 330px;
-	}
-	
-	#searchbox {
-		margin-top: 3px;
-		margin-left: 2px;
-		width: 400px;
-	}
+  width: inherit;
+  
+  &.subnav-fixed,
+  &.subnav-fixed-bottom {
+    margin-left: 210px;
+    margin-right: 330px;
+  }
+  
+  #searchbox {
+    margin-top: 3px;
+    margin-left: 2px;
+    width: 400px;
+  }
 }
 
 .modal .table-fixed-head {
-	position: absolute;	
-	top: 82px;
+  position: absolute;  
+  top: 82px;
 }
 
 .modal .subnav-fixed {
-	position: absolute;	
-	top: 46px;
-	margin-left: 15px;
-	width: 605px;
+  position: absolute;  
+  top: 46px;
+  margin-left: 15px;
+  width: 605px;
 }
 
 .modal.datas {
-	width: 800px;
-	margin: -250px 0 0 -400px;
+  width: 800px;
+  margin: -250px 0 0 -400px;
 }
 
 .modal.links {
-	width: 960px;
-	margin: -250px 0 0 -480px;
-	
-	.modal-body {
-		padding: 0;
-	}
-	
-	.graph {
-		width: 600px;
-		overflow: auto;
-		height: 400px;
-		float: left;
-	}
-	
-	.graph-control {
-		width: 360px;
-		overflow: auto;
-		height: 400px;
-		float: left;
-		#hl.box-sizing();
-		padding: 10px;
-		padding-right: 15px;
-	}
+  width: 960px;
+  margin: -250px 0 0 -480px;
+  
+  .modal-body {
+    padding: 0;
+  }
+  
+  .graph {
+    width: 600px;
+    overflow: auto;
+    height: 400px;
+    float: left;
+  }
+  
+  .graph-control {
+    width: 360px;
+    overflow: auto;
+    height: 400px;
+    float: left;
+    #hl.box-sizing();
+    padding: 10px;
+    padding-right: 15px;
+  }
 }
 
 .modal.view-media {
-	width: 510px;
+  width: 510px;
 }
 
 body.retract .subnav.subnav-fixed,
 body.retract .subnav-fixed-bottom {
-	margin-right: 48px;
+  margin-right: 48px;
 }
 
 .login-view {
-	.well {
-		margin-top: 125px;
-		
-		width: 482px;
-		height: 240px;
-	}
+  .well {
+    margin-top: 125px;
+    
+    width: 482px;
+    height: 240px;
+  }
 }
 
 .dashboard {
-	.hero-unit {
-		background-color: transparent;
-	}
-	
-	.arrow {
-		position: fixed;
-		color: #999999;
-		width: 200px;
-	}
-	
-	#tuto-menu {
-		top: 54px;
-		left: 195px;
-		padding-left: 94px;
-		background: url(../img/arrow-1.png) 0px 27px no-repeat;
-		
-		& > div {
-			#hl.rotate(-3deg);
-		}
-	}
-	#tuto-notif {
-		top: 284px;
-		left: 196px;
-		padding-left: 94px;
-		padding-top: 23px;
-		background: url(../img/arrow-2.png) 0px 0px no-repeat;
-		
-		& > div {
-			#hl.rotate(2deg);
-		}
-	}
-	#tuto-connected {
-		top: 366px;
-		left: 109px;
-		padding-left: 99px;
-		padding-top: 94px;
-		background: url(../img/arrow-3.png) 0px 0px no-repeat;
-		
-		& > div {
-			#hl.rotate(10deg);
-		}
-	}
-	#tuto-retract {
-		display: block;
-		
-		top: 50px;
-		right: 327px;
-		padding-right: 76px;
-		padding-top: 16px;
-		background: url(../img/arrow-4.png) top right no-repeat;
-		text-align: right;
-		
-		& > div {
-			#hl.rotate(-3deg);
-		}
-	}
-	#tuto-deploy {
-		display: none;
-		
-		top: 50px;
-		right: 50px;
-		padding-right: 76px;
-		padding-top: 16px;
-		background: url(../img/arrow-4.png) top right no-repeat;
-		text-align: right;
-		
-		& > div {
-			#hl.rotate(-3deg);
-		}
-	}
-	#tuto-chatanoo {
-		display: block;
-		
-		top: 260px;
-		right: 327px;
-		padding-right: 83px;
-		padding-top: 31px;
-		background: url(../img/arrow-5.png) top right no-repeat;
-		text-align: right;
-		
-		& > div {
-			#hl.rotate(-9deg);
-		}
-	}
+  .hero-unit {
+    background-color: transparent;
+  }
+  
+  .arrow {
+    position: fixed;
+    color: #999999;
+    width: 200px;
+  }
+  
+  #tuto-menu {
+    top: 54px;
+    left: 195px;
+    padding-left: 94px;
+    background: url(../img/arrow-1.png) 0px 27px no-repeat;
+    
+    & > div {
+      #hl.rotate(-3deg);
+    }
+  }
+  #tuto-notif {
+    top: 284px;
+    left: 196px;
+    padding-left: 94px;
+    padding-top: 23px;
+    background: url(../img/arrow-2.png) 0px 0px no-repeat;
+    
+    & > div {
+      #hl.rotate(2deg);
+    }
+  }
+  #tuto-connected {
+    top: 366px;
+    left: 109px;
+    padding-left: 99px;
+    padding-top: 94px;
+    background: url(../img/arrow-3.png) 0px 0px no-repeat;
+    
+    & > div {
+      #hl.rotate(10deg);
+    }
+  }
+  #tuto-retract {
+    display: block;
+    
+    top: 50px;
+    right: 327px;
+    padding-right: 76px;
+    padding-top: 16px;
+    background: url(../img/arrow-4.png) top right no-repeat;
+    text-align: right;
+    
+    & > div {
+      #hl.rotate(-3deg);
+    }
+  }
+  #tuto-deploy {
+    display: none;
+    
+    top: 50px;
+    right: 50px;
+    padding-right: 76px;
+    padding-top: 16px;
+    background: url(../img/arrow-4.png) top right no-repeat;
+    text-align: right;
+    
+    & > div {
+      #hl.rotate(-3deg);
+    }
+  }
+  #tuto-chatanoo {
+    display: block;
+    
+    top: 260px;
+    right: 327px;
+    padding-right: 83px;
+    padding-top: 31px;
+    background: url(../img/arrow-5.png) top right no-repeat;
+    text-align: right;
+    
+    & > div {
+      #hl.rotate(-9deg);
+    }
+  }
 }
 body.retract #tuto-deploy {
-	display: block;
+  display: block;
 }
 body.retract #tuto-retract {
-	display: none;
+  display: none;
 }
 body.retract #tuto-chatanoo {
-	display: none;
+  display: none;
 }
 
 #menu .well.menu {
-	padding: 5px 15px;
+  padding: 5px 15px;
 }
 
 .notifications {
-	.alert {
-		&:first-child {
-			margin-top: 10px;
-		}
-		
-		margin-bottom: 5px;
-		padding: 7px;
-		
-		.close {
-			top: -8px;
-			right: -2px;
-		}
-	}
+  .alert {
+    &:first-child {
+      margin-top: 10px;
+    }
+    
+    margin-bottom: 5px;
+    padding: 7px;
+    
+    .close {
+      top: -8px;
+      right: -2px;
+    }
+  }
 }
 
 .connected {
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		margin-top: 10px;
-	}
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+  }
 }
 
 .modal {
-	&.metas {
-		width: 650px;
-		margin-left: -325px;
-	}
+  &.metas {
+    width: 650px;
+    margin-left: -325px;
+  }
 }
 
 #overlay {
-	//display: none;
-	
-	position: absolute;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	//background-color: rgba(0, 0, 0, 0.5);
-	
-	z-index: 2000;
-	
-	& > div {
-   		width: 150px;
-   		height: 150px;
-   		position: absolute;
-   		top: 0;
-   		right: 0;
-   		bottom: 0;
-   		left: 0;
-   		margin: auto;
+  //display: none;
+  
+  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //background-color: rgba(0, 0, 0, 0.5);
+  
+  z-index: 2000;
+  
+  & > div {
+       width: 150px;
+       height: 150px;
+       position: absolute;
+       top: 0;
+       right: 0;
+       bottom: 0;
+       left: 0;
+       margin: auto;
 
-		background-color: rgba(0, 0, 0, 0.8);
-		#hl.rounded-corners(15px, 15px, 15px, 15px);
-		
-		text-align: center;
-		
-		&#error {
-			display: none;
-			span {
-				background: url(../img/error_icon.png) center 10px no-repeat;
-				padding-top: 100px;
-			}
-		}
-		
-		&#valid {
-			display: none;
-			span {
-				background: url(../img/valid_icon.png) center 10px no-repeat;
-				padding-top: 100px;
-			}
-		}
-		
-		&#loading {
-			//display: none;
-			
-			#spinner {
-				padding-top: 38px;
-			}
-			
-			span {
-				//background: url(../img/loading.gif) center 10px no-repeat;
-				padding-top: 10px;
-			}
-		}
-		
-		span {
-			display: block;
-			position: relative;
-			width: 80%;
-			height: 80%;
-			margin: 10%;
-			
-			color: white;
-			font-weight: bold;
-		}
-	}
+    background-color: rgba(0, 0, 0, 0.8);
+    #hl.rounded-corners(15px, 15px, 15px, 15px);
+    
+    text-align: center;
+    
+    &#error {
+      display: none;
+      span {
+        background: url(../img/error_icon.png) center 10px no-repeat;
+        padding-top: 100px;
+      }
+    }
+    
+    &#valid {
+      display: none;
+      span {
+        background: url(../img/valid_icon.png) center 10px no-repeat;
+        padding-top: 100px;
+      }
+    }
+    
+    &#loading {
+      //display: none;
+      
+      #spinner {
+        padding-top: 38px;
+      }
+      
+      span {
+        //background: url(../img/loading.gif) center 10px no-repeat;
+        padding-top: 10px;
+      }
+    }
+    
+    span {
+      display: block;
+      position: relative;
+      width: 80%;
+      height: 80%;
+      margin: 10%;
+      
+      color: white;
+      font-weight: bold;
+    }
+  }
 }
 
 

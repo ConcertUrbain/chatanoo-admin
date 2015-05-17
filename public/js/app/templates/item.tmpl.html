@@ -1,41 +1,41 @@
 <% if( !editing ) { %>
-	<td><%= item.get('id') %></td>
-	<td><%= item.get('title') %></td>
-	<td><%= item.get('description') %></td>
-	<td><%= !_( item.get('addDate') ).isUsable() ? '' : item.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= !_( item.get('setDate') ).isUsable() ? '' : item.get('setDate').format( Config.dateFormat ) %></td>
-	<td class="action">
-	   <div class="btn-group btn-group-action">
-	   	<button class="btn btn-mini <%= item.get('_isValid') ? "btn-success unvalidate" : "btn-danger validate" %>"><%= item.get('_isValid') ? "Affiché" : "Masqué" %></button>
-	   	<button class="btn btn-mini <%= item.get('_isValid') ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
-	   		<span class="caret"></span>
-	   	</button>
-	   	<ul class="dropdown-menu pull-right">
-	   		<li><a href="#" class="edit"><i class="icon-edit"></i> Editer</a></li>
-	   		<li><a href="#" class="link"><i class="icon-random"></i> Liens</a></li>
-	   		<li><a href="#" class="datas"><i class="icon-hdd"></i> Données associés</a></li>
-	   		<li><a href="#" class="tags"><i class="icon-tags"></i> Tags associés</a></li>
-	   		<li><a href="#" class="stats"><i class="icon-signal"></i> Statistiques</a></li>
-	   		<li class="divider"></li>
-	   		<li><a href="#" class="delete"><i class="icon-remove"></i> Supprimer</a></li>
-	   	</ul>
-	   </div>
-	</td>
+  <td><%= item.get('id') %></td>
+  <td><%= item.get('title') %></td>
+  <td><%= item.get('description') %></td>
+  <td><%= !_( item.get('addDate') ).isUsable() ? '' : item.get('addDate').format( Config.dateFormat ) %></td>
+  <td><%= !_( item.get('setDate') ).isUsable() ? '' : item.get('setDate').format( Config.dateFormat ) %></td>
+  <td class="action">
+     <div class="btn-group btn-group-action">
+       <button class="btn btn-mini <%= item.get('_isValid') ? "btn-success unvalidate" : "btn-danger validate" %>"><%= item.get('_isValid') ? "Affiché" : "Masqué" %></button>
+       <button class="btn btn-mini <%= item.get('_isValid') ? "btn-success" : "btn-danger" %> dropdown-toggle" data-toggle="dropdown">
+         <span class="caret"></span>
+       </button>
+       <ul class="dropdown-menu pull-right">
+         <li><a href="#" class="edit"><i class="icon-edit"></i> Editer</a></li>
+         <li><a href="#" class="link"><i class="icon-random"></i> Liens</a></li>
+         <li><a href="#" class="datas"><i class="icon-hdd"></i> Données associés</a></li>
+         <li><a href="#" class="tags"><i class="icon-tags"></i> Tags associés</a></li>
+         <li><a href="#" class="stats"><i class="icon-signal"></i> Statistiques</a></li>
+         <li class="divider"></li>
+         <li><a href="#" class="delete"><i class="icon-remove"></i> Supprimer</a></li>
+       </ul>
+     </div>
+  </td>
 <% } else { %>
-	<td><%= item.get('id') %></td>
-	<td><textarea name="title"><%= item.get('title') %></textarea></td>
-	<td><textarea name="description"><%= item.get('description') %></textarea></td>
-	<td><%= !_( item.get('addDate') ).isUsable() ? '' : item.get('addDate').format( Config.dateFormat ) %></td>
-	<td><%= !_( item.get('setDate') ).isUsable() ? '' : item.get('setDate').format( Config.dateFormat ) %></td>
-	<td class="action">
-		<div class="btn-group btn-group-action">
-			<button class="btn btn-mini btn-success validate-edit">Valider</button>
-			<button class="btn btn-mini btn-success dropdown-toggle" data-toggle="dropdown">
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu pull-right">
-				<li><a href="#" class="cancel-edit"><i class="icon-remove"></i> Annuler</a></li>
-			</ul>
-		</div>
-	</td>
+  <td><%= item.get('id') %></td>
+  <td><textarea name="title"><%= item.get('title') %></textarea></td>
+  <td><textarea name="description"><%= item.get('description') %></textarea></td>
+  <td><%= !_( item.get('addDate') ).isUsable() ? '' : item.get('addDate').format( Config.dateFormat ) %></td>
+  <td><%= !_( item.get('setDate') ).isUsable() ? '' : item.get('setDate').format( Config.dateFormat ) %></td>
+  <td class="action">
+    <div class="btn-group btn-group-action">
+      <button class="btn btn-mini btn-success validate-edit">Valider</button>
+      <button class="btn btn-mini btn-success dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu pull-right">
+        <li><a href="#" class="cancel-edit"><i class="icon-remove"></i> Annuler</a></li>
+      </ul>
+    </div>
+  </td>
 <% } %>
