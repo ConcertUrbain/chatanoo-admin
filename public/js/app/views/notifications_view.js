@@ -27,7 +27,8 @@ define([
 		initialize: function() {
 			var mThis = this;
 				
-			if(window.io) {
+			// if(window.io) {
+			if(false) {
 				this.socket = io.connect( Config.notify.url );
 				this.socket.on('connect', 	function(data) { mThis.connect(data); 	});
 				this.socket.on('queries', 	function(data) { mThis.queries(data); 	});

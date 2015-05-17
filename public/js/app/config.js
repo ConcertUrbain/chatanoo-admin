@@ -95,7 +95,7 @@ define([], function() {
 			}
 		},
 		notify: {
-			url: 'http://notify.chatanoo.org:3131'
+			topic: '${NOTIFY_TOPIC}'
 		},
 		mediasCenter: {
 			url: "http://mc.chatanoo.org/",
