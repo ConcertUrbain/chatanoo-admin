@@ -15,7 +15,8 @@ require.config({
     'chatanoo': { deps: ['underscore', 'jquery'], exports: 'Chatanoo' },
     'gritter': { deps: ['jquery'] },
     'elastic': { deps: ['jquery'] },
-    'visualsearch': { deps: ['jquery', /*'jquery-ui', */'underscore', 'backbone'] }
+    'visualsearch': { deps: ['jquery', /*'jquery-ui', */'underscore', 'backbone'] },
+    'aws': { exports: 'AWS' }
   },
   paths: {
     'text': '../components/requirejs-text/text',
@@ -27,7 +28,7 @@ require.config({
     'cookie': '../components/jquery.cookie/jquery.cookie',
     'moment': '../components/moment/moment',
     'jquery-ui': 'libs/jquery-ui-1.8.20.custom.min',
-    'jquery-elastic': 'libs/jquery.elastic-1.6.11.js',
+    'elastic': 'libs/jquery.elastic-1.6.11.js',
     'modernizr': '../components/modernizr/modernizr',
     'backbone': '../components/backbone/backbone',
     'bootstrap': 'libs/bootstrap.min',
@@ -35,6 +36,7 @@ require.config({
     'gritter': '../components/jquery.gritter/js/jquery.gritter',
     'visualsearch': '../components/visualsearch/build/visualsearch',
     'elastic': 'libs/jquery.elastic-1.6.11',
+    'aws': '../components/aws-sdk-js/dist/aws-sdk',
 
     'config': 'app/config'
   },
@@ -43,6 +45,8 @@ require.config({
 
 require([
   'jquery',
+  'aws',
+  'config',
   'app/app',
 
   'bootstrap',
@@ -51,14 +55,41 @@ require([
   'gritter',
   'elastic',
   'app/helpers/mixin'
-], function($, App) {
+], function($, aws, Config, App) {
   $(document).ready( function() {
+
     console.log("App loaded");
     App.initialize();
+
+    aws.config.update({
+      region: 'eu-west-1',
+      accessKeyId: 'AKIAIXCXYCP6KQKXWXNQ',
+      secretAccessKey: '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'
+    });
+    var cloudwatchlogs = new AWS.CloudWatchLogs({
+      apiVersion: '2014-03-28'
+    });
+
+    var token = "49543063142833479438792691369440060137384119169038946050";
+    window.onerror = function(message, file, line, column, err) {
+      var params = {
+        logEvents: [{
+            message: '[Error] ' + err.stack,
+            timestamp: new Date().getTime()
+        }],
+        logGroupName: 'chatanoo-admin-prod-browser',
+        logStreamName: 'browser', //navigator.userAgent
+        sequenceToken: token
+      };
+      cloudwatchlogs.putLogEvents(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     token = data.nextSequenceToken;
+      });
+    }
+
+    // foo();
+
   });
 });
 
-window.onerror = function(message, file, line, column, err) {
-  console.log('[Error]', err.stack);
-}
 
