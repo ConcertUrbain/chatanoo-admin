@@ -1,5 +1,5 @@
-define(['jQuery'], function($) {
-  
+define(['jquery'], function($) {
+
   var createPopin = function( Klass, options ) {
     var popin = new Klass( options );
     popin.$el.on('hidden', function () {
@@ -11,6 +11,6 @@ define(['jQuery'], function($) {
     popin.$el.modal('show');
     return popin;
   }
-  
+
   return createPopin;
 })

@@ -1,22 +1,22 @@
 define([
-  'Backbone',
-  'Underscore',
-  'Chatanoo'
+  'backbone',
+  'underscore',
+  'chatanoo'
 ], function(Backbone, _, Chatanoo) {
-  
+
   var Comment = Backbone.Model.extend(
   {
       // Default attributes for the Query item.
       defaults: function() {
         return {};
       },
-  
+
       initialize: function() {
-    
+
       },
-    
+
     user: null,
-    loadUser: function() {        
+    loadUser: function() {
       var mThis = this;
       var r = Chatanoo.users.getUserById( this.get("_user") );
       Chatanoo.users.on( r.success, function(user) {
@@ -24,7 +24,7 @@ define([
         mThis.trigger("change change:user");
       }, mThis);
     },
-    
+
     rate: 0,
     loadRate: function() {
       var mThis = this;
@@ -36,7 +36,7 @@ define([
         this.trigger("change change:rate");
       }, mThis);
     },
-    
+
     validateVo: function() {
       var r = Chatanoo.comments.validateVo( this.get("id"), true, false );
       Chatanoo.comments.on( r.success, function( commentId ) {
@@ -44,7 +44,7 @@ define([
         this.set('_isValid', 1);
       }, this);
     },
-    
+
     unvalidateVo: function() {
       var r = Chatanoo.comments.validateVo( this.get("id"), false, false );
       Chatanoo.comments.on( r.success, function( commentId ) {
@@ -52,14 +52,14 @@ define([
         this.set('_isValid', 0);
       }, this);
     },
-    
+
     deleteVo: function() {
       var r = Chatanoo.comments.deleteComment( this.get("id") );
       Chatanoo.comments.on( r.success, function( bool ) {
         this.trigger("delete");
       }, this);
     },
-    
+
     editVo: function(options) {
       var comment = _.extend(this.toJSON(), options);
       var r = Chatanoo.comments.setComment( comment );
@@ -68,10 +68,10 @@ define([
         this.trigger("edited");
       }, this);
     },
-    
+
     addVo: function(comment) {
       comment.__className = "Vo_Comment";
-      
+
       var r = Chatanoo.comments.addComment( comment );
       Chatanoo.comments.on( r.success, function( commentId ) {
         this.set( 'id', commentId );
@@ -81,6 +81,6 @@ define([
     }
   });
   //_.extend(Comment, Chatanoo.ValueObject.Comment);
-  
+
   return Comment;
 });

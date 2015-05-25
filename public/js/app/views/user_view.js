@@ -1,9 +1,9 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
-  'Config',
+  'config',
   
   'app/views/abstract_row_view',
   

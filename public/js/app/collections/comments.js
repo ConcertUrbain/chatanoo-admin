@@ -1,9 +1,9 @@
 define([
-  'Underscore',
-  'Chatanoo',
-  
+  'underscore',
+  'chatanoo',
+
   'app/collections/abstract',
-  
+
   'app/models/comment_model'
 ], function( _, Chatanoo,
   AbstractCollection,
@@ -12,10 +12,10 @@ define([
   var Comments = AbstractCollection.extend({
       model: Comment,
     badgeName: "comments",
-    
+
     load: function() {
       this.remove(this.toArray());
-      
+
       var mThis = this;
       var r = Chatanoo.comments.getComments( {} );
       Chatanoo.comments.on( r.success, function(comments) {
@@ -25,6 +25,6 @@ define([
       }, this);
     }
   });
-  
+
   return Comments;
 });

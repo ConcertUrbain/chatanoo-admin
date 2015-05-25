@@ -1,9 +1,9 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery'
+  'backbone',
+  'underscore',
+  'jquery'
 ], function(Backbone, _, $) {
-  
+
   var Notif = Backbone.Model.extend(
   {
       defaults: function() {
@@ -14,11 +14,11 @@ define([
         user: "Mathieu Desvé"
       };
       },
-  
+
       initialize: function() {
-    
+
       }
   });
-  
+
   return Notif;
 });

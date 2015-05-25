@@ -1,9 +1,9 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
-  'Config',
+  'config',
   
   'app/collections/datasset',
   'app/views/datas_view',

@@ -1,9 +1,9 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
-  'Config',
+  'config',
   'app/helpers/metas_typeahead',
   
   'app/views/abstract_row_view',

@@ -1,20 +1,20 @@
 define([
-  'Backbone',
-  'Underscore',
-  'Chatanoo'
+  'backbone',
+  'underscore',
+  'chatanoo'
 ], function(Backbone, _, Chatanoo) {
-  
+
   var User = Backbone.Model.extend(
   {
       // Default attributes for the Query item.
       defaults: function() {
         return {};
       },
-  
+
       initialize: function() {
-    
+
       },
-    
+
     unvalidateVo: function() {
       var r = Chatanoo.users.banUser( this.get("id"), true );
       Chatanoo.users.on( r.success, function( userId ) {
@@ -22,7 +22,7 @@ define([
         this.trigger("change change:validate");
       }, this);
     },
-    
+
     validateVo: function() {
       var r = Chatanoo.users.banUser( this.get("id"), false );
       Chatanoo.users.on( r.success, function( userId ) {
@@ -30,14 +30,14 @@ define([
         this.trigger("change change:unvalidate");
       }, this);
     },
-    
+
     deleteVo: function() {
       var r = Chatanoo.users.deleteUser( this.get("id") );
       Chatanoo.users.on( r.success, function( bool ) {
         this.trigger("delete");
       }, this);
     },
-    
+
     editVo: function(options) {
       var user = _.extend(this.toJSON(), options);
       var r = Chatanoo.users.setUser( user );
@@ -46,12 +46,12 @@ define([
         this.trigger("edited");
       }, this);
     },
-    
+
     addVo: function() {
-      
+
     }
   });
   //_.extend(Comment, Chatanoo.ValueObject.Comment);
-  
+
   return User;
 });

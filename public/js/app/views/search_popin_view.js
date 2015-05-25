@@ -1,7 +1,7 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
   'text!app/templates/search_popin.tmpl.html',
 ], function(Backbone, _, $,

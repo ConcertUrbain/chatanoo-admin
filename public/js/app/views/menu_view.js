@@ -1,9 +1,9 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
-  'Config',
+  'config',
   
   'app/views/notifications_view',
   'app/views/connected_view',

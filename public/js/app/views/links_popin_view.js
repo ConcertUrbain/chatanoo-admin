@@ -1,11 +1,11 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
-  'Chatanoo',
-  
-  'Config',
-  
+  'backbone',
+  'underscore',
+  'jquery',
+  'chatanoo',
+
+  'config',
+
   'app/models/comment_model',
   'app/models/data_model',
   'app/models/item_model',
@@ -13,65 +13,63 @@ define([
   'app/models/meta_model',
   'app/models/query_model',
   'app/models/user_model',
-  
+
   'app/helpers/create_popin',
-  
+
   'app/views/add_link_popin',
-  
-  'text!app/templates/links_popin.tmpl.html',
-  
-  "libs/raphael-2.1.0"
+
+  'text!app/templates/links_popin.tmpl.html'
 ], function(Backbone, _, $, Chatanoo,
   Config,
   Comment, Data, Item, Media, Meta, Query, User,
   createPopin,
   AddLinkPopin,
   template) {
-  
+
   var LinksPopinView = Backbone.View.extend(
   {
     model: null,
-    
+
     voType: null,
     voId: null,
     vo: null,
-    
+
     links: null,
     graphLinks: [],
-    
+
     cellSize: { width: 120, height: 50, horizontalGap: 100, verticalGap: 25, verticalTypeGap: 100 },
-    
+
     count: 0,
-    
+
     events: {
       'click .add': 'addLink',
       'click .graph-control .delete-link': 'deleteLink',
       'click .graph-control .delete-vo': 'deleteVo',
     },
-    
+
     initialize: function(options) {
       var mThis = this;
       this.$el.addClass("modal hide fade links");
-      
+
       this.voType = options.voType;
       this.voId = options.voId;
       this.vo = options.vo;
-      
+
       this.load();
       },
 
     load: function() {
       this.count = 0;
       this.links = {};
-      
+
       var mThis = this;
       var conf = Config.chatanoo.links[ this.voType ];
-      _( _.union(conf.parents, conf.children) ).each( function(type) { 
+      _( _.union(conf.parents, conf.children) ).each( function(type) {
         mThis.count++;
         mThis.getLinks( mThis.voType, type, mThis.vo );
       });
     },
-    
+
     getLinks: function( voType, linkType, vo ) {
       var service, method, args = [], uniq = false;
       switch( voType ) {
@@ -112,12 +110,12 @@ define([
           break;
         case "User":
           switch( linkType ) {
-                
+
           }
           break;
         case "Data":
           switch( linkType ) {
-            
+
           }
           break;
         case "Meta":
@@ -128,7 +126,7 @@ define([
           }
           break;
       }
-      
+
       var mThis = this;
       var r = method.apply( service, args );
       service.on( r.success, function( results ) {
@@ -144,7 +142,7 @@ define([
                     mThis.links[ linkType ].push( vo );
                   }
                 });
-              } else {  
+              } else {
                 mThis.links[ linkType ].push( result );
               }
             });
@@ -163,15 +161,15 @@ define([
         }
       }, this);
     },
-    
+
     render: function() {
       this.graphLinks = [];
-      
+
       this.$el.html(_.template( template, { Config: Config } ));
-      
+
       if( _.isNull( this.links ) || _.isEmpty( this.links ) )
         return this;
-      
+
       var mThis = this;
       var parents = [], children = [];
       var conf = Config.chatanoo.links[ this.voType ];
@@ -179,40 +177,40 @@ define([
       var childrenMax = 0; _( conf.children ).each( function( type ) { if(mThis.links[type].length > 0) children.push( type ); var size = mThis.links[type].length; if( childrenMax < size ) childrenMax = size; });
       var horizonMax = ( parents.length >= children.length ) ? parents.length : children.length;
       var padding = 10;
-      
+
       var paperWidth = this.cellSize.width * horizonMax + this.cellSize.horizontalGap * (horizonMax - 1) + padding * 2;
       var paperHeight = this.cellSize.height + this.cellSize.verticalTypeGap * 2 + this.cellSize.height * (parenstMax + childrenMax) + this.cellSize.verticalGap * (parenstMax + childrenMax - 2) + padding * 2;
-      
+
       if(paperWidth < 580) paperWidth = 580;
-      if(paperHeight < 380) paperHeight = 380;        
-      
+      if(paperHeight < 380) paperHeight = 380;
+
       var paper = Raphael( this.$el.find('#graph')[0], paperWidth, paperHeight );
-      
+
       var x, y;
       var width = this.cellSize.width * parents.length + this.cellSize.horizontalGap * (parents.length - 1);
       var height = this.cellSize.height * parenstMax + this.cellSize.verticalGap * (parenstMax - 1);
-      
+
       var block, blocks = [];
       _( parents ).each( function(type, index) {
         var vos = mThis.links[ type ];
         x = (paperWidth - width) / 2 + index * (mThis.cellSize.width + mThis.cellSize.horizontalGap) + padding;
         _( vos ).each( function (vo, i) {
           block = { vo: vo, x: x, y: height - (i + 1) * mThis.cellSize.height - i * mThis.cellSize.verticalGap + padding };
-          if(i == 0) { block.position = "start"; } 
+          if(i == 0) { block.position = "start"; }
           else if(i == _(vos).size() - 1) { block.position = "end"; }
-          
+
           blocks.push( block );
         });
       });
-      
-      var center = { 
+
+      var center = {
         vo: mThis.vo.toJSON(),
-        x: paperWidth / 2 + padding - mThis.cellSize.width / 2, 
-        y: height + padding + this.cellSize.verticalTypeGap, 
+        x: paperWidth / 2 + padding - mThis.cellSize.width / 2,
+        y: height + padding + this.cellSize.verticalTypeGap,
         position: "center"
-      };  
+      };
       blocks.push( center );
-      
+
       var offsetY = height + padding + 2 * this.cellSize.verticalTypeGap + this.cellSize.height;
       width = this.cellSize.width * children.length + this.cellSize.horizontalGap * (children.length - 1);
       _( children ).each( function(type, index) {
@@ -220,20 +218,20 @@ define([
         x = (paperWidth - width) / 2 + index * (mThis.cellSize.width + mThis.cellSize.horizontalGap) + padding;
         _( vos ).each( function (vo, i) {
           block = { vo: vo, x: x, y: offsetY + i * (mThis.cellSize.height + mThis.cellSize.verticalGap) };
-          if(i == 0) { block.position = "start"; } 
+          if(i == 0) { block.position = "start"; }
           else if(i == _(vos).size() - 1) { block.position = "end"; }
-          
+
           blocks.push( block );
         });
       });
-      
+
       paper.setStart();
       var start;
       _( blocks ).each( function( block ) {
         if( block.position == "start" ) {
           start = block;
           paper.path("M" + (center.x + mThis.cellSize.width / 2) + " " + (center.y + mThis.cellSize.height / 2) + " L" + (block.x + mThis.cellSize.width / 2) + " " + (block.y + mThis.cellSize.height / 2) );
-        } else if( block.position == "end" ) {  
+        } else if( block.position == "end" ) {
           paper.path("M" + (start.x + mThis.cellSize.width / 2) + " " + (start.y + mThis.cellSize.height / 2) + " L" + (block.x + mThis.cellSize.width / 2) + " " + (block.y + mThis.cellSize.height / 2) );
         }
       });
@@ -242,23 +240,23 @@ define([
         stroke: '#BCBCBC',
         "stroke-width": 1
       });
-      
+
       _( blocks ).each( function( block ) {
-        var b = paper.createGraphCell( block.vo, block.x, block.y, mThis); 
+        var b = paper.createGraphCell( block.vo, block.x, block.y, mThis);
         mThis.graphLinks.push( b );
         if( block.position == "center" ) {
           b.select(true);
           mThis.renderVo( block.vo );
         }
       });
-      
+
       return this;
     },
-    
+
     currentVo: null,
     renderVo: function(vo) {
       this.currentVo = vo;
-      
+
       var tmpl = "";
       var canDelete = false;
       switch( vo.__className ) {
@@ -272,31 +270,31 @@ define([
         tmpl = "links_data.tmpl.html"; canDelete = Config.chatanoo.links.Data.canDelete;
       }
       if( vo.__className.indexOf('Vo_Media') != -1 ) {
-        tmpl = "links_media.tmpl.html"; canDelete = 
+        tmpl = "links_media.tmpl.html"; canDelete =
         Config.chatanoo.links.Media.canDelete;
       }
-      
+
       var mThis = this;
       require(['text!app/templates/' + tmpl], function(tmpl) {
         mThis.$el.find('.graph-control').html( _.template( tmpl, { vo: vo, canDelete: canDelete, Config: Config } ) );
       });
     },
-    
+
     addLink: function() {
       var popin = createPopin( AddLinkPopin, {
         voType: this.voType,
         voId:   this.voId,
         vo:   this.vo
       } );
-      
+
       popin.on('added', function() {
         this.load();
         popin.off();
       }, this);
-      
+
       return false;
     },
-    
+
     deleteLink: function() {
       var service, method, args = [];
       switch(true) {
@@ -454,22 +452,22 @@ define([
           }
           break;
       }
-      
+
       if( !confirm( "Êtes-vous sûr de vouloir supprimer ce lien ?" ) )
         return false;
-      
+
       var r = method.apply( service, args );
       service.on( r.success, function( results ) {
         this.load();
       }, this);
-      
+
       return false;
     },
-    
+
     deleteVo: function() {
       if( !confirm( "Êtes-vous sûr de vouloir supprimer cette objet ?" ) )
         return false;
-      
+
       var vo;
       switch(true) {
         case this.currentVo.__className == 'Vo_User':     vo = new User(this.currentVo);     break;
@@ -477,35 +475,35 @@ define([
         case this.currentVo.__className == 'Vo_Query':     vo = new Query(this.currentVo);   break;
         case this.currentVo.__className == 'Vo_Comment':   vo = new Comment(this.currentVo);   break;
         case this.currentVo.__className == 'Vo_Meta':     vo = new Meta(this.currentVo);     break;
-        
-        case this.currentVo.__className.indexOf('Vo_Media') != -1: 
-          vo = new Media(this.currentVo); 
+
+        case this.currentVo.__className.indexOf('Vo_Media') != -1:
+          vo = new Media(this.currentVo);
           vo.set('type', _.getLast( this.currentVo.__className ));
           break;
-        case this.currentVo.__className.indexOf('Vo_Data') != -1: 
-          vo = new Data(this.currentVo); 
+        case this.currentVo.__className.indexOf('Vo_Data') != -1:
+          vo = new Data(this.currentVo);
           vo.set('type', _.getLast( this.currentVo.__className ));
           break;
       }
-      
+
       vo.on('delete', function() {
         this.load();
       }, this);
       vo.deleteVo();
-      
+
       return false;
     },
-    
+
     kill: function() {
       this.$el.unbind()
       //this.model.off();
       this.$el.remove();
     }
   });
-  
+
   Raphael.fn.createGraphCell = function(vo, x, y, delegate) {
     var paper = this;
-    
+
     var cell = paper.set();
 
     var rect = paper.rect(x, y, delegate.cellSize.width, delegate.cellSize.height, 5);
@@ -524,7 +522,7 @@ define([
       "stroke-width": 1
     });
     cell.push( rect );
-    
+
     var label = "";
     switch( vo.__className ) {
       case "Vo_Query":   label = "Question";   break;
@@ -557,15 +555,15 @@ define([
       }
     });
     cell.click( function() {
-      delegate.renderVo( vo );  
+      delegate.renderVo( vo );
       _( delegate.graphLinks ).each( function(r) {
         r.select(false);
       })
       rect.select(true);
     });
-    
+
     return rect;
   }
-  
+
   return LinksPopinView;
 });

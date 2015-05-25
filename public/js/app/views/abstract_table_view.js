@@ -1,47 +1,47 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
-  
+  'backbone',
+  'underscore',
+  'jquery',
+
   'app/helpers/create_popin'
 ], function(Backbone, _, $,
   createPopin) {
-  
+
   var AbstractTableView = Backbone.View.extend(
   {
     blockResize: false,
     collection: null,
     voClass: null,
-    
+
     addOptions: {},
     addViewClass: "row",
-    
+
     mode: 'all',
     facets: ['id', 'Contenu', 'Date d\'ajout', 'Date de modif'],
-    
+
     currentRow: null,
-    
+
     scrollReferer: window,
     $scrollReferer: null,
-    
+
     initialize: function() {
       var mThis = this;
-      
+
       this.collection.load();
       this.collection.on('load', function() { this.render(); }, this);
-      
+
       var mThis = this;
       $(window).resize( function( event ) {
         mThis.renderHead();
       });
-      
+
       if( this.scrollReferer === window ) {
         $(window).on( "scroll", function(event) {
           mThis.processScroll(event);
         } );
       }
       },
-  
+
     events: {
       // table controls
       'click .all a': 'showAll',
@@ -51,54 +51,54 @@ define([
       'click .refresh': 'refresh',
       'click .add': "add"
     },
-    
+
     render: function() {
       this.renderResult();
       this.search();
       this.renderHead();
-      
+
       if( this.scrollReferer === window ) {
         this.$scrollReferer = $(window);
       } else {
         this.$scrollReferer = this.$el.find( this.scrollReferer );
-        
+
         var mThis = this;
         this.$scrollReferer.on( "scroll", function(event) {
           mThis.processScroll(event);
         } );
       }
-      
+
       this.topNav = null;
       this.bottomNav = null;
       this.tableHead = null;
       this.processScroll();
-    
+
       return this;
     },
-    
+
     refresh: function( event ) {
       this.collection.load();
       return false;
     },
-    
+
     topNav: null,
     bottomNav: null,
     tableHead: null,
     processScroll: function(event) {
       var scrollTop = this.$scrollReferer.scrollTop();
       var offset = this.$scrollReferer.height();
-      
+
       // TOP NAV
       if( _.isNull( this.topNav ) ) {
         var nav = this.$el.find('.topnav');
-        if( nav.length > 0 ) { 
+        if( nav.length > 0 ) {
           nav.removeClass('subnav-fixed');
           this.topNav = {
             el: nav,
             top: nav.length && nav.offset().top,
             isFixed: 0
           }
-          if( this.scrollReferer === window ) { 
+          if( this.scrollReferer === window ) {
             this.topNav.top -= 40;
           } else {
             this.topNav.top -= this.$scrollReferer.offset().top;
@@ -114,20 +114,20 @@ define([
           this.topNav.el.removeClass('subnav-fixed');
         }
       }
-      
+
       // TABLE HEAD
       if( _.isNull( this.tableHead ) ) {
         var table = this.$el.find('.table-fixed-head');
         if( table.length > 0 ) {
           table.css("display", "none");
-          
+
           var tableRef = this.$el.find( table.data('target') );
           this.tableHead = {
             el: table,
             top: table.length && tableRef.offset().top - 40,
             isFixed: 0
           }
-          if( this.scrollReferer === window ) { 
+          if( this.scrollReferer === window ) {
             this.tableHead.top -= 40;
           } else {
             this.tableHead.top -= this.$scrollReferer.offset().top;
@@ -143,11 +143,11 @@ define([
           this.tableHead.el.css("display", "none");
         }
       }
-      
+
       // BOTTOM NAV
       if( _.isNull( this.bottomNav ) ) {
         var nav = this.$el.find('.bottomnav');
-        if( nav.length > 0 ) { 
+        if( nav.length > 0 ) {
           nav.removeClass('subnav-fixed-bottom');
           this.bottomNav = {
             el: nav,
@@ -171,7 +171,7 @@ define([
     renderResult: function() {
       var mThis = this;
       this.$el.find("table tbody tr:not(.add)").remove();
-        
+
       var collection;
       switch(this.mode) {
         case "all": collection = this.collection.all(); break;
@@ -186,7 +186,7 @@ define([
       });
       this.$el.find("table tbody").prepend( els );
     },
-    
+
     createRowView: function( model ) {
       var mThis = this;
       var v = new this.voClass( { model: model } );
@@ -222,7 +222,7 @@ define([
       });
       return v;
     },
-        
+
     _request: '',
     search: function() {
       var mThis = this;
@@ -249,28 +249,28 @@ define([
           }
         });
     },
-    
+
     renderHead: function() {
       var mThis = this;
       this.$el.find(".table-fixed-head").each( function(index, table) {
         var tableRef = mThis.$el.find( $(table).data("target") );
         $(table).html("");
-        
+
         var ul = $("<ul />");
         tableRef.find('th').each( function(i, th) {
           var el = $("<li />");
-          
+
           var w = $(th).width();
           w += parseInt( $(th).css("padding-left").substring(0, $(th).css("padding-left").length - 2) );
           w += parseInt( $(th).css("padding-right").substring(0, $(th).css("padding-right").length - 2) );
           if(i > 0)
             w += 1;
           el.width( w );
-          
+
           el.html( $(th).html() );
           ul.append( el );
         });
-        
+
         $(table).append( ul );
       });
     },
@@ -279,30 +279,30 @@ define([
     showAll: function( event ) {
       this.mode = "all";
       this.render();
-        
+
       return false;
     },
-        
+
     showValid: function( event ) {
       this.mode = "valid";
       this.render();
-        
+
       return false;
     },
-        
+
     showUnvalid: function( event ) {
       this.mode = "unvalid";
       this.render();
-        
+
       return false;
     },
-    
+
     add: function() {
       if( this.addViewClass == "row" ) {
         var v = this.createRowView( new this.collection.model( this.addOptions ) );
         v.$el.addClass('new');
         v.editing = true;
-        
+
         var tr = this.$el.find("table tbody tr:not(.add)");
         if( tr.length == 0 ) {
           this.$el.find("table tbody").prepend( v.render().$el );
@@ -316,15 +316,15 @@ define([
         $(window).resize();
         createPopin( this.addViewClass, this.addOptions );
       }
-      
+
       return false;
     },
-    
+
     _actionClick: function( event ) {
       event.preventDefault();
     }
-    
+
   });
-  
+
   return AbstractTableView;
 });

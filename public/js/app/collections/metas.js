@@ -1,25 +1,25 @@
 define([
-  'Underscore',
-  'Chatanoo',
+  'underscore',
+  'chatanoo',
 
   'app/collections/abstract',
-  
+
   'app/models/meta_model'
 ], function( _, Chatanoo,
   AbstractCollection,
   Meta ) {
-  
+
   var Metas = AbstractCollection.extend({
     model: Meta,
     isValidKey: null,
-    
+
     voId: null,
     voType: null,
     isMedia: false,
-    
+
     load: function() {
       this.remove(this.toArray());
-      
+
       var mThis = this;
       var r;
       if( _.isNull( this.voId ) )
@@ -32,6 +32,6 @@ define([
       }, this);
     }
   });
-  
+
   return Metas;
 });

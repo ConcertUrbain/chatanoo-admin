@@ -1,12 +1,12 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
-  'Chatanoo',
+  'backbone',
+  'underscore',
+  'jquery',
+  'chatanoo',
   
   'app/views/abstract_table_view',
   
-  'Config',
+  'config',
   
   'app/collections/datas',
   'app/views/data_view',

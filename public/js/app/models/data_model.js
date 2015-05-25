@@ -1,7 +1,7 @@
 define([
-  'Backbone',
-  'Underscore',
-  'Chatanoo'
+  'backbone',
+  'underscore',
+  'chatanoo'
 ], function(Backbone, _, Chatanoo) {
 
   var Data = Backbone.Model.extend(
@@ -10,21 +10,21 @@ define([
       defaults: function() {
         return {};
       },
-  
+
       initialize: function() {
-    
+
       },
 
     validateVo: function() {},
     unvalidateVo: function() {},
-        
+
     deleteVo: function() {
       var r = Chatanoo.datas.deleteData( this.get("id"), this.get('type') );
       Chatanoo.datas.on( r.success, function( bool ) {
         this.trigger("delete");
       }, this);
     },
-    
+
     addVo: function(options) {
       var service, method, isMedia = false, r;
       switch( this.get( 'voType' ) ) {
@@ -32,18 +32,18 @@ define([
         case 'Item': service = Chatanoo.items; method = service.addDataIntoVo; break;
         case 'Comment': service = Chatanoo.comments; method = service.addDataIntoVo; break;
         case 'User': service = Chatanoo.users; method = service.addDataIntoVo; break;
-        
+
         case 'Sound':
         case 'Video':
         case 'Picture':
         case 'Text': isMedia = true; service = Chatanoo.medias; method = service.addDataIntoMedia; break;
       }
-      
+
       var data = _.extend(this.toJSON(), options);
       delete data.voId;
       delete data.voType;
       delete data.type;
-      
+
       if( isMedia )
         r = method.apply( service, [ data, this.get( 'voId' ), this.get( 'voType' ) ] );
       else
@@ -54,13 +54,13 @@ define([
         this.trigger("added");
       }, this);
     },
-        
+
     editVo: function(options) {
       var data = _.extend(this.toJSON(), options);
       delete data.voId;
       delete data.voType;
       delete data.type;
-      
+
       var r = Chatanoo.datas.setData( data );
       Chatanoo.datas.on( r.success, function( dataId ) {
         this.set(options);
@@ -68,7 +68,7 @@ define([
       }, this);
     }
   });
-  //_.extend(Media, Chatanoo.ValueObject.Media.Abstract); 
-  
+  //_.extend(Media, Chatanoo.ValueObject.Media.Abstract);
+
   return Data;
 });

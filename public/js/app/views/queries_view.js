@@ -1,11 +1,11 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
   'app/views/abstract_table_view',
   
-  'Config',
+  'config',
   
   'app/collections/queries',
   'app/views/query_view',

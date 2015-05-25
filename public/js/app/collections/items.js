@@ -1,21 +1,21 @@
 define([
-  'Underscore',
-  'Chatanoo',
+  'underscore',
+  'chatanoo',
 
   'app/collections/abstract',
-  
+
   'app/models/item_model'
 ], function( _, Chatanoo,
   AbstractCollection,
   Item) {
-  
+
   var Items = AbstractCollection.extend({
       model: Item,
     badgeName: "items",
 
     load: function() {
       this.remove(this.toArray());
-      
+
       var mThis = this;
       var r = Chatanoo.items.getItems( {} );
       Chatanoo.items.on( r.success, function(items) {
@@ -25,6 +25,6 @@ define([
       }, this);
     }
   });
-  
+
   return Items
 });

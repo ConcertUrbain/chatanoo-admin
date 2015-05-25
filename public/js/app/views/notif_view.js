@@ -1,9 +1,9 @@
 define([
-  'Backbone',
-  'Underscore',
-  'jQuery',
+  'backbone',
+  'underscore',
+  'jquery',
   
-  'Config',
+  'config',
   
   'text!app/templates/notif.tmpl.html'
 ], function(Backbone, _, $,
