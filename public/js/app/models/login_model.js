@@ -3,8 +3,10 @@ define([
   'underscore',
   'jquery',
   'chatanoo',
-  'config'
-], function(Backbone, _, $, Chatanoo, Config) {
+  'config',
+
+  'app/helpers/metas_typeahead'
+], function(Backbone, _, $, Chatanoo, Config, typeahead) {
 
   var Login = Backbone.Model.extend(
   {
@@ -32,6 +34,12 @@ define([
       }, this);
       Chatanoo.init(Config.chatanoo.url, this.get("session"));
       Chatanoo.connect(this.get("login"), this.get("pass"));
+
+      var r = Chatanoo.search.getMetas();
+      Chatanoo.search.on( r.success, function(metas) {
+        typeahead.source.name = _.chain( metas ).pluck('name').uniq().compact().value();
+        typeahead.source.content = _.chain( metas ).pluck('content').uniq().compact().value();
+      }, this);
     }
   });
 

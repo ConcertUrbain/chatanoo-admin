@@ -99,8 +99,11 @@ define([
       topic: '${NOTIFY_TOPIC}'
     },
     mediasCenter: {
-      url: "http://mc.chatanoo.org/",
-      uploadURL: "http://mc.chatanoo.org/upload"
+      url: "http://medias.aws.chatanoo.org",
+      inputBucket: "chatanoo-medias-input",
+      identityPoolId: 'eu-west-1:b263aeab-02ae-4268-b338-95e7ea79e255',
+      region: 'eu-west-1',
+      uploadURL: "http://ms.dring93.org/upload"
     },
     dateFormat: "DD/MM/YYYY"
   }

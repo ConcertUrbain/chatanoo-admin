@@ -13,6 +13,7 @@ define([
   var AddMediaPopinView = Backbone.View.extend(
   {
     events: {
+      'click .validate': 'validate'
     },
 
     initialize: function( ) {
@@ -21,11 +22,15 @@ define([
       this.$el.on('hidden', function () {
          mThis.kill();
       });
-      },
+    },
 
     render: function() {
       this.$el.html(_.template( template, { Config: Config } ));
       return this;
+    },
+
+    validate: function(event) {
+      event.preventDefault()
     },
 
     kill: function() {

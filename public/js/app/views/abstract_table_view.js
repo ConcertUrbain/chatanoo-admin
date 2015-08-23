@@ -226,28 +226,28 @@ define([
     _request: '',
     search: function() {
       var mThis = this;
-      var visualSearch = VS.init({
-          container  : this.$el.find('#searchbox'),
-          query      : mThis._request,
-          callbacks  : {
-        search       : function(query, searchCollection) {
-          mThis.collection.filters = searchCollection.facets();
-          mThis._request = query;
-          mThis.renderResult();
-          $(window).resize();
-        },
-            facetMatches : function(callback) {
-              callback(mThis.facets);
-            },
-            valueMatches : function(facet, searchTerm, callback) {
-              switch (facet) {
-                /*case 'account':
-                  callback([]);
-                  break;*/
-              }
-            }
-          }
-        });
+      // var visualSearch = VS.init({
+      //     container  : this.$el.find('#searchbox'),
+      //     query      : mThis._request,
+      //     callbacks  : {
+      //   search       : function(query, searchCollection) {
+      //     mThis.collection.filters = searchCollection.facets();
+      //     mThis._request = query;
+      //     mThis.renderResult();
+      //     $(window).resize();
+      //   },
+      //       facetMatches : function(callback) {
+      //         callback(mThis.facets);
+      //       },
+      //       valueMatches : function(facet, searchTerm, callback) {
+      //         switch (facet) {
+      //           /*case 'account':
+      //             callback([]);
+      //             break;*/
+      //         }
+      //       }
+      //     }
+      //   });
     },
 
     renderHead: function() {
