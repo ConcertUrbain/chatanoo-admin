@@ -5,7 +5,7 @@
       "AWS::CloudFormation::Interface" : {
         "ParameterGroups" : [{
           "Label": { "default": "General Configuration" },
-          "Parameters": ["CreateDNSRecord", "DeploymentZipUrl"]
+          "Parameters": ["ProjectName", "CreateDNSRecord", "DeploymentZipUrl"]
         }, {
           "Label": { "default": "DNS Configuration" },
           "Parameters": ["DomainName", "SubDomainName", "Route53HostedZone"]
@@ -20,6 +20,9 @@
       }
     },
     "Parameters": {
+      "ProjectName": {
+        "Type": "String"
+      },
       "CreateDNSRecord": {
         "Type": "String",
         "AllowedValues": ["true", "false"],
@@ -101,7 +104,8 @@
             "IndexDocument": "index.html"
           },
           "Tags": [
-            { "Key": "chatanoo:project", "Value": "admin" }
+            { "Key": "chatanoo:project", "Value": { "Ref": "ProjectName" } }
+            { "Key": "chatanoo:component", "Value": "admin" }
           ]
         }
       },
@@ -175,7 +179,8 @@
               "ValidationDomain": {"Fn::Join" : [".",[ { "Ref": "SubDomainName" }, { "Ref": "DomainName" } ] ]}
             }],
             "Tags": [
-              { "Key": "chatanoo:project", "Value": "admin" }
+              { "Key": "chatanoo:project", "Value": { "Ref": "ProjectName" } }
+              { "Key": "chatanoo:component", "Value": "admin" }
             ]
          },
          "Condition": "UseDNSRecord"
