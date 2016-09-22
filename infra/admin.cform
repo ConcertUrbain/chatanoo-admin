@@ -104,7 +104,7 @@
             "IndexDocument": "index.html"
           },
           "Tags": [
-            { "Key": "chatanoo:project", "Value": { "Ref": "ProjectName" } }
+            { "Key": "chatanoo:project", "Value": { "Ref": "ProjectName" } },
             { "Key": "chatanoo:component", "Value": "admin" }
           ]
         }
@@ -179,7 +179,7 @@
               "ValidationDomain": {"Fn::Join" : [".",[ { "Ref": "SubDomainName" }, { "Ref": "DomainName" } ] ]}
             }],
             "Tags": [
-              { "Key": "chatanoo:project", "Value": { "Ref": "ProjectName" } }
+              { "Key": "chatanoo:project", "Value": { "Ref": "ProjectName" } },
               { "Key": "chatanoo:component", "Value": "admin" }
             ]
          },
