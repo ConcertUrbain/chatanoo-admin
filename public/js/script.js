@@ -23,7 +23,7 @@ require.config({
     'dom-ready': '../components/requirejs-domready/domReady',
 
     'underscore': '../components/underscore/underscore',
-    'jquery': '../components/jquery/jquery',
+    'jquery': '../components/jquery/dist/jquery',
     'cookie': '../components/jquery.cookie/jquery.cookie',
     'moment': '../components/moment/moment',
     'jquery-ui': 'libs/jquery-ui-1.8.20.custom.min',
@@ -61,4 +61,3 @@ require([
 window.onerror = function(message, file, line, column, err) {
   console.log('[Error]', err.stack);
 }
-
