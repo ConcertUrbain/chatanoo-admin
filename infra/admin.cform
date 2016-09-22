@@ -209,6 +209,7 @@
             }
             ],
             "PriceClass": "PriceClass_All",
+            "DefaultRootObject": "index.html",
             "DefaultCacheBehavior" : {
               "AllowedMethods" : [ "GET", "HEAD" ],
               "TargetOriginId" : { "Fn::Join": ["-", ["s3Origin", { "Ref": "S3Bucket" }]] },
