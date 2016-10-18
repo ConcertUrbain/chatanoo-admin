@@ -2,15 +2,15 @@ define([
   'backbone',
   'underscore',
   'jquery',
-  
+
   'config',
-  
+
   'app/views/notif_view',
-  
+
   'app/collections/notifications',
-  
+
   'app/models/notif_model',
-  
+
   'text!app/templates/notifications.tmpl.html'
 ], function(Backbone, _, $,
   Config,
@@ -18,48 +18,48 @@ define([
   Notifications,
   Notif,
   template) {
-  
+
   var NotificationsView = Backbone.View.extend(
   {
     collections: new Notifications(),
     user: null,
-    
+
     initialize: function() {
       var mThis = this;
-        
+
       // if(window.io) {
-      if(false) {
-        this.socket = io.connect( Config.notify.url );
-        this.socket.on('connect',   function(data) { mThis.connect(data);   });
-        this.socket.on('queries',   function(data) { mThis.queries(data);   });
-        this.socket.on('search',   function(data) { mThis.search(data);   });
-        this.socket.on('comments',   function(data) { mThis.comments(data);   });
-        this.socket.on('medias',   function(data) { mThis.medias(data);   });
-        this.socket.on('items',   function(data) { mThis.items(data);   });
-        this.socket.on('datas',   function(data) { mThis.datas(data);   });
-        this.socket.on('users',   function(data) { mThis.users(data);   });
-      }
+      // if(false) {
+      //   this.socket = io.connect( Config.notify.url );
+      //   this.socket.on('connect',   function(data) { mThis.connect(data);   });
+      //   this.socket.on('queries',   function(data) { mThis.queries(data);   });
+      //   this.socket.on('search',   function(data) { mThis.search(data);   });
+      //   this.socket.on('comments',   function(data) { mThis.comments(data);   });
+      //   this.socket.on('medias',   function(data) { mThis.medias(data);   });
+      //   this.socket.on('items',   function(data) { mThis.items(data);   });
+      //   this.socket.on('datas',   function(data) { mThis.datas(data);   });
+      //   this.socket.on('users',   function(data) { mThis.users(data);   });
+      // }
       },
-  
+
     events: {
-      
+
     },
-    
+
     render: function() {
       var mThis = this;
       require(['app/views/app_view'], function(app_view) {
         mThis.user = app_view.user;
       });
-      
+
       var collapse = this.$el.find('#notifications').hasClass('in');
-      
+
       this.$el.addClass("well menu");
       this.$el.html( _.template( template, { nb: this.collections.length } ) );
-      
+
       var center = this.$el.find('#notifications');
       if( collapse )
         center.addClass('in');
-      
+
       this.collections.each( function( notif, index ) {
         var nv = new NotifView({ model: notif });
         nv.on('delete', function() {
@@ -68,16 +68,16 @@ define([
         });
         center.prepend(  nv.render().el );
       });
-      
+
       return this;
     },
-    
+
     addNotification: function( notif ) {
       this.collections.add( notif );
       while( this.collections.length > 10 )
         this.collections.shift();
     },
-    
+
     highlight: function() {
       this.$el.css({
         backgroundColor: "#FFFFCC"
@@ -86,24 +86,24 @@ define([
         backgroundColor: "#F6F6F6"
       }, 2000);
     },
-    
+
     connect: function(data) {
        console.log("Connected to Chatanoo Notify Server!");
-    
+
       this.render();
     },
-    
+
     createNotif: function(data, title) {
       var n = new Notif();
       n.set('title', title);
-      
+
       return n;
     },
-    
+
     setUser: function(data, notif) {
       /*if(data.byUser == this.user.id)
         return false;*/
-        
+
       var user = data.byUser;
       if( _( user.firstName ).isUsable() && _( user.lastName ).isUsable() ) {
         notif.set('user', user.lastName + " " + user.firstName );
@@ -112,16 +112,16 @@ define([
       } else {
         notif.set('user', user);
       }
-      
+
       return true;
     },
-    
+
     queries: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Question' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var query = 0;
       switch( data.method ) {
         case "addQuery":
@@ -203,19 +203,19 @@ define([
           n.set('type', 'info');
           break;
       }
-      
+
       this.addNotification( n );
-      
-      this.render(); 
-      this.highlight(); 
+
+      this.render();
+      this.highlight();
     },
-    
+
     search: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Tag' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var meta = 0;
       switch( data.method ) {
         case "addMeta":
@@ -236,17 +236,17 @@ define([
       }
 
       this.addNotification( n );
-      
-      this.render(); 
+
+      this.render();
       this.highlight();
     },
-    
+
     comments: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Commentaire' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var comment = 0;
       switch( data.method ) {
         case "addComment":
@@ -307,17 +307,17 @@ define([
       }
 
       this.addNotification( n );
-      
-      this.render(); 
+
+      this.render();
       this.highlight();
     },
-    
+
     medias: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Médias' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var media = 0;
       switch( data.method ) {
         case "addMedia":
@@ -385,19 +385,19 @@ define([
           n.set('type', 'error');
           break;
       }
-      
+
       this.addNotification( n );
-      
-      this.render(); 
+
+      this.render();
       this.highlight();
     },
-    
+
     items: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Item' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var item = 0;
       switch( data.method ) {
         case "addItem":
@@ -487,19 +487,19 @@ define([
           n.set('type', 'error');
           break;
       }
-      
+
       this.addNotification( n );
-      
-      this.render(); 
+
+      this.render();
       this.highlight();
     },
-    
+
     datas: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Données associée' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var data = 0;
       switch( data.method ) {
         case "addData":
@@ -518,19 +518,19 @@ define([
           n.set('type', 'error');
           break;
       }
-      
+
       this.addNotification( n );
-      
-      this.render(); 
+
+      this.render();
       this.highlight();
     },
-    
+
     users: function(data) {
       console.log(data);
-      
+
       var n = this.createNotif( data, 'Utilisateur' );
       if( !this.setUser( data, n ) ) return;
-      
+
       var user = 0;
       switch( data.method ) {
         case "addUser":
@@ -572,18 +572,18 @@ define([
           n.set('type', 'error');
           break;
       }
-      
+
       this.addNotification( n );
-      
-      this.render(); 
+
+      this.render();
       this.highlight();
     },
-    
+
     kill: function() {
       this.$el.unbind()
       //this.model.off();
     }
   });
-  
+
   return NotificationsView;
 });

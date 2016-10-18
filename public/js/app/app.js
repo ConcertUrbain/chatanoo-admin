@@ -15,7 +15,9 @@ define([
 
       window.isLogged = false;
 
-      Router.initialize();
+      Config.load( function() {
+        Router.initialize();
+      });
     }
 
     return {

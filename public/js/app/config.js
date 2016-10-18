@@ -1,11 +1,19 @@
 define([
+  'jquery',
   'json!env.json'
-], function(env) {
+], function($, env) {
 
   return {
+    load: function(callback) {
+      var _this = this;
+      $.getJSON(env.API_KEYS, function(data) {
+        _this.chatanoo.sessions = data.api_key;
+        callback(null);
+      })
+    },
     chatanoo: {
       url: env.WS_URL,
-      sessions: env.API_KEYS,
+      sessions: [],
 
       anonymous_user: {
         login: "anonymous",
@@ -95,15 +103,11 @@ define([
         }
       }
     },
-    notify: {
-      topic: env.NOTIFY_TOPIC
-    },
     mediasCenter: {
       url: env.MEDIAS_CENTER.url,
       inputBucket: env.MEDIAS_CENTER.input_bucket,
       identityPoolId: env.MEDIAS_CENTER.identity_pool,
       region: env.MEDIAS_CENTER.region,
-      uploadURL: env.MEDIAS_CENTER.upload_url
     },
     dateFormat: "DD/MM/YYYY"
   }
