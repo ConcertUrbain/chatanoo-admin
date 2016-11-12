@@ -8,14 +8,14 @@ require.config({
     'underscore': { exports: '_' },
     'jquery': { exports: '$' },
     'cookie': { exports: '$', deps: ['jquery'] },
-    // 'jquery-ui': { exports: '$', deps: ['jquery'] },
+    'jquery-ui': { exports: '$', deps: ['jquery'] },
     'modernizr': { exports: 'Modernizr' },
     'backbone': { deps: ['underscore', 'jquery'], exports: 'Backbone' },
     'bootstrap': { deps: ['jquery'] },
     'chatanoo': { deps: ['underscore', 'jquery'], exports: 'Chatanoo' },
     'gritter': { deps: ['jquery'] },
     'elastic': { deps: ['jquery'] },
-    'visualsearch': { deps: ['jquery', /*'jquery-ui', */'underscore', 'backbone'] }
+    'visualsearch': { deps: ['jquery', 'jquery-ui', 'underscore', 'backbone'] }
   },
   paths: {
     'text': '../components/requirejs-text/text',
@@ -23,7 +23,7 @@ require.config({
     'dom-ready': '../components/requirejs-domready/domReady',
 
     'underscore': '../components/underscore/underscore',
-    'jquery': '../components/jquery/dist/jquery',
+    'jquery': '../components/jquery/jquery',
     'cookie': '../components/jquery.cookie/jquery.cookie',
     'moment': '../components/moment/moment',
     'jquery-ui': 'libs/jquery-ui-1.8.20.custom.min',
